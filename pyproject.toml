@@ -8,8 +8,7 @@ dependencies = [
     "nicegui",
     "pywebview",
     "babel",  # For translation management
-    "keyboard",  # For global hotkey management (more reliable than pynput)
-    "pynput",  # Fallback for hotkey management
+    "keyboard",  # For global hotkey management
 ]
 
 [build-system]

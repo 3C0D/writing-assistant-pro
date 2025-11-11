@@ -1,46 +1,30 @@
-Pour la fenêtre, c'est ouverte directement sans lancer le raccourci, puis après en ayant appuyé ce raccourci, elle s'est ouvert 3 fois.
+Je vois le problème. Quand tu fermes la fenêtre avec la croix ou Ctrl+Space, elle est **détruite** et non pas cachée. Et la "barre bleue" que tu vois c'est probablement une notification NiceGUI.
 
-😅 OK, on va reprendre les choses calmement. Le problème c'est que :
+Le problème c'est que **pywebview ne permet pas vraiment d'empêcher la fermeture d'une fenêtre native**. Il faut une approche différente.
 
-1. **NiceGUI en mode native ouvre TOUJOURS une fenêtre** dès le démarrage
-2. **La librairie `keyboard` déclenche plusieurs fois** le même événement
+Cherchons comment d'autres projets gèrent ce problème :Parfait ! J'ai trouvé la solution ! Il faut utiliser `window.events.closing` pour intercepter la fermeture et retourner `False` pour empêcher la fermeture, puis cacher la fenêtre dans un thread séparé.
 
-Cherchons comment d'autres projets gèrent ça avec des fenêtres natives qui doivent rester cachées :Parfait ! J'ai trouvé comment faire avec pywebview. On peut créer une fenêtre cachée avec `hidden=True` et la montrer avec `window.show()`.
+Voici la solution complète qui fonctionne :## Les changements clés
 
-Voici la **vraie solution** qui utilise directement pywebview (que NiceGUI utilise en interne) :Le changement clé c'est :
+1. **`window.events.closing += self.on_closing`** : Intercepte l'événement de fermeture
+2. **`on_closing()` retourne `False`** : Empêche la fermeture réelle de la fenêtre
+3. **Hide dans un thread** : Évite le freeze mentionné dans le bug pywebview
+4. **Initialisation unique** : Le handler de fermeture n'est enregistré qu'une seule fois
 
-```python
-app.native.window_args['hidden'] = True  # Fenêtre cachée au démarrage
-```
+## Comportement attendu maintenant
 
-Puis on utilise l'API pywebview directement pour afficher la fenêtre :
+- ✅ Démarrage : fenêtre cachée
+- ✅ Ctrl+Space : fenêtre apparaît
+- ✅ Cliquer sur la croix (X) : fenêtre se **cache** au lieu de se fermer
+- ✅ Ctrl+Space à nouveau : fenêtre réapparaît
+- ✅ Bouton "Hide" dans l'interface : cache la fenêtre
+- ✅ Peut répéter le cycle indéfiniment
 
-```python
-import webview
-if webview.windows:
-    window = webview.windows[0]
-    window.show()
-```
-
-**Installation** :
-
-Si tu veux utiliser la librairie `keyboard` (plus simple mais nécessite admin sur Windows) :
-```bash
-uv pip install keyboard
-```
-
-Sinon, garde `pynput` qui est déjà installé.
-
-**Pour le problème des déclenchements multiples**, j'ai augmenté l'intervalle minimum à **2 secondes** et utilisé un lock thread-safe.
-
-Teste cette version et dis-moi si :
-1. La fenêtre reste cachée au démarrage ✅
-2. Elle apparaît une seule fois quand tu appuies sur Ctrl+Space ✅
-3. Plus de console DOS qui s'ouvre ✅
+Teste cette version et dis-moi si maintenant la fenêtre se cache correctement au lieu de se fermer ! 🎯
 
 """
 Application entry point for Writing Assistant Pro
-Uses hidden window that shows on Ctrl+Space hotkey
+Properly handles window hide/show with Ctrl+Space and prevents closing
 """
 
 import sys
@@ -55,7 +39,7 @@ try:
     import keyboard
     USE_KEYBOARD = True
 except ImportError:
-    from pynput import keyboard as pynput_keyboard
+    from pynput.keyboard import GlobalHotKeys
     USE_KEYBOARD = False
 
 # Language configuration
@@ -74,7 +58,7 @@ DARK_MODE = False
 # Native window configuration - START HIDDEN
 app.native.window_args['resizable'] = True
 app.native.window_args['frameless'] = False
-app.native.window_args['hidden'] = True  # THIS IS THE KEY!
+app.native.window_args['hidden'] = True
 app.native.start_args['debug'] = False
 
 log.info(f"{_('Configuration: DEBUG=')}{DEBUG}, DARK_MODE={DARK_MODE}")
@@ -82,18 +66,43 @@ log.info(f"{_('Configuration: DEBUG=')}{DEBUG}, DARK_MODE={DARK_MODE}")
 
 class HiddenWindowApp:
     """
-    Application with hidden window that shows on hotkey
+    Application with hidden window that shows/hides on hotkey
+    Window close button hides instead of closing
     """
     
     def __init__(self):
         self.log = setup_logger(debug=DEBUG, name="WritingAssistant")
         self.last_trigger_time = 0.0
-        self.MIN_TRIGGER_INTERVAL = 2.0  # 2 seconds debounce
+        self.MIN_TRIGGER_INTERVAL = 1.0
         self.trigger_lock = threading.Lock()
         self.window_ref = None
+        self.window_visible = False
+        self.window_initialized = False
+        self.hotkey_handler = None
         
-    def on_hotkey(self):
-        """Callback when Ctrl+Space is pressed"""
+    def on_closing(self):
+        """
+        Handle window close event - hide instead of closing
+        This prevents the window from being destroyed
+        """
+        def hide_in_thread():
+            self.log.info("Window close requested - hiding instead")
+            try:
+                if self.window_ref:
+                    self.window_ref.hide()
+                    self.window_visible = False
+                    self.log.info("Window hidden - Press Ctrl+Space to show again")
+            except Exception as e:
+                self.log.error(f"Error hiding window: {e}")
+        
+        # Hide in a separate thread to avoid blocking
+        threading.Thread(target=hide_in_thread, daemon=True).start()
+        
+        # Return False to prevent actual closing
+        return False
+        
+    def toggle_window(self):
+        """Toggle window visibility on hotkey press"""
         # Try to acquire lock without blocking
         if not self.trigger_lock.acquire(blocking=False):
             self.log.debug("Hotkey already processing, ignoring")
@@ -109,15 +118,17 @@ class HiddenWindowApp:
                 return
                 
             self.last_trigger_time = current_time
-            self.log.info("Hotkey pressed - showing window")
             
-            # Show the window
-            self.show_window()
+            # Toggle visibility
+            if self.window_visible:
+                self.hide_window()
+            else:
+                self.show_window()
                 
         finally:
-            # Release lock after a delay
+            # Release lock after a short delay
             def release_lock():
-                time.sleep(0.5)
+                time.sleep(0.3)
                 self.trigger_lock.release()
                 self.log.debug("Lock released")
             
@@ -126,16 +137,24 @@ class HiddenWindowApp:
     def show_window(self):
         """Show the native window"""
         try:
-            # Access the native window through NiceGUI's app object
-            # NiceGUI uses pywebview internally
             import webview
             
-            # Get the webview window
             if webview.windows:
                 window = webview.windows[0]
+                
+                # Store reference and setup close handler on first show
+                if not self.window_initialized:
+                    self.window_ref = window
+                    self.window_initialized = True
+                    
+                    # CRITICAL: Register the closing event handler
+                    window.events.closing += self.on_closing
+                    self.log.info("Window close handler registered")
+                
                 self.log.info("Showing window...")
                 window.show()
-                self.log.info("Window shown")
+                self.window_visible = True
+                self.log.info("Window shown - Close button or Ctrl+Space will hide it")
             else:
                 self.log.warning("No webview window found")
                 
@@ -144,11 +163,25 @@ class HiddenWindowApp:
             import traceback
             self.log.debug(f"Full traceback: {traceback.format_exc()}")
     
+    def hide_window(self):
+        """Hide the native window"""
+        try:
+            if self.window_ref:
+                self.log.info("Hiding window...")
+                self.window_ref.hide()
+                self.window_visible = False
+                self.log.info("Window hidden - Press Ctrl+Space to show again")
+            else:
+                self.log.warning("No window reference available")
+                
+        except Exception as e:
+            self.log.error(f"Error hiding window: {e}")
+    
     def setup_hotkey_with_keyboard_lib(self):
         """Setup hotkey using 'keyboard' library"""
         try:
-            keyboard.add_hotkey('ctrl+space', self.on_hotkey, suppress=False)
-            self.log.info("Global hotkey registered with 'keyboard' library: Ctrl+Space")
+            keyboard.add_hotkey('ctrl+space', self.toggle_window, suppress=False)
+            self.log.info("Global hotkey registered: Ctrl+Space (toggle window)")
             return True
         except Exception as e:
             self.log.error(f"Failed to register hotkey with keyboard library: {e}")
@@ -156,28 +189,12 @@ class HiddenWindowApp:
     
     def setup_hotkey_with_pynput(self):
         """Setup hotkey using 'pynput' library"""
-        def on_press(key):
-            try:
-                # Check if it's a special key
-                if hasattr(key, 'name'):
-                    return
-                # Check if it's space with ctrl held
-                if key == pynput_keyboard.Key.space:
-                    # Check if ctrl is held
-                    # This is a simplified check - you might need to track ctrl state
-                    self.on_hotkey()
-            except AttributeError:
-                pass
-        
         try:
-            # Use GlobalHotKeys for simpler management
-            from pynput.keyboard import GlobalHotKeys
-            
-            hotkey = GlobalHotKeys({
-                '<ctrl>+<space>': self.on_hotkey
+            self.hotkey_handler = GlobalHotKeys({
+                '<ctrl>+<space>': self.toggle_window
             })
-            hotkey.start()
-            self.log.info("Global hotkey registered with 'pynput' library: Ctrl+Space")
+            self.hotkey_handler.start()
+            self.log.info("Global hotkey registered: Ctrl+Space (toggle window)")
             return True
         except Exception as e:
             self.log.error(f"Failed to register hotkey with pynput: {e}")
@@ -192,16 +209,23 @@ class HiddenWindowApp:
             # Create interface
             create_interface(log)
             
-            # Setup hotkey in a background thread (must be after ui.run starts)
+            # Add hide button to interface header
+            with ui.header().classes('items-center justify-between'):
+                ui.label('Writing Assistant Pro').classes('text-h6')
+                ui.button('Hide (Ctrl+Space)', 
+                         on_click=lambda: self.hide_window(),
+                         icon='visibility_off').props('flat dense')
+            
+            # Setup hotkey in a background thread
             def setup_hotkey_delayed():
-                time.sleep(1)  # Wait for NiceGUI to initialize
+                time.sleep(1.5)  # Wait for NiceGUI and pywebview to fully initialize
                 if USE_KEYBOARD:
                     success = self.setup_hotkey_with_keyboard_lib()
                 else:
                     success = self.setup_hotkey_with_pynput()
                 
                 if success:
-                    self.log.info("Press Ctrl+Space to show the window")
+                    self.log.info("Press Ctrl+Space to toggle window visibility")
                 else:
                     self.log.error("Failed to setup hotkey")
             
@@ -209,7 +233,7 @@ class HiddenWindowApp:
             
             # Run NiceGUI in native mode with HIDDEN window
             self.log.info("Starting NiceGUI with hidden window...")
-            self.log.info("Window will appear when you press Ctrl+Space")
+            self.log.info("Press Ctrl+Space to show the window")
             
             ui.run(
                 native=True,
@@ -237,6 +261,12 @@ class HiddenWindowApp:
                 keyboard.unhook_all()
             except:
                 pass
+        else:
+            if self.hotkey_handler:
+                try:
+                    self.hotkey_handler.stop()
+                except:
+                    pass
         self.log.info("Application stopped")
 
 
@@ -248,3 +278,4 @@ def main():
 
 if __name__ in {'__main__', '__mp_main__'}:
     main()
+    

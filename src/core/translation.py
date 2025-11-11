@@ -112,6 +112,7 @@ class LanguageManager:
         }
         return language_names.get(language, language)
     
+    # Not used
     def register_ui_update_callback(self, callback: Callable) -> None:
         """
         Register a callback function to be called when language changes.
@@ -201,7 +202,7 @@ def get_current_language() -> str:
     """Get the current language code."""
     return get_language_manager().get_current_language()
 
-
+# Not used
 def register_ui_update(callback: Callable) -> None:
     """
     Register a UI update callback for language changes.

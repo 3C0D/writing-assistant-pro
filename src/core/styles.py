@@ -8,13 +8,13 @@ from pathlib import Path
 
 def get_theme_css_path(dark_mode: bool) -> Path:
     """
-    Retourne le chemin du fichier CSS correspondant au thème.
-    
+    Returns the path to the CSS file corresponding to the theme.
+
     Args:
-        dark_mode: True pour le mode sombre, False pour le mode clair
-    
+        dark_mode: True for dark mode, False for light mode
+
     Returns:
-        Path vers le fichier CSS
+        Path to the CSS file
     """
     styles_dir = Path(__file__).parent.parent.parent / 'styles'
     if dark_mode:
@@ -25,20 +25,20 @@ def get_theme_css_path(dark_mode: bool) -> Path:
 
 def apply_theme(dark_mode: bool) -> None:
     """
-    Applique le thème à l'application en chargeant le fichier CSS.
-    
+    Applies the theme to the application by loading the CSS file.
+
     Args:
-        dark_mode: True pour le mode sombre, False pour le mode clair
+        dark_mode: True for dark mode, False for light mode
     """
     from nicegui import ui
     
     css_path = get_theme_css_path(dark_mode)
     
-    # Lire le contenu du fichier CSS
+    # Read the CSS file content
     with open(css_path, 'r', encoding='utf-8') as f:
         css_content = f.read()
     
-    # Ajouter le CSS au head de la page
+    # Add the CSS to the page head
     ui.add_head_html(f'<style>{css_content}</style>')
     
     if dark_mode:

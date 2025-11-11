@@ -1,5 +1,5 @@
 """
-Configuration centralisée du logging pour l'application.
+Centralized logging configuration for the application.
 """
 
 import logging
@@ -8,39 +8,39 @@ import sys
 
 def setup_logger(debug: bool, name: str = "WritingAssistant") -> logging.Logger:
     """
-    Configure et retourne un logger pour l'application.
-    
+    Configure and return a logger for the application.
+
     Args:
-        debug: True pour activer le mode DEBUG (logs détaillés), False pour logs minimalistes
-        name: Nom du logger
-    
+        debug: True to enable DEBUG mode (detailed logs), False for minimal logs
+        name: Logger name
+
     Returns:
-        Logger configuré
+        Configured logger
     """
     logger = logging.getLogger(name)
     
-    # Éviter les handlers dupliqués
+    # Avoid duplicate handlers
     if logger.handlers:
         return logger
     
     if debug:
-        # Mode DEBUG : logs détaillés avec timestamp et niveau
+        # DEBUG mode: detailed logs with timestamp and level
         log_level = logging.DEBUG
         log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     else:
-        # Mode production : logs simples
+        # Production mode: simple logs
         log_level = logging.INFO
         log_format = "%(levelname)s - %(message)s"
     
-    # Créer un handler pour afficher les logs dans la console
+    # Create a handler to display logs in the console
     handler = logging.StreamHandler(sys.stdout)
     handler.setLevel(log_level)
-    
-    # Créer un formateur
+
+    # Create a formatter
     formatter = logging.Formatter(log_format)
     handler.setFormatter(formatter)
-    
-    # Configurer le logger
+
+    # Configure the logger
     logger.setLevel(log_level)
     logger.addHandler(handler)
     

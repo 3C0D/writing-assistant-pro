@@ -1,41 +1,56 @@
 # Project Development Rules
 
-## Script Execution
-
-- **Always use UV**: When launching any script, always use `uv run python <script_name>` instead of direct `python` commands
-- **Example**: `uv run python scripts/run_dev.py` instead of `python scripts/run_dev.py`
-- **Use del for file deletion**: On Windows, use `del <filename>` instead of `rm <filename>` for deleting files
+**Target Platform**: Windows, Linux, and Mac
 
 ## Code Language
 
-- **English only**: All code and comments must be in English, never in French
-- **No French in code**: Variable names, function names, comments, strings must be English
+- **English only**: All code, comments, and documentation must be in English
+- **No French**: Variable names, function names, comments, and strings must be English
+- **Consistent terminology**: Use standard English terms across the codebase
+
+## Script Execution
+
+- **Always use UV**: Use `uv run python <script_name>` for running any Python script
+- **Never use raw Python**: Don't use `python <script>` directly
 
 ## File Organization
 
-- **Keep root clean**: Only essential files at project root
-- **Use proper directories**: src/, tests/, translations/, scripts/, docs/
-- **No mixed files**: Don't mix different file types in same directory
+- **Keep root clean**: Only essential files at project root (main.py, pyproject.toml, README.md, etc.)
+- **Use proper directories**:
+  - `src/` → Source code (core, ui)
+  - `scripts/` → Utilities and tools
+  - `tests/` → Test files
+  - `translations/` → i18n files
+  - `docs/` → Documentation
+  - `styles/` → CSS files
+- **One concern per module**: Keep UI, core logic, and data in separate modules
+- **Refactoring principle**: Share responsibilities between modules, but keep logic quick to understand
 
 ## Development Guidelines
 
-- **Modular design**: Keep separation between UI, core logic, and data
+- **Modular design**: Maintain clear separation between UI, business logic, and data layers
+- **Code clarity**: Choose clarity over cleverness - make code easy to understand
+- **Single Responsibility**: Each module should have one clear purpose
 - **Test coverage**: Add tests for new functionality
-- **Clean commits**: One logical change per commit
-- **Documentation**: Update docs when structure changes
+- **Documentation**: Update docs when structure or APIs change
+- **Clean commits**: One logical change per commit with clear messages
 
-## Project Structure Guidelines
+## Project Structure
 
-- **Use established structure**: Follow the existing project organization
-- **Consistent naming**: Use snake_case for Python files
-- **Proper imports**: Standard library → Third party → Local modules
+- **Follow established patterns**: Use the existing directory structure as a template
+- **Consistent naming**: Use snake_case for Python files and functions
+- **Import order**:
+  1. Standard library
+  2. Third-party packages
+  3. Local application modules
 
-## Maintenance
+## Code Quality
 
-- **Regular organization**: Review and refactor as needed
-- **Keep tests updated**: Ensure all new code has appropriate tests
-- **Monitor dependencies**: Keep project dependencies current
+- **Regular reviews**: Check code organization periodically
+- **Prevent technical debt**: Apply these rules consistently
+- **Update dependencies**: Keep packages current and secure
+- **Maintain tests**: Ensure all new code has appropriate test coverage
 
 ---
 
-**Remember**: These rules prevent technical debt and ensure consistent development practices.
+**Why these rules matter**: They prevent technical debt, ensure consistent practices, and make the codebase easy for new developers to understand.

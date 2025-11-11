@@ -5,14 +5,12 @@ This module contains the logic for managing global hotkeys, keyboard listeners,
 and signal handling for the Writing Assistant application.
 """
 
-import logging
-import signal
 import time
 import threading
 from typing import Optional, Callable
 
 from pynput import keyboard as keyboard
-from pynput.keyboard import Key, KeyCode, Listener
+from pynput.keyboard import Key, Listener
 
 from .logger import setup_logger
 
