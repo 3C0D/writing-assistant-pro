@@ -1,0 +1,14 @@
+[project]
+name = "writing-assistant-pro"
+version = "0.1.0"
+description = "Inspired by writting tool app"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "nicegui",
+    "pywebview",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"

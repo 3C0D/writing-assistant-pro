@@ -1,0 +1,30 @@
+/* Thème Sombre */
+
+body {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+/* Labels */
+.nicegui-label {
+    color: #e0e0e0;
+}
+
+/* Boutons */
+.nicegui-button {
+    background-color: #2a2a2a;
+    color: #e0e0e0;
+    border: 1px solid #404040;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.nicegui-button:hover {
+    background-color: #3a3a3a;
+}
+
+.nicegui-button:active {
+    background-color: #4a4a4a;
+}
