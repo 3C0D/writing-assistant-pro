@@ -11,6 +11,7 @@ from src.core import apply_theme, setup_logger, init_translation, _
 from src.ui import create_interface
 
 import keyboard
+import webview
 
 # Language configuration
 LANGUAGE = "fr"
@@ -43,7 +44,7 @@ class HiddenWindowApp:
         self.log = setup_logger(debug=DEBUG, name="WritingAssistant")
         self.last_trigger_time = 0.0
         self.MIN_TRIGGER_INTERVAL = 1.0  # 1 second debounce (reduced)
-        self.trigger_lock = threading.Lock() # prevent overlapping triggers
+        self.trigger_lock = threading.Lock() # prevent overlapping triggers. not locked!
         self.window_ref = None
         self.window_visible = False
         self.window_initialized = False # to register close handler only once
@@ -101,8 +102,6 @@ class HiddenWindowApp:
     def show_window(self):
         """Show the native window"""
         try:
-            import webview
-
             if webview.windows:
                 window = webview.windows[0]
 
@@ -137,8 +136,6 @@ class HiddenWindowApp:
     def hide_window(self):
         """Hide the native window"""
         try:
-            import webview
-
             if webview.windows:
                 window = webview.windows[0]
 
