@@ -133,7 +133,7 @@ writing-assistant-pro/
 
 ### Ajouter des traductions
 ```python
-from src.core.translation import _
+from src.core import _
 ui.label(_("Texte à traduire"))
 ```
 

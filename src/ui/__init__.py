@@ -3,7 +3,7 @@ UI Module - Creates pages and interface components
 """
 
 from nicegui import ui
-from src.core.translation import _, change_language, get_current_language
+from src.core import _, change_language, get_current_language
 
 
 def create_interface(logger):

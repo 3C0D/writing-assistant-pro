@@ -170,7 +170,7 @@ uv run python main.py --debug
 
 ```python
 # Dans src/ui/__init__.py ou autre fichier
-from src.core.translation import _
+from src.core import _
 
 ui.label(_("Texte à traduire"))
 ```

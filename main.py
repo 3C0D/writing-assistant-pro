@@ -4,10 +4,8 @@ Application entry point for Writing Assistant Pro
 
 import sys
 from nicegui import ui, app
-from src.core.styles import apply_theme
-from src.core.logger import setup_logger
+from src.core import apply_theme, setup_logger, init_translation, _
 from src.ui import create_interface
-from src.core.translation import init_translation, _
 
 # Language configuration
 LANGUAGE = "fr"  # Default language

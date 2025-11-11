@@ -2,17 +2,41 @@
 Core modules for Writing Assistant Pro
 
 This package contains the core functionality modules including:
-- translation: Language management and internationalization
+- translation: Language management and internationalization using gettext/Babel
+- logger: Centralized logging system
+- styles: Theme management (light/dark)
 """
 
-from .translation import *
+# Import translation system
+from .translation import (
+    LanguageManager,
+    get_language_manager,
+    init_translation,
+    _,
+    change_language,
+    get_current_language,
+    register_ui_update
+)
+
+# Import logger system
+from .logger import setup_logger
+
+# Import styles system
+from .styles import apply_theme
 
 __all__ = [
+    # Translation system
     'LanguageManager',
+    'get_language_manager',
     'init_translation',
     '_',
     'change_language',
     'get_current_language',
-    'get_language_manager',
-    'register_ui_update'
+    'register_ui_update',
+    
+    # Logger system
+    'setup_logger',
+    
+    # Styles system
+    'apply_theme'
 ]

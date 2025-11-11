@@ -212,7 +212,7 @@ Cette commande fait automatiquement :
 ### Code : Marquer du texte à traduire
 
 ```python
-from src.core.translation import _
+from src.core import _
 
 # Toute chaîne enveloppée dans _() sera automatiquement traduite
 ui.label(_("Texte à traduire"))
@@ -222,7 +222,7 @@ ui.button(_("Bouton"), on_click=lambda: ui.notify(_("Cliqué!")))
 ### Code : Changer de langue
 
 ```python
-from src.core.translation import change_language
+from src.core import change_language
 change_language("fr")  # Bascule à français
 change_language("en")  # Bascule à anglais
 ```

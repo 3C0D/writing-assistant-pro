@@ -3,11 +3,9 @@ Translation module for NiceGUI applications.
 Provides internationalization support using gettext.
 """
 
-import os
 import gettext
-import locale
 from pathlib import Path
-from typing import Optional, Dict, Any, Callable
+from typing import Optional, Dict, Callable
 
 
 class LanguageManager:
@@ -54,7 +52,6 @@ class LanguageManager:
         try:
             # Create locale path
             locale_path = self.locales_dir / language / "LC_MESSAGES"
-            domain = f"{self.app_name}.mo"
             
             # Load translation
             if locale_path.exists():
