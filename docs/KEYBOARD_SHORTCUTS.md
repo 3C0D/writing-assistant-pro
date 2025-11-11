@@ -28,213 +28,194 @@ ui.keyboard(on_key=handle_keyboard_event)
 - Cannot capture system-wide shortcuts
 - Limited key support (Space and arrow keys have known issues)
 
-### 2. Global Keyboard Shortcuts (Recommended for Desktop)
+### 2. Global Keyboard Shortcuts with `keyboard` library (Recommended for Desktop)
 
-For desktop applications with system-wide shortcuts, use `pynput`:
+For desktop applications with system-wide shortcuts, use the `keyboard` library:
 
 ```python
-from pynput import keyboard as pynput_keyboard
-from pynput.keyboard import Key, Listener
+import keyboard
 
 class GlobalHotkeyManager:
     def __init__(self):
-        self.current_keys = set()
-        self.listener = None
-        self.on_hotkey = None
+        self.hotkeys_registered = False
     
-    def on_press(self, key):
+    def setup_global_hotkey(self, hotkey_combination, callback, suppress=True):
+        """
+        Setup a global hotkey
+        
+        Args:
+            hotkey_combination: String like 'ctrl+space' or 'ctrl+shift+a'
+            callback: Function to call when hotkey is pressed
+            suppress: Whether to suppress the key event (default True)
+        """
         try:
-            self.current_keys.add(key)
+            # Clear existing hotkeys to prevent conflicts
+            keyboard.unhook_all()
             
-            # Check for Ctrl+Space
-            if (key == pynput_keyboard.Key.space and 
-                (pynput_keyboard.Key.ctrl_l in self.current_keys or 
-                 pynput_keyboard.Key.ctrl_r in self.current_keys)):
-                if self.on_hotkey:
-                    self.on_hotkey()
-                    
-        except AttributeError:
-            pass
+            # Register the new hotkey
+            keyboard.add_hotkey(hotkey_combination, callback, suppress=suppress)
+            self.hotkeys_registered = True
+            print(f"Hotkey registered: {hotkey_combination}")
+            return True
+            
+        except Exception as e:
+            print(f"Failed to register hotkey {hotkey_combination}: {e}")
+            return False
     
-    def on_release(self, key):
-        if key in self.current_keys:
-            self.current_keys.discard(key)
-    
-    def start(self):
-        self.listener = Listener(
-            on_press=self.on_press,
-            on_release=self.on_release
-        )
-        self.listener.start()
-    
-    def stop(self):
-        if self.listener:
-            self.listener.stop()
+    def clear_all_hotkeys(self):
+        """Clear all registered hotkeys"""
+        try:
+            keyboard.unhook_all()
+            self.hotkeys_registered = False
+            print("All hotkeys cleared")
+        except Exception as e:
+            print(f"Error clearing hotkeys: {e}")
 
 # Usage
 hotkey_manager = GlobalHotkeyManager()
-hotkey_manager.on_hotkey = lambda: print("Global shortcut triggered!")
-hotkey_manager.start()
+
+def on_ctrl_space():
+    print("Ctrl+Space pressed!")
+    # Your window toggle logic here
+
+hotkey_manager.setup_global_hotkey('ctrl+space', on_ctrl_space)
 ```
 
-### 3. Combining Both Approaches (Hybrid)
+### 3. Implementation in main.py
 
-For maximum flexibility, use both methods:
-
-```python
-from nicegui import ui
-from pynput import keyboard as pynput_keyboard
-
-def setup_keyboard_shortcuts(app_window_toggle):
-    # Global system shortcuts (works everywhere)
-    global_hotkey = GlobalHotkeyManager()
-    global_hotkey.on_hotkey = app_window_toggle
-    global_hotkey.start()
-    
-    # NiceGUI browser shortcuts (works in web interface)
-    def handle_web_shortcut(e):
-        if e.key.ctrl and e.key.name == 'space':
-            app_window_toggle()
-    
-    ui.keyboard(on_key=handle_web_shortcut)
-    
-    return global_hotkey
-```
-
-## Best Practices
-
-### 1. Debouncing and Spam Protection
-
-Prevent multiple rapid triggers:
+Here's how it's implemented in your Writing Assistant:
 
 ```python
-import time
-import threading
+import keyboard
 
-class SpamProtectedHotkey:
-    def __init__(self, min_interval=1.0):
-        self.last_trigger = 0.0
-        self.min_interval = min_interval
-        self.is_processing = False
-        self.lock = threading.Lock()
-    
-    def should_trigger(self):
-        now = time.time()
-        if now - self.last_trigger < self.min_interval:
+class HiddenWindowApp:
+    def setup_hotkey(self):
+        """Setup hotkey using 'keyboard' library"""
+        try:
+            # Clear all existing hotkeys first to prevent duplicates
+            keyboard.unhook_all()
+            
+            # Register the global hotkey
+            keyboard.add_hotkey('ctrl+space', self.toggle_window, suppress=False)
+            self.log.info("Global hotkey registered: Ctrl+Space (toggle window)")
+            return True
+        except Exception as e:
+            self.log.error(f"Failed to register hotkey: {e}")
             return False
-        if not self.lock.acquire(blocking=False):
-            return False
-        
-        self.last_trigger = now
-        return True
-    
-    def release(self):
-        self.lock.release()
-```
-
-### 2. Cleanup and Resource Management
-
-Always clean up keyboard listeners:
-
-```python
-import atexit
-
-class Application:
-    def __init__(self):
-        self.hotkey_manager = GlobalHotkeyManager()
-        atexit.register(self.cleanup)
     
     def cleanup(self):
-        if self.hotkey_manager:
-            self.hotkey_manager.stop()
+        """Clean up resources"""
+        try:
+            keyboard.unhook_all()  # Clear all hotkeys
+        except Exception:
+            pass
 ```
 
-### 3. Cross-Platform Compatibility
+## Key Points from Your Implementation
 
-Handle different keyboard layouts and OS variations:
+### 1. `keyboard.unhook_all()` is Essential
+
+The line `keyboard.unhook_all()` at line 162 is crucial because:
+
+- **Prevents Duplicate Registrations**: Without this, hotkeys can be registered multiple times
+- **Avoids Memory Leaks**: Cleans up previous keyboard hooks
+- **Prevents Conflicts**: Ensures only your current hotkeys are active
+
+### 2. Best Practices in Your Code
+
+1. **Error Handling**: Always wrap hotkey operations in try-catch
+2. **Cleanup**: Call `unhook_all()` on application exit
+3. **Suppress Option**: Use `suppress=True` to prevent system from also processing the key
+4. **Single Responsibility**: One hotkey registration per setup call
+
+### 3. Advanced keyboard Library Features
 
 ```python
-def get_ctrl_key():
-    import platform
-    if platform.system() == 'Darwin':  # macOS
-        return Key.cmd  # Command key instead of Ctrl
-    else:
-        return Key.ctrl_l  # Ctrl on Windows/Linux
+# Multiple hotkeys
+keyboard.add_hotkey('ctrl+alt+h', show_help)
+keyboard.add_hotkey('ctrl+shift+t', show_tools)
 
-def on_press(self, key):
-    ctrl_key = get_ctrl_key()
-    if key == Key.space and ctrl_key in self.current_keys:
-        # Handle shortcut
-        pass
+# Conditional hotkeys
+def conditional_callback():
+    if some_condition:
+        perform_action()
+
+# Wait for hotkey with timeout
+keyboard.wait('ctrl+space', suppress=True, timeout=2.0)
+
+# Remove specific hotkey
+keyboard.remove_hotkey(handler_id)
+
+# Hotkey blocking (advanced)
+keyboard.block_key('ctrl')  # Block Ctrl key temporarily
 ```
-
-## Implementation in Writing Assistant
-
-The current implementation in this project uses the `HotkeyManager` class in `src/core/hotkey_manager.py`:
-
-```python
-from src.core.hotkey_manager import HotkeyManager
-
-class Application:
-    def __init__(self):
-        self.hotkey_manager = HotkeyManager()
-        self.hotkey_manager.set_callback(self.toggle_window)
-        
-    def start(self):
-        self.hotkey_manager.start()
-        
-    def toggle_window(self):
-        # Toggle window visibility
-        pass
-```
-
-### Key Features of Current Implementation
-
-1. **Spam Protection**: Minimum interval between triggers
-2. **Thread Safety**: Uses locks to prevent concurrent processing
-3. **Resource Management**: Proper cleanup on application exit
-4. **Cross-Platform**: Works on Windows, Linux, and macOS
 
 ## Common Issues and Solutions
 
-### Issue 1: Keyboard Library Conflicts
+### Issue 1: Hotkey Not Working
 
-**Problem**: Multiple keyboard libraries interfering
-**Solution**: Use only one keyboard library per application
+**Problem**: Global shortcut not triggering
+**Solutions**:
 
-### Issue 2: Insufficient Permissions
+- Run as administrator/with elevated privileges
+- Check if other applications use the same shortcut
+- Ensure `keyboard.unhook_all()` is called before registering new hotkeys
+
+### Issue 2: Multiple Triggers
+
+**Problem**: Hotkey fires multiple times
+**Solutions**:
+
+- Always call `keyboard.unhook_all()` before new registrations
+- Use debouncing logic in your callback
+- Check for existing hotkey conflicts
+
+### Issue 3: Insufficient Permissions
 
 **Problem**: Cannot register global shortcuts
-**Solution**:
+**Solutions**:
 
-- Run as administrator on Windows
-- Check macOS accessibility permissions
-- Verify Linux user permissions
-
-### Issue 3: Key State Conflicts
-
-**Problem**: Keys remain "pressed" in internal state
-**Solution**: Reset key state on application focus changes
+- Windows: Run as administrator
+- macOS: Grant accessibility permissions in System Preferences
+- Linux: Check user permissions for input devices
 
 ## Security Considerations
 
-1. **Hotkey Capture**: Be aware that global shortcuts can capture user input
-2. **Permission Requests**: Some operating systems require explicit permission
-3. **Privacy**: Consider the implications of global keyboard monitoring
+1. **Hotkey Capture**: Global shortcuts capture all user input
+2. **Permission Requirements**: Some OS require explicit permission
+3. **User Experience**: Be careful not to interfere with system shortcuts
+4. **Cleanup**: Always clean up hotkeys when your application exits
+
+## Implementation in Writing Assistant
+
+Your current implementation in `main.py` uses the correct approach:
+
+```python
+def setup_hotkey(self):
+    try:
+        # Clear all existing hotkeys first to prevent duplicates
+        keyboard.unhook_all()
+        
+        keyboard.add_hotkey('ctrl+space', self.toggle_window, suppress=False)
+        self.log.info("Global hotkey registered: Ctrl+Space (toggle window)")
+        return True
+    except Exception as e:
+        self.log.error(f"Failed to register hotkey: {e}")
+        return False
+```
+
+This implementation:
+
+- ✅ Uses `keyboard.unhook_all()` to prevent conflicts
+- ✅ Has proper error handling
+- ✅ Registers only the needed hotkey
+- ✅ Cleans up on application exit
 
 ## References
 
+- [Keyboard Library Documentation](https://github.com/boppreh/keyboard)
 - [NiceGUI Keyboard Documentation](https://nicegui.io/documentation/keyboard)
-- [pynput Documentation](https://pynput.readthedocs.io/)
-- [Keyboard Library (Alternative)](https://github.com/boppreh/keyboard)
 
 ## Conclusion
 
-For desktop applications using NiceGUI, the recommended approach is to:
-
-1. Use `pynput` for global system shortcuts
-2. Use NiceGUI's `ui.keyboard()` for browser-based shortcuts
-3. Implement proper debouncing and cleanup
-4. Handle cross-platform differences appropriately
-
-The `HotkeyManager` class in this project demonstrates best practices for implementing global keyboard shortcuts with NiceGUI applications.
+For NiceGUI desktop applications, using the `keyboard` library with proper `unhook_all()` calls is the recommended approach. Your current implementation follows best practices and provides reliable global keyboard shortcuts for Windows, Linux, and macOS.
