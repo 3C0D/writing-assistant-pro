@@ -18,26 +18,46 @@ L'architecture est conçue pour être **modulaire, scalable et facile à dévelo
 writing-assistant-pro/
 │
 ├── main.py                      # Point d'entrée principal
-├── logger.py                    # Configuration du logging centralisée
-├── styles.py                    # Gestion des thèmes (light/dark)
-├── pyproject.toml               # Configuration du projet (dépendances)
-├── uv.lock                      # Lock file des dépendances (UV)
+├── logger.py                    # Logging centralisé
+├── styles.py                    # Gestion des thèmes
+├── pyproject.toml               # Dépendances du projet
+├── uv.lock                      # Lock file (dépendances)
 │
-├── styles/                      # Fichiers CSS des thèmes
-│   ├── light.css                # Thème clair
-│   └── dark.css                 # Thème sombre
+├── src/                         # Code source (package principal)
+│   ├── __init__.py
+│   ├── core/
+│   │   └── translation.py       # 🌐 Module de traduction (gettext)
+│   └── ui/
+│       └── __init__.py          # Interface utilisateur
 │
-├── ui/                          # Module UI (à étendre)
-│   └── __init__.py              # Crée l'interface principale
+├── styles/                      # Fichiers CSS
+│   ├── light.css
+│   └── dark.css
+│
+├── translations/                # 🌐 Fichiers de traduction
+│   ├── template.pot             # Template (source de vérité)
+│   ├── en/LC_MESSAGES/
+│   │   ├── writing_assistant.po # Traduction anglais (éditable)
+│   │   └── writing_assistant.mo # Compiled (binaire)
+│   ├── fr/LC_MESSAGES/
+│   │   ├── writing_assistant.po
+│   │   └── writing_assistant.mo
+│   └── it/LC_MESSAGES/
+│       ├── writing_assistant.po
+│       └── writing_assistant.mo
 │
 ├── scripts/                     # Scripts utilitaires
-│   └── run_dev.py               # Lance l'app en mode développement
+│   ├── run_dev.py               # Lancer en mode dev
+│   └── translation_management/  # 🌐 Outils de traduction
+│       ├── GUIDE.md             # 📖 Guide complet
+│       ├── extract_translations.py
+│       ├── sync_translations.py
+│       └── compile_translations.py
 │
-├── docs/                        # Documentation
-│   └── architecture.py          # ⚠️ À supprimer (remplacé par ARCHITECTURE.md)
-│
+├── ARCHITECTURE.md              # Ce fichier
+├── README.md                    # Quick start
 └── .vscode/                     # Configuration VS Code
-    └── settings.json            # Config Code Runner pour UV
+    └── settings.json            # Code Runner + Python config
 ```
 
 ---
@@ -159,6 +179,69 @@ DARK_MODE = False # Mode clair (défaut)
 1. Crée un fichier `styles/custom.css`
 2. Modifie `styles.py` pour charger le nouveau thème
 3. Ajoute une option pour le sélectionner
+
+---
+
+## 🌐 Système de traduction (Gettext)
+
+### Vue d'ensemble
+
+Le système utilise **Babel** (gettext wrapper standard) avec **un seul script unifié** :
+
+```bash
+uv run python scripts/translation_management/update_translations.py
+```
+
+Ce script en une seule commande :
+1. 🔍 **Extrait** les textes du code (pybabel extract)
+2. 🔄 **Synchronise** les fichiers .po (pybabel init/update)
+3. ⚙️ **Compile** en binaire .mo (pybabel compile)
+
+### Workflow typique
+
+**Commande unique et automatisée :**
+```bash
+uv run python scripts/translation_management/update_translations.py
+```
+
+Cette commande fait automatiquement :
+1. **Extraction** → Scan tous les fichiers `.py` pour les textes marqués `_("...")`
+2. **Synchronisation** → Crée/met à jour les fichiers `.po` pour chaque langue
+3. **Compilation** → Génère les fichiers `.mo` utilisés par l'app
+
+### Code : Marquer du texte à traduire
+
+```python
+from src.core.translation import _
+
+# Toute chaîne enveloppée dans _() sera automatiquement traduite
+ui.label(_("Texte à traduire"))
+ui.button(_("Bouton"), on_click=lambda: ui.notify(_("Cliqué!")))
+```
+
+### Code : Changer de langue
+
+```python
+from src.core.translation import change_language
+change_language("fr")  # Bascule à français
+change_language("en")  # Bascule à anglais
+```
+
+### Ajouter une nouvelle langue
+
+```bash
+# Créer le dossier
+mkdir -p translations/de/LC_MESSAGES
+
+# Copier le template
+cp translations/template.pot translations/de/LC_MESSAGES/writing_assistant.po
+
+# Synchroniser et compiler
+uv run python scripts/translation_management/sync_translations.py
+uv run python scripts/translation_management/compile_translations.py de
+```
+
+**📖 Guide détaillé** → `scripts/translation_management/GUIDE.md`
 
 ---
 

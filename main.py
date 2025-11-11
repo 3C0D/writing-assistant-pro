@@ -1,12 +1,22 @@
+"""
+Application entry point for Writing Assistant Pro
+"""
+
 import sys
 from nicegui import ui, app
-from styles import apply_theme
-from logger import setup_logger
-from ui import create_interface
+from src.core.styles import apply_theme
+from src.core.logger import setup_logger
+from src.ui import create_interface
+from src.core.translation import init_translation, _
+
+# Language configuration
+LANGUAGE = "fr"  # Default language
 
 # Récupère le flag DEBUG depuis les arguments de ligne de commande
-# Utilisation: python main.py --debug
 DEBUG = '--debug' in sys.argv
+
+# Initialize translation system BEFORE using _()
+init_translation("writing_assistant", "translations", LANGUAGE)
 
 # Configurer le logger
 log = setup_logger(debug=DEBUG)
@@ -16,28 +26,29 @@ DARK_MODE = False  # Mettre à True pour activer le mode sombre
 
 # Configuration de la fenêtre native
 app.native.window_args['resizable'] = True
-app.native.window_args['frameless'] = False  # True pour sans bordure
+app.native.window_args['frameless'] = False
 app.native.start_args['debug'] = DEBUG
 
-log.info(f"Configuration: DEBUG={DEBUG}, DARK_MODE={DARK_MODE}")
+log.info(f"{_('Configuration: DEBUG=')}{DEBUG}, DARK_MODE={DARK_MODE}")
 
 
 def main():
     """Lance l'application"""
-    # Appliquer le thème
+    # Apply theme
     apply_theme(DARK_MODE)
     
-    # Créer l'interface
+    # Create interface
     create_interface(log)
 
 
-# Créer l'interface
-main()
+if __name__ in {'__main__', '__mp_main__'}:
+    # Créer l'interface
+    main()
 
-# Lance en mode NATIF (pas dans le navigateur!)
-ui.run(
-    native=True,           # ← C'EST LE PARAMÈTRE CLÉ
-    window_size=(800, 600),
-    title=("Mon Application (DEV MODE)" if DEBUG else "Mon Application"),
-    reload=True if DEBUG else False  # Rechargement à chaud en mode dev
-)
+    # Launch in NATIVE mode (not in browser!)
+    ui.run(
+        native=True,
+        window_size=(800, 600),
+        title=_("Writing Assistant Pro (DEV MODE)") if DEBUG else _("Writing Assistant Pro"),
+        reload=True if DEBUG else False  # Hot reload in dev mode
+    )

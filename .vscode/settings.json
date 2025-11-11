@@ -8,5 +8,11 @@
   "[python]": {
     "editor.defaultFormatter": "ms-python.python",
     "editor.formatOnSave": true
-  }
+  },
+  "python.languageServer": "Pylance",
+  "python.analysis.typeCheckingMode": "basic",
+  "editor.rulers": [88, 120],
+  "files.associations": {
+    ".babelrc": "ini"
+  },
 }

@@ -1,0 +1,74 @@
+# Translation template for Writing Assistant Pro
+# Generated automatically - do not edit manually
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2025-11-11 06:04+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: fr\n"
+"Language-Team: fr <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.17.0\n"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/__init__.py⁩:20
+msgid "Clicked!!!"
+msgstr "Cliqué !!!"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/__init__.py⁩:24
+msgid "Language"
+msgstr "Langue"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/__init__.py⁩:26
+msgid "English"
+msgstr "Anglais"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/__init__.py⁩:26
+msgid "Français"
+msgstr "Français"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/__init__.py⁩:26
+msgid "Italiano"
+msgstr "Italien"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/__init__.py⁩:40
+msgid "Hello, this is a real desktop app!"
+msgstr "Bonjour, ceci est une vraie application bureau !"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/__init__.py⁩:41
+msgid "Click me"
+msgstr "Cliquez-moi"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/__init__.py⁩:43
+msgid "Interface created successfully"
+msgstr "Interface créée avec succès"
+
+#~ msgid "Click me"
+#~ msgstr "Cliquez-moi"
+
+#~ msgid "Clicked!!!"
+#~ msgstr "Cliqué !!!"
+
+#~ msgid "English"
+#~ msgstr "Anglais"
+
+#~ msgid "Français"
+#~ msgstr "Français"
+
+#~ msgid "Hello, this is a real desktop app!"
+#~ msgstr "Bonjour, ceci est une vraie application bureau !"
+
+#~ msgid "Interface created successfully"
+#~ msgstr "Interface créée avec succès"
+
+#~ msgid "Italiano"
+#~ msgstr "Italien"
+
+#~ msgid "Language"
+#~ msgstr "Langue"
+

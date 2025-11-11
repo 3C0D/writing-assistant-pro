@@ -1,6 +1,6 @@
 """
-Gestion des thèmes et styles de l'application.
-Charge les fichiers CSS depuis le dossier styles/
+Theme and style management for the application.
+Loads CSS files from the styles/ directory
 """
 
 from pathlib import Path
@@ -16,7 +16,7 @@ def get_theme_css_path(dark_mode: bool) -> Path:
     Returns:
         Path vers le fichier CSS
     """
-    styles_dir = Path(__file__).parent / 'styles'
+    styles_dir = Path(__file__).parent.parent.parent / 'styles'
     if dark_mode:
         return styles_dir / 'dark.css'
     else:
@@ -42,6 +42,6 @@ def apply_theme(dark_mode: bool) -> None:
     ui.add_head_html(f'<style>{css_content}</style>')
     
     if dark_mode:
-        print("🌙 Mode sombre activé")
+        print("Dark mode enabled")
     else:
-        print("☀️  Mode clair activé")
+        print("Light mode enabled")
