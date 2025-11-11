@@ -33,7 +33,7 @@ locales/
     └── writing_assistant.po    # Italian translations
 ```
 
-### 4. Interface utilisateur (ui/__init__.py)
+### 4. Interface utilisateur (ui/**init**.py)
 
 - Sélecteur de langue intégré
 - Mise à jour dynamique des textes
@@ -72,16 +72,19 @@ ui.button(_('Click me'), on_click=callback)
 ## Traductions disponibles
 
 ### Interface
+
 - "My Application" / "Mon Application" / "La Mia Applicazione"
 - "Click me" / "Cliquez-moi" / "Cliccami"
 - "Hello, this is a real desktop app!" / "Bonjour, ceci est une vraie app desktop!" / "Ciao, questa è una vera applicazione desktop!"
 - "Language" / "Langue" / "Lingua"
 
 ### Configuration
+
 - "Configuration: DEBUG=" / "Configuration : DEBUG=" / "Configurazione: DEBUG="
 - "Interface created successfully" / "Interface créée avec succès" / "Interfaccia creata con successo"
 
 ### Messages système
+
 - "Error" / "Erreur" / "Errore"
 - "Success" / "Succès" / "Successo"
 - "Warning" / "Avertissement" / "Avviso"
@@ -110,6 +113,7 @@ python test_translation.py
 ```
 
 Ce script teste :
+
 - La présence des fichiers de traduction
 - Le fonctionnement du LanguageManager
 - Le changement de langues
@@ -119,6 +123,7 @@ Ce script teste :
 ## Fonctionnalités avancées
 
 ### Callbacks UI
+
 ```python
 from translation import register_ui_update
 
@@ -130,10 +135,13 @@ register_ui_update(refresh_interface)
 ```
 
 ### Gestion des langues invalides
+
 Le système gère automatiquement les langues non supportées en revenant à la langue par défaut.
 
 ### Extensibilité
+
 Pour ajouter une nouvelle langue :
+
 1. Créer le dossier `locales/[code]/LC_MESSAGES/`
 2. Créer le fichier `writing_assistant.po`
 3. Ajouter le code à `LANGUAGE_CHOICES` dans `main.py`

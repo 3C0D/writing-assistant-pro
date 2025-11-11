@@ -5,6 +5,7 @@ Une application desktop pour l'édition de texte construite avec **NiceGUI** et 
 ## 🚀 Démarrage rapide
 
 ### Prérequis
+
 - Python 3.13+
 - [UV](https://docs.astral.sh/uv/) (gestionnaire de dépendances)
 
@@ -19,6 +20,7 @@ cd writing-assistant-pro
 ### Lancer l'application
 
 **Mode développement (recommandé) :**
+
 ```bash
 uv run python scripts/run_dev.py
 # ou
@@ -26,6 +28,7 @@ uv run python main.py --debug
 ```
 
 **Mode production :**
+
 ```bash
 python main.py
 ```
@@ -85,15 +88,17 @@ writing-assistant-pro/
 ### Contenu détaillé de chaque document
 
 **ARCHITECTURE.md (379 lignes)**
+
 - Vue d'ensemble des composants NiceGUI
 - Structure détaillée avec `.babelrc` et `babel.cfg`
-- Composants clés : main.py, logger.py, styles.py, ui/__init__.py
+- Composants clés : main.py, logger.py, styles.py, ui/**init**.py
 - Workflow de développement (dev/production)
 - Gestion des thèmes light/dark
 - Système de traduction avec Babel
 - Configuration VS Code et conventions de code
 
 **docs/STRUCTURE.md (213 lignes)**
+
 - Structure complète avec tous les fichiers
 - Explication détaillée des rôles de chaque composant
 - `src/core/` (config, logger, styles, translation)
@@ -103,23 +108,27 @@ writing-assistant-pro/
 - `translations/` (fichiers .po/.mo)
 
 **docs/CONFIG_BABEL.md (59 lignes)**
+
 - Configuration `babel.cfg` (extraction)
 - Configuration `.babelrc` (init/update/compile)
 - Workflow en 3 étapes automatisé
 - Commande unique de mise à jour
 
 **docs/nice_gui.md (163 lignes)**
+
 - Guide complet d'utilisation NiceGUI
 - Mode natif (pywebview) vs navigateur
 - Packaging en application installable
 - Exemples d'interface moderne
 
 **docs/RECAP.md (126 lignes)**
+
 - Récapitulatif des modifications de la session complète
 - Objectifs réalisés et résultats
 - Structure finale et fonctionnalités
 
 **docs/TRANSLATION_README.md (156 lignes)**
+
 - Guide complet du système de traduction
 - Workflow pratique étape par étape
 - Comment ajouter du texte à traduire
@@ -129,21 +138,26 @@ writing-assistant-pro/
 ## 🔧 Développement
 
 ### Modifier l'interface
+
 Édite le fichier `src/ui/__init__.py` ou crée de nouveaux modules dans `src/ui/`.
 
 ### Ajouter des traductions
+
 ```python
 from src.core import _
 ui.label(_("Texte à traduire"))
 ```
 
 Puis met à jour les traductions :
+
 ```bash
 uv run python scripts/translation_management/update_translations.py
 ```
 
 ### Changer de thème
+
 Dans `src/core/config.py`, modifie `DARK_MODE` :
+
 ```python
 DARK_MODE = True  # Mode sombre
 ```

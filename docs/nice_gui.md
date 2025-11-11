@@ -239,13 +239,15 @@ L'application fonctionne avec **deux couches distinctes** qui communiquer entre 
 
 ### 🔄 Séparation des responsabilités
 
-#### NiceGUI gère :
+#### NiceGUI gère
+
 - ✅ Interface utilisateur (boutons, labels, formulaires)
 - ✅ Composants réactifs et mise à jour dynamique
 - ✅ Logique métier côté application
 - ✅ Communication avec backend/API
 
-#### Pywebview gère :
+#### Pywebview gère
+
 - ✅ Fenêtre native du système d'exploitation
 - ✅ Événements de fermeture/minimisation/maximisation
 - ✅ Contrôles natifs (bouton [X] de fermeture)
@@ -256,6 +258,7 @@ L'application fonctionne avec **deux couches distinctes** qui communiquer entre 
 **Important :** Les événements de fermeture de fenêtre ne sont **pas** gérés par NiceGUI.
 
 **Pourquoi ?**
+
 - NiceGUI est une interface web qui n'a pas de concept de "fermeture de fenêtre"
 - Une page web peut être fermée mais l'application backend continue de tourner
 - Pywebview, en tant que wrapper de fenêtre native, **est** responsable des événements du système d'exploitation
@@ -311,7 +314,8 @@ def on_closing(self):
 
 ### 🔍 Pattern Events vs Signals
 
-#### Pywebview utilise un pattern Events :
+#### Pywebview utilise un pattern Events
+
 ```python
 # Pattern Events (pywebview)
 window.events.closing += self.on_closing
@@ -319,7 +323,8 @@ window.events.resized += self.on_resized
 window.events.moved += self.on_moved
 ```
 
-#### PySide 6 utilise des Signals :
+#### PySide 6 utilise des Signals
+
 ```python
 # Pattern Signals (PySide 6)
 window.closeEvent = self.on_closing
@@ -327,6 +332,7 @@ window.resizeEvent.connect(self.on_resized)
 ```
 
 **Différences :**
+
 - **Events** : Supportent `+=` pour ajouter plusieurs handlers
 - **Signals** : Assignment direct ou `connect()`
 - **Multiple handlers** : Events peuvent avoir plusieurs abonnés
@@ -359,6 +365,7 @@ window.resizeEvent.connect(self.on_resized)
 ### 🎯 Conclusion architecture
 
 Cette architecture combine :
+
 - ✅ **Rapid prototyping** de NiceGUI (interface web moderne)
 - ✅ **Intégration native** de Pywebview (fenêtre OS)
 - ✅ **Performance** et compatibilité cross-platform

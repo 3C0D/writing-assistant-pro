@@ -3,6 +3,7 @@
 ## 📋 Vue d'ensemble
 
 **writing-assistant-pro** est une application desktop construite avec :
+
 - **NiceGUI** : Framework UI moderne basé sur Python et web technologies
 - **Python 3.13+** : Langage principal
 - **UV** : Gestionnaire de dépendances et environnements Python
@@ -65,27 +66,34 @@ writing-assistant-pro/
 ## 🚀 Composants clés
 
 ### `main.py` - Point d'entrée
+
 Le fichier principal qui orchestrate tout :
+
 - Récupère les flags de ligne de commande (`--debug`)
 - Configure le logger
 - Charge les thèmes
 - Lance l'application NiceGUI en mode natif
 
 **Arguments supportés :**
+
 - `--debug` : Active le mode DEBUG (logs détaillés)
 
 **Configuration :**
+
 ```python
 DEBUG = '--debug' in sys.argv
 DARK_MODE = False  # À changer pour activer le thème sombre
 ```
 
 ### `logger.py` - Logging centralisé
+
 Gère tout le logging de l'application :
+
 - En mode DEBUG : logs détaillés avec timestamp
 - En mode production : logs simples
 
 **Utilisation :**
+
 ```python
 from logger import setup_logger
 log = setup_logger(debug=DEBUG)
@@ -96,22 +104,28 @@ log.error("Erreur")
 ```
 
 ### `styles.py` - Gestion des thèmes
+
 Charge les thèmes CSS depuis des fichiers externes :
+
 - `styles/light.css` - Thème clair (défaut)
 - `styles/dark.css` - Thème sombre
 
 **Utilisation :**
+
 ```python
 from styles import apply_theme
 apply_theme(DARK_MODE)  # Applique le thème choisi
 ```
 
 ### `ui/__init__.py` - Interface utilisateur
+
 Module principal pour l'interface. Actuellement très simple, mais à étendre avec :
+
 - Pages (home, editor, settings, etc.)
 - Composants réutilisables (toolbar, panels, etc.)
 
 **Structure future envisagée :**
+
 ```
 ui/
 ├── __init__.py           # Fonction principale create_interface()
@@ -144,6 +158,7 @@ uv run python main.py --debug
 ```
 
 **En mode DEBUG :**
+
 - ✅ Hot reload activé (les changements apparaissent immédiatement)
 - ✅ Logs détaillés avec timestamp
 - ✅ Titre de fenêtre montre "(DEV MODE)"
@@ -155,6 +170,7 @@ python main.py
 ```
 
 **En mode production :**
+
 - ✅ Pas de hot reload
 - ✅ Logs simples (INFO et supérieur seulement)
 - ✅ Titre de fenêtre normal
@@ -193,6 +209,7 @@ uv run python scripts/translation_management/update_translations.py
 ```
 
 Ce script en une seule commande :
+
 1. 🔍 **Extrait** les textes du code (pybabel extract)
 2. 🔄 **Synchronise** les fichiers .po (pybabel init/update)
 3. ⚙️ **Compile** en binaire .mo (pybabel compile)
@@ -200,11 +217,13 @@ Ce script en une seule commande :
 ### Workflow typique
 
 **Commande unique et automatisée :**
+
 ```bash
 uv run python scripts/translation_management/update_translations.py
 ```
 
 Cette commande fait automatiquement :
+
 1. **Extraction** → Scan tous les fichiers `.py` pour les textes marqués `_("...")`
 2. **Synchronisation** → Crée/met à jour les fichiers `.po` pour chaque langue
 3. **Compilation** → Génère les fichiers `.mo` utilisés par l'app
@@ -325,17 +344,20 @@ DEBUG = '--debug' in sys.argv
 ## 🚦 Prochaines étapes
 
 ### Court terme
+
 - [ ] Ajouter plus de composants UI (input, textarea, boutons avancés)
 - [ ] Créer une page `ui/pages/home.py` pour la page d'accueil
 - [ ] Ajouter une barre de menu/toolbar
 
 ### Moyen terme
+
 - [ ] Ajouter un système de configuration (fichier config.yaml)
 - [ ] Implémenter la persistance des données
 - [ ] Créer des tests unitaires
 - [ ] Ajouter une CI/CD (GitHub Actions)
 
 ### Long terme
+
 - [ ] Architecture MVVM pour la logique métier
 - [ ] Système de plugins
 - [ ] Localisation (i18n)
@@ -346,13 +368,16 @@ DEBUG = '--debug' in sys.argv
 ## 🐛 Dépannage
 
 ### Les logs s'affichent plusieurs fois
+
 C'est normal en mode DEBUG avec le reload activé. Chaque rechargement réexécute le code.
 
 ### Le thème ne change pas
+
 - Vérifie que `DARK_MODE` est bien modifié dans `main.py`
 - Redémarre l'application (le reload ne recharge pas les CSS)
 
 ### Code Runner ne fonctionne pas
+
 - Vérifie que `.vscode/settings.json` existe
 - Redémarre VS Code
 - Installe l'extension Code Runner si nécessaire
@@ -371,6 +396,7 @@ C'est normal en mode DEBUG avec le reload activé. Chaque rechargement réexécu
 ## 📄 Historique des modifications
 
 ### Version 0.1.0 (Initial)
+
 - ✅ Setup de base avec NiceGUI
 - ✅ Mode développement avec hot reload
 - ✅ Système de logging
