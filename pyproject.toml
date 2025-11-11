@@ -7,7 +7,9 @@ requires-python = ">=3.13"
 dependencies = [
     "nicegui",
     "pywebview",
-    "babel",  # Pour la gestion des traductions
+    "babel",  # For translation management
+    "keyboard",  # For global hotkey management (more reliable than pynput)
+    "pynput",  # Fallback for hotkey management
 ]
 
 [build-system]

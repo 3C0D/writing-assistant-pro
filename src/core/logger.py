@@ -45,6 +45,6 @@ def setup_logger(debug: bool, name: str = "WritingAssistant") -> logging.Logger:
     logger.addHandler(handler)
     
     if debug:
-        logger.debug("🔍 Mode DEBUG activé - Logging détaillé")
+        logger.debug("DEBUG Mode enabled - Detailed logging")
     
     return logger
