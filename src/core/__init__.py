@@ -6,6 +6,8 @@ This package contains the core functionality modules including:
 - logger: Centralized logging system
 - styles: Theme management (light/dark)
 - config: Application configuration and command line argument parsing
+- window_manager: Window visibility and lifecycle management
+- hotkey_manager: Global hotkey registration and management
 """
 
 # Import translation system
@@ -30,6 +32,12 @@ from .config import parse_arguments, get_config, LANGUAGE, DEBUG, DARK_MODE
 
 # Import app system
 from .app import WritingAssistantApp
+
+# Import window management system
+from .window_manager import WindowManager
+
+# Import hotkey management system
+from .hotkey_manager import HotkeyManager
 
 __all__ = [
     # Translation system
@@ -57,5 +65,11 @@ __all__ = [
     'DARK_MODE',
 
     # App system
-    'WritingAssistantApp'
+    'WritingAssistantApp',
+
+    # Window management system
+    'WindowManager',
+
+    # Hotkey management system
+    'HotkeyManager'
 ]

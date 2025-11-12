@@ -3,6 +3,7 @@ Tu as raison de te poser la question ! Voici comment organiser les logs propreme
 ## Le problème actuel
 
 Dans `app.py`, tu as effectivement **deux loggers différents** :
+
 - `self.log` pour les logs de la classe `WritingAssistantApp`
 - `main_log` pour les logs de configuration
 
@@ -20,6 +21,7 @@ src.ui.components             ← Composants UI
 ```
 
 Chaque module/classe a **son propre logger** avec son nom, ce qui permet de :
+
 - Filtrer les logs par module
 - Voir clairement d'où vient chaque log
 - Garder une hiérarchie cohérente
@@ -35,6 +37,7 @@ Chaque module/classe a **son propre logger** avec son nom, ce qui permet de :
 ### 🤔 Faut-il logger la config dans config.py ?
 
 **Non**, c'est mieux dans `app.py` parce que :
+
 - Le module `config.py` est juste des **variables**, pas de la logique
 - C'est l'application qui **utilise** la config, donc c'est elle qui log
 - Si tu mets un logger dans `config.py`, il va se déclencher à chaque import
@@ -70,7 +73,6 @@ from nicegui import ui, app
 
 import keyboard
 import webview
-
 
 class WritingAssistantApp:
     """
