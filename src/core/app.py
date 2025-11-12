@@ -183,9 +183,7 @@ class WritingAssistantApp:
             # Re-get logger after setup (in case it was reconfigured)
             self.log = logging.getLogger("WritingAssistant.App")
 
-            # Log configuration
-            main_log = logging.getLogger("WritingAssistant.main")
-            main_log.info(
+            self.log.info(
                 f"{_('Configuration: DEBUG=')}{config.DEBUG}, "
                 f"DARK_MODE={config.DARK_MODE}, "
                 f"LANGUAGE={config.LANGUAGE}"
