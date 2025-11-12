@@ -21,7 +21,7 @@ from src.core import (
 )
 from src.core.hotkey_manager import setup_hotkey
 from src.core.window_manager import WindowManager
-from src.ui import create_interface
+from src.ui import create_interface, create_header
 
 
 class WritingAssistantApp:
@@ -74,10 +74,8 @@ class WritingAssistantApp:
             # Create interface (no need to pass logger anymore)
             create_interface()
 
-            # Add hide button to interface
-            with ui.header().classes('items-center justify-between'):
-                ui.label('Writing Assistant Pro').classes('text-h6')
-                ui.button(f'Hide ({config.HOTKEY_COMBINATION})', on_click=lambda: self.window_manager.hide_window(), icon='visibility_off').props('flat dense')
+            # Add header with hide button
+            create_header(config, self.window_manager)
 
             # Setup hotkey in a background thread (must be after ui.run starts)
             def setup_hotkey_delayed():
