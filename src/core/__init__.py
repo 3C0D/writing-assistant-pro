@@ -33,11 +33,8 @@ from .config import parse_arguments, get_config, LANGUAGE, DEBUG, DARK_MODE
 # Import app system
 from .app import WritingAssistantApp
 
-# Import window management system
-from .window_manager import WindowManager
-
 # Import hotkey management system
-from .hotkey_manager import HotkeyManager
+from .hotkey_manager import setup_hotkey
 
 __all__ = [
     # Translation system
@@ -67,9 +64,6 @@ __all__ = [
     # App system
     'WritingAssistantApp',
 
-    # Window management system
-    'WindowManager',
-
     # Hotkey management system
-    'HotkeyManager'
+    'setup_hotkey'
 ]

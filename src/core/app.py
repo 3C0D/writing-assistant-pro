@@ -19,7 +19,8 @@ from src.core import (
     stop_css_hot_reload,
     _
 )
-from src.core import HotkeyManager, WindowManager
+from src.core.hotkey_manager import setup_hotkey
+from src.core.window_manager import WindowManager
 from src.ui import create_interface
 
 
@@ -36,11 +37,12 @@ class WritingAssistantApp:
     def run(self):
         """Run the application"""
         try:
+            print("================ START ================")
+            
             # Import configuration module
             from src.core import config
             self.config = config
             self.window_manager = WindowManager(config)
-            self.hotkey_manager = HotkeyManager(config, self.window_manager.toggle_window)
 
             # Initialize translation system
             init_translation("writing_assistant", "translations", config.LANGUAGE)
@@ -80,7 +82,7 @@ class WritingAssistantApp:
             # Setup hotkey in a background thread (must be after ui.run starts)
             def setup_hotkey_delayed():
                 time.sleep(self.config.HOTKEY_SETUP_DELAY)  # Wait for pywebview to fully initialize
-                success = self.hotkey_manager.setup_hotkey()
+                success = setup_hotkey(config, self.window_manager.toggle_window)
 
                 if success:
                     self.log.info(f"Press {self.config.HOTKEY_COMBINATION} to toggle window")

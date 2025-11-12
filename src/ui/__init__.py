@@ -51,4 +51,4 @@ def create_interface():
             ui_elements['label_main'] = ui.label(_('Hello, this is a real desktop app!'))
             ui_elements['button_main'] = ui.button(_('Click me'), on_click=on_button_click)
     
-    logger.debug(_("Interface created successfully"))
+    logger.debug("Interface created successfully")
