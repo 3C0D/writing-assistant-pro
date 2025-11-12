@@ -10,6 +10,7 @@ from pathlib import Path
 import threading
 import time
 import traceback
+import logging
 
 # Third-party imports
 from nicegui import ui
@@ -20,7 +21,7 @@ try:
 except ImportError:
     WATCHDOG_AVAILABLE = False
 
-
+log = logging.getLogger(__name__)
 
 def get_theme_css_path(dark_mode: bool) -> Path:
     """
@@ -56,9 +57,9 @@ def apply_theme(dark_mode: bool) -> None:
     ui.add_head_html(f'<style id="app-theme-styles">{css_content}</style>')
     
     if dark_mode:
-        print("Dark mode enabled")
+        log.info("Dark mode enabled")
     else:
-        print("Light mode enabled")
+        log.info("Light mode enabled")
 
 
 class CSSHotReloader:
@@ -83,8 +84,8 @@ class CSSHotReloader:
             return
             
         if not WATCHDOG_AVAILABLE:
-            print("⚠️ watchdog not installed - CSS hot reload disabled")
-            print("   Install with: pip install watchdog")
+            log.warning("⚠️ watchdog not installed - CSS hot reload disabled")
+            log.warning("   Install with: pip install watchdog")
             return
             
         self.running = True
@@ -96,7 +97,7 @@ class CSSHotReloader:
         observer.schedule(handler, str(styles_dir), recursive=False)
         observer.start()
         
-        print(f"🔥 CSS Hot Reload enabled - watching {styles_dir}")
+        log.info(f"🔥 CSS Hot Reload enabled - watching {styles_dir}")
         
         # Create a timer that checks for CSS updates every 200ms
         # This runs in the NiceGUI event loop, so it has proper context
@@ -137,9 +138,9 @@ class CSSHotReloader:
             with open(self.css_path, 'r', encoding='utf-8') as f:
                 self.new_css_content = f.read()
                 self.css_update_pending = True
-                print(f"🔥 CSS change detected: {self.css_path.name}")
+                log.info(f"🔥 CSS change detected: {self.css_path.name}")
         except Exception as e:
-            print(f"❌ Error reading CSS file: {e}")
+            log.error(f"❌ Error reading CSS file: {e}")
     
     def check_and_reload_css(self):
         """
@@ -169,12 +170,12 @@ class CSSHotReloader:
             # This automatically runs on all clients when called from UI context
             ui.run_javascript(js_code)
             
-            print(f"🔥 CSS reloaded: {self.css_path.name}")
+            log.info(f"🔥 CSS reloaded: {self.css_path.name}")
             self.css_update_pending = False
             
         except Exception as e:
-            print(f"❌ Error reloading CSS: {e}")
-            print(traceback.format_exc())
+            log.error(f"❌ Error reloading CSS: {e}")
+            log.error(traceback.format_exc())
 
 
 class CSSChangeHandler(FileSystemEventHandler):

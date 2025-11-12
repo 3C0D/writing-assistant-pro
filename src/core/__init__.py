@@ -19,7 +19,7 @@ from .translation import (
 )
 
 # Import logger system
-from .logger import setup_logger
+from .logger import setup_root_logger
 
 # Import styles system
 from .styles import apply_theme
@@ -35,7 +35,7 @@ __all__ = [
     'register_ui_update',
     
     # Logger system
-    'setup_logger',
+    'setup_root_logger',
     
     # Styles system
     'apply_theme'

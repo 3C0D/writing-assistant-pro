@@ -6,8 +6,9 @@ Properly handles window hide/show with Ctrl+Space and prevents closing
 import threading
 import time
 import argparse
+import logging
 from nicegui import ui, app
-from src.core import apply_theme, setup_logger, init_translation, _
+from src.core import apply_theme, init_translation,setup_root_logger, _
 from src.core.styles import setup_css_hot_reload, stop_css_hot_reload
 from src.ui import create_interface
 
@@ -32,8 +33,9 @@ parse_arguments()
 # Initialize translation system
 init_translation("writing_assistant", "translations", LANGUAGE)
 
-# Configure logger
-log = setup_logger(debug=DEBUG)
+# Setup root logger using our new system
+setup_root_logger(debug=DEBUG)
+main_log = logging.getLogger("WritingAssistant.main")
 
 # Theme configuration
 DARK_MODE = False
@@ -44,7 +46,7 @@ app.native.window_args['frameless'] = False
 app.native.window_args['hidden'] = True  # Start hidden
 app.native.start_args['debug'] = False
 
-log.info(f"{_('Configuration: DEBUG=')}{DEBUG}, DARK_MODE={DARK_MODE}")
+main_log.info(f"{_('Configuration: DEBUG=')}{DEBUG}, DARK_MODE={DARK_MODE}")
 
 class HiddenWindowApp:
     """
@@ -53,7 +55,7 @@ class HiddenWindowApp:
     """
 
     def __init__(self):
-        self.log = setup_logger(debug=DEBUG, name="WritingAssistant")
+        self.log = logging.getLogger("WritingAssistant.HiddenWindowApp")
         self.last_trigger_time = 0.0
         self.MIN_TRIGGER_INTERVAL = 1.0  # 1 second debounce (reduced)
         self.trigger_lock = threading.Lock() # prevent overlapping triggers. not locked!
@@ -189,8 +191,8 @@ class HiddenWindowApp:
             # Setup CSS hot reload in debug mode
             setup_css_hot_reload(DARK_MODE, DEBUG)
 
-            # Create interface
-            create_interface(log)
+            # Create interface (no need to pass logger anymore)
+            create_interface()
 
             # Add hide button to interface
             with ui.header().classes('items-center justify-between'):

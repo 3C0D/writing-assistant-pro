@@ -2,17 +2,16 @@
 UI Module - Creates pages and interface components
 """
 
+import logging
 from nicegui import ui
 from src.core import _, change_language, get_current_language
 
 
-def create_interface(logger):
+def create_interface():
     """
     Creates the main user interface.
-    
-    Args:
-        logger: Logger instance for displaying logs
     """
+    logger = logging.getLogger("WritingAssistant.ui")
     
     # Store references to UI elements that need updating
     ui_elements = {}
