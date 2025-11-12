@@ -2,10 +2,12 @@
 Translation module for NiceGUI applications.
 Provides internationalization support using gettext.
 """
+from __future__ import annotations
 
 import gettext
+from typing import Callable
 from pathlib import Path
-from typing import Optional, Dict, Callable
+
 
 
 class LanguageManager:
@@ -28,7 +30,7 @@ class LanguageManager:
         self.available_languages = ["en", "fr", "it"]
         
         # Translation cache
-        self._translations: Dict[str, gettext.NullTranslations | gettext.GNUTranslations] = {}
+        self._translations: dict[str, gettext.NullTranslations | gettext.GNUTranslations] = {}
         
         # UI update callbacks
         self._update_callbacks: list[Callable] = []
@@ -92,7 +94,7 @@ class LanguageManager:
             return self._translations[self.current_language].gettext(text)
         return text
     
-    def get_language_name(self, language: Optional[str] = None) -> str:
+    def get_language_name(self, language: str | None = None) -> str:
         """
         Get the human-readable name of a language.
         
@@ -105,7 +107,7 @@ class LanguageManager:
         if language is None:
             language = self.current_language
         
-        language_names: Dict[str, str] = {
+        language_names: dict[str, str] = {
             "en": "English",
             "fr": "Français",
             "it": "Italiano"
@@ -145,7 +147,7 @@ class LanguageManager:
 
 
 # Global language manager instance
-_language_manager: Optional[LanguageManager] = None
+_language_manager: LanguageManager | None = None
 
 
 def get_language_manager() -> LanguageManager:

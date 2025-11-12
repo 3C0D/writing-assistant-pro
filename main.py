@@ -3,11 +3,12 @@ Application entry point for Writing Assistant Pro
 Properly handles window hide/show with Ctrl+Space and prevents closing
 """
 
-import sys
 import threading
 import time
+import argparse
 from nicegui import ui, app
 from src.core import apply_theme, setup_logger, init_translation, _
+from src.core.styles import setup_css_hot_reload, stop_css_hot_reload
 from src.ui import create_interface
 
 import keyboard
@@ -15,7 +16,18 @@ import webview
 
 # Language configuration
 LANGUAGE = "fr"
-DEBUG = '--debug' in sys.argv
+DEBUG = False
+
+# Parse command line arguments
+def parse_arguments():
+    global DEBUG
+    parser = argparse.ArgumentParser(description="Writing Assistant Pro")
+    parser.add_argument('--debug', action='store_true', help='Enable debug mode')
+    args = parser.parse_args()
+    DEBUG = args.debug
+    return args
+
+parse_arguments()
 
 # Initialize translation system
 init_translation("writing_assistant", "translations", LANGUAGE)
@@ -174,6 +186,9 @@ class HiddenWindowApp:
             # Apply theme
             apply_theme(DARK_MODE)
 
+            # Setup CSS hot reload in debug mode
+            setup_css_hot_reload(DARK_MODE, DEBUG)
+
             # Create interface
             create_interface(log)
 
@@ -201,7 +216,7 @@ class HiddenWindowApp:
             ui.run(
                 native=True,
                 window_size=(800, 600),
-                title=_("Writing Assistant Pro (DEV MODE)") if DEBUG else _("Writing Assistant Pro"),
+                title="🔥 Writing Assistant Pro (DEV MODE)" if DEBUG else _("Writing Assistant Pro"),
                 reload=DEBUG,
                 show=False
             )
@@ -219,6 +234,7 @@ class HiddenWindowApp:
         """Clean up resources"""
         self.log.info("Cleaning up...")
         try:
+            stop_css_hot_reload()  # Stop CSS hot reload
             keyboard.unhook_all()  # Clear all hotkeys
         except Exception:
             pass

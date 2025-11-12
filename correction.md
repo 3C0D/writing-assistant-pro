@@ -1,281 +1,246 @@
-Je vois le problème. Quand tu fermes la fenêtre avec la croix ou Ctrl+Space, elle est **détruite** et non pas cachée. Et la "barre bleue" que tu vois c'est probablement une notification NiceGUI.
+Je vois le problème ! L'erreur vient du fait que `ui.run_javascript()` ne peut pas être appelé depuis un thread en arrière-plan car il n'a pas accès au contexte NiceGUI. Il faut utiliser une approche différente avec `ui.timer` ou injecter le JavaScript directement via l'objet `app`.
 
-Le problème c'est que **pywebview ne permet pas vraiment d'empêcher la fermeture d'une fenêtre native**. Il faut une approche différente.
+Voici la solution corrigée :Parfait ! J'ai corrigé le problème. Voici ce qui a changé :
 
-Cherchons comment d'autres projets gèrent ce problème :Parfait ! J'ai trouvé la solution ! Il faut utiliser `window.events.closing` pour intercepter la fermeture et retourner `False` pour empêcher la fermeture, puis cacher la fenêtre dans un thread séparé.
+## 🔧 Corrections apportées
 
-Voici la solution complète qui fonctionne :## Les changements clés
+### Problème identifié
 
-1. **`window.events.closing += self.on_closing`** : Intercepte l'événement de fermeture
-2. **`on_closing()` retourne `False`** : Empêche la fermeture réelle de la fenêtre
-3. **Hide dans un thread** : Évite le freeze mentionné dans le bug pywebview
-4. **Initialisation unique** : Le handler de fermeture n'est enregistré qu'une seule fois
+`ui.run_javascript()` ne peut pas être appelé depuis un thread en arrière-plan (watchdog) car il n'a pas accès au contexte NiceGUI.
 
-## Comportement attendu maintenant
+### Solution implémentée
 
-- ✅ Démarrage : fenêtre cachée
-- ✅ Ctrl+Space : fenêtre apparaît
-- ✅ Cliquer sur la croix (X) : fenêtre se **cache** au lieu de se fermer
-- ✅ Ctrl+Space à nouveau : fenêtre réapparaît
-- ✅ Bouton "Hide" dans l'interface : cache la fenêtre
-- ✅ Peut répéter le cycle indéfiniment
+1. **Séparation en deux étapes** :
+   - `on_css_modified()` : Détecte le changement (thread watchdog) et met un flag `css_update_pending = True`
+   - `check_and_reload_css()` : Timer NiceGUI (200ms) qui vérifie le flag et injecte le JS
 
-Teste cette version et dis-moi si maintenant la fenêtre se cache correctement au lieu de se fermer ! 🎯
+2. **Utilisation de `ui.timer()`** :
+   - S'exécute dans la boucle d'événements NiceGUI
+   - A accès au contexte approprié
+
+3. **Injection via `app.state._clients`** :
+   - Injecte le JavaScript directement sur tous les clients connectés
+   - Fonctionne même en mode natif avec pywebview
+
+## ✅ Avantages
+
+- ✨ **Pas d'erreur de contexte** : Le timer s'exécute dans le bon thread
+- 🎯 **Lightweight** : Check toutes les 200ms seulement si un changement est détecté
+- 🔒 **Thread-safe** : Le flag `css_update_pending` coordonne les deux threads
+- 🚀 **Compatible pywebview** : Fonctionne en mode natif
+
+Testez maintenant en mode debug et modifiez vos fichiers CSS - ça devrait fonctionner sans erreur ! 🎨
 
 """
-Application entry point for Writing Assistant Pro
-Properly handles window hide/show with Ctrl+Space and prevents closing
+Theme and style management for the application.
+Loads CSS files from the styles/ directory with hot reload support
 """
 
-import sys
+from pathlib import Path
 import threading
 import time
-from nicegui import ui, app
-from src.core import apply_theme, setup_logger, init_translation, _
-from src.ui import create_interface
+from typing import Optional
+import asyncio
 
-# Try keyboard library first, fallback to pynput
-try:
-    import keyboard
-    USE_KEYBOARD = True
-except ImportError:
-    from pynput.keyboard import GlobalHotKeys
-    USE_KEYBOARD = False
-
-# Language configuration
-LANGUAGE = "fr"
-DEBUG = '--debug' in sys.argv
-
-# Initialize translation system
-init_translation("writing_assistant", "translations", LANGUAGE)
-
-# Configure logger
-log = setup_logger(debug=DEBUG)
-
-# Theme configuration
-DARK_MODE = False
-
-# Native window configuration - START HIDDEN
-app.native.window_args['resizable'] = True
-app.native.window_args['frameless'] = False
-app.native.window_args['hidden'] = True
-app.native.start_args['debug'] = False
-
-log.info(f"{_('Configuration: DEBUG=')}{DEBUG}, DARK_MODE={DARK_MODE}")
-
-
-class HiddenWindowApp:
+def get_theme_css_path(dark_mode: bool) -> Path:
     """
-    Application with hidden window that shows/hides on hotkey
-    Window close button hides instead of closing
+    Returns the path to the CSS file corresponding to the theme.
+
+    Args:
+        dark_mode: True for dark mode, False for light mode
+
+    Returns:
+        Path to the CSS file
     """
+    styles_dir = Path(__file__).parent.parent.parent / 'styles'
+    if dark_mode:
+        return styles_dir / 'dark.css'
+    else:
+        return styles_dir / 'light.css'
+
+def apply_theme(dark_mode: bool) -> None:
+    """
+    Applies the theme to the application by loading the CSS file.
+
+    Args:
+        dark_mode: True for dark mode, False for light mode
+    """
+    from nicegui import ui
     
-    def __init__(self):
-        self.log = setup_logger(debug=DEBUG, name="WritingAssistant")
-        self.last_trigger_time = 0.0
-        self.MIN_TRIGGER_INTERVAL = 1.0
-        self.trigger_lock = threading.Lock()
-        self.window_ref = None
-        self.window_visible = False
-        self.window_initialized = False
-        self.hotkey_handler = None
+    css_path = get_theme_css_path(dark_mode)
+    
+    # Read the CSS file content
+    with open(css_path, 'r', encoding='utf-8') as f:
+        css_content = f.read()
+    
+    # Add the CSS to the page head with a unique ID for hot reload
+    ui.add_head_html(f'<style id="app-theme-styles">{css_content}</style>')
+    
+    if dark_mode:
+        print("Dark mode enabled")
+    else:
+        print("Light mode enabled")
+
+class CSSHotReloader:
+    """
+    Watches CSS files and reloads them automatically in debug mode.
+    Works with native mode (pywebview) by injecting JavaScript.
+    """
+
+    def __init__(self, dark_mode: bool, debug: bool = False):
+        self.dark_mode = dark_mode
+        self.debug = debug
+        self.css_path = get_theme_css_path(dark_mode)
+        self.last_modified: Optional[float] = None
+        self.observer_thread: Optional[threading.Thread] = None
+        self.running = False
+        self.css_update_pending = False
+        self.new_css_content = ""
         
-    def on_closing(self):
-        """
-        Handle window close event - hide instead of closing
-        This prevents the window from being destroyed
-        """
-        def hide_in_thread():
-            self.log.info("Window close requested - hiding instead")
-            try:
-                if self.window_ref:
-                    self.window_ref.hide()
-                    self.window_visible = False
-                    self.log.info("Window hidden - Press Ctrl+Space to show again")
-            except Exception as e:
-                self.log.error(f"Error hiding window: {e}")
-        
-        # Hide in a separate thread to avoid blocking
-        threading.Thread(target=hide_in_thread, daemon=True).start()
-        
-        # Return False to prevent actual closing
-        return False
-        
-    def toggle_window(self):
-        """Toggle window visibility on hotkey press"""
-        # Try to acquire lock without blocking
-        if not self.trigger_lock.acquire(blocking=False):
-            self.log.debug("Hotkey already processing, ignoring")
+    def start(self):
+        """Start watching CSS files for changes"""
+        if not self.debug:
             return
-        
+            
         try:
-            current_time = time.time()
+            from watchdog.observers import Observer
+            from watchdog.events import FileSystemEventHandler
+            from nicegui import ui, app
             
-            # Debounce check
-            time_since_last = current_time - self.last_trigger_time
-            if time_since_last < self.MIN_TRIGGER_INTERVAL:
-                self.log.debug(f"Ignoring hotkey - too soon ({time_since_last:.2f}s)")
-                return
-                
-            self.last_trigger_time = current_time
-            
-            # Toggle visibility
-            if self.window_visible:
-                self.hide_window()
-            else:
-                self.show_window()
-                
-        finally:
-            # Release lock after a short delay
-            def release_lock():
-                time.sleep(0.3)
-                self.trigger_lock.release()
-                self.log.debug("Lock released")
-            
-            threading.Thread(target=release_lock, daemon=True).start()
-    
-    def show_window(self):
-        """Show the native window"""
-        try:
-            import webview
-            
-            if webview.windows:
-                window = webview.windows[0]
-                
-                # Store reference and setup close handler on first show
-                if not self.window_initialized:
-                    self.window_ref = window
-                    self.window_initialized = True
+            class CSSChangeHandler(FileSystemEventHandler):
+                def __init__(self, reloader):
+                    self.reloader = reloader
                     
-                    # CRITICAL: Register the closing event handler
-                    window.events.closing += self.on_closing
-                    self.log.info("Window close handler registered")
-                
-                self.log.info("Showing window...")
-                window.show()
-                self.window_visible = True
-                self.log.info("Window shown - Close button or Ctrl+Space will hide it")
-            else:
-                self.log.warning("No webview window found")
-                
-        except Exception as e:
-            self.log.error(f"Error showing window: {e}")
-            import traceback
-            self.log.debug(f"Full traceback: {traceback.format_exc()}")
-    
-    def hide_window(self):
-        """Hide the native window"""
-        try:
-            if self.window_ref:
-                self.log.info("Hiding window...")
-                self.window_ref.hide()
-                self.window_visible = False
-                self.log.info("Window hidden - Press Ctrl+Space to show again")
-            else:
-                self.log.warning("No window reference available")
-                
-        except Exception as e:
-            self.log.error(f"Error hiding window: {e}")
-    
-    def setup_hotkey_with_keyboard_lib(self):
-        """Setup hotkey using 'keyboard' library"""
-        try:
-            keyboard.add_hotkey('ctrl+space', self.toggle_window, suppress=False)
-            self.log.info("Global hotkey registered: Ctrl+Space (toggle window)")
-            return True
-        except Exception as e:
-            self.log.error(f"Failed to register hotkey with keyboard library: {e}")
-            return False
-    
-    def setup_hotkey_with_pynput(self):
-        """Setup hotkey using 'pynput' library"""
-        try:
-            self.hotkey_handler = GlobalHotKeys({
-                '<ctrl>+<space>': self.toggle_window
-            })
-            self.hotkey_handler.start()
-            self.log.info("Global hotkey registered: Ctrl+Space (toggle window)")
-            return True
-        except Exception as e:
-            self.log.error(f"Failed to register hotkey with pynput: {e}")
-            return False
-    
-    def run(self):
-        """Run the application"""
-        try:
-            # Apply theme
-            apply_theme(DARK_MODE)
+                def on_modified(self, event):
+                    if event.src_path.endswith('.css'):
+                        self.reloader.on_css_modified()
             
-            # Create interface
-            create_interface(log)
+            self.running = True
+            observer = Observer()
+            handler = CSSChangeHandler(self)
             
-            # Add hide button to interface header
-            with ui.header().classes('items-center justify-between'):
-                ui.label('Writing Assistant Pro').classes('text-h6')
-                ui.button('Hide (Ctrl+Space)', 
-                         on_click=lambda: self.hide_window(),
-                         icon='visibility_off').props('flat dense')
+            # Watch the styles directory
+            styles_dir = self.css_path.parent
+            observer.schedule(handler, str(styles_dir), recursive=False)
+            observer.start()
             
-            # Setup hotkey in a background thread
-            def setup_hotkey_delayed():
-                time.sleep(1.5)  # Wait for NiceGUI and pywebview to fully initialize
-                if USE_KEYBOARD:
-                    success = self.setup_hotkey_with_keyboard_lib()
-                else:
-                    success = self.setup_hotkey_with_pynput()
-                
-                if success:
-                    self.log.info("Press Ctrl+Space to toggle window visibility")
-                else:
-                    self.log.error("Failed to setup hotkey")
+            print(f"🔥 CSS Hot Reload enabled - watching {styles_dir}")
             
-            threading.Thread(target=setup_hotkey_delayed, daemon=True).start()
+            # Create a timer that checks for CSS updates every 200ms
+            # This runs in the NiceGUI event loop, so it has proper context
+            ui.timer(0.2, self.check_and_reload_css)
             
-            # Run NiceGUI in native mode with HIDDEN window
-            self.log.info("Starting NiceGUI with hidden window...")
-            self.log.info("Press Ctrl+Space to show the window")
-            
-            ui.run(
-                native=True,
-                window_size=(800, 600),
-                title=_("Writing Assistant Pro (DEV MODE)") if DEBUG else _("Writing Assistant Pro"),
-                reload=DEBUG,
-                show=False
-            )
-            
-        except KeyboardInterrupt:
-            self.log.info("Application interrupted by user")
-        except Exception as e:
-            self.log.error(f"Application error: {e}")
-            import traceback
-            self.log.debug(f"Full traceback: {traceback.format_exc()}")
-        finally:
-            self.cleanup()
-    
-    def cleanup(self):
-        """Clean up resources"""
-        self.log.info("Cleaning up...")
-        if USE_KEYBOARD:
-            try:
-                keyboard.remove_hotkey('ctrl+space')
-                keyboard.unhook_all()
-            except:
-                pass
-        else:
-            if self.hotkey_handler:
+            # Keep the observer running in background
+            def keep_alive():
                 try:
-                    self.hotkey_handler.stop()
-                except:
-                    pass
-        self.log.info("Application stopped")
-
-
-def main():
-    """Main entry point"""
-    app = HiddenWindowApp()
-    app.run()
-
-
-if __name__ in {'__main__', '__mp_main__'}:
-    main()
+                    while self.running:
+                        time.sleep(1)
+                except KeyboardInterrupt:
+                    observer.stop()
+                observer.join()
+                
+            self.observer_thread = threading.Thread(target=keep_alive, daemon=True)
+            self.observer_thread.start()
+            
+        except ImportError:
+            print("⚠️ watchdog not installed - CSS hot reload disabled")
+            print("   Install with: pip install watchdog")
+            
+    def stop(self):
+        """Stop watching CSS files"""
+        self.running = False
+        
+    def on_css_modified(self):
+        """
+        Called by watchdog when CSS file is modified.
+        Runs in watchdog thread, so we can't call ui.run_javascript directly.
+        """
+        # Debounce: check if file was actually modified
+        try:
+            current_mtime = self.css_path.stat().st_mtime
+            if self.last_modified and current_mtime == self.last_modified:
+                return
+            self.last_modified = current_mtime
+        except FileNotFoundError:
+            return
+            
+        # Read new CSS content
+        try:
+            with open(self.css_path, 'r', encoding='utf-8') as f:
+                self.new_css_content = f.read()
+                self.css_update_pending = True
+                print(f"🔥 CSS change detected: {self.css_path.name}")
+        except Exception as e:
+            print(f"❌ Error reading CSS file: {e}")
     
+    def check_and_reload_css(self):
+        """
+        Periodically checks if CSS needs to be reloaded.
+        Runs in NiceGUI event loop, so it has proper context.
+        """
+        if not self.css_update_pending:
+            return
+            
+        try:
+            from nicegui import app
+            
+            # Escape the CSS content for JavaScript
+            css_escaped = self.new_css_content.replace('\\', '\\\\').replace('`', '\\`').replace('$', '\\$')
+            
+            js_code = f"""
+            (function() {{
+                const styleEl = document.getElementById('app-theme-styles');
+                if (styleEl) {{
+                    styleEl.textContent = `{css_escaped}`;
+                    console.log('🔥 CSS reloaded');
+                }} else {{
+                    console.warn('Style element not found');
+                }}
+            }})();
+            """
+            
+            # Execute JavaScript on all connected clients via app
+            # This works even without a specific client context
+            for client_id, client in app.state._clients.items():
+                try:
+                    client.run_javascript(js_code, respond=False)
+                except Exception as e:
+                    # Client might be disconnected, ignore
+                    pass
+            
+            print(f"🔥 CSS reloaded: {self.css_path.name}")
+            self.css_update_pending = False
+            
+        except Exception as e:
+            print(f"❌ Error reloading CSS: {e}")
+            import traceback
+            print(traceback.format_exc())
+
+# Global reloader instance
+
+_css_reloader: Optional[CSSHotReloader] = None
+
+def setup_css_hot_reload(dark_mode: bool, debug: bool = False):
+    """
+    Setup CSS hot reload in debug mode.
+
+    Args:
+        dark_mode: True for dark mode, False for light mode
+        debug: Enable hot reload only in debug mode
+    """
+    global _css_reloader
+    
+    if not debug:
+        return
+        
+    _css_reloader = CSSHotReloader(dark_mode, debug)
+    _css_reloader.start()
+    
+
+def stop_css_hot_reload():
+    """Stop CSS hot reload"""
+    global_css_reloader
+
+    if _css_reloader:
+        _css_reloader.stop()
+        _css_reloader = None
