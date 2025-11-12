@@ -8,30 +8,24 @@ def main():
     """
     try:
         # Run ruff check with --fix to automatically fix issues
-        result_check_fix = subprocess.run(
-            ["uv", "run", "ruff", "check", "--fix", "."], capture_output=True, text=True
-        )
+        print("Running ruff check --fix...")
+        result_check_fix = subprocess.run(["uv", "run", "ruff", "check", "--fix", "."], text=True)
         if result_check_fix.returncode != 0:
-            print("Error during ruff check --fix:")
-            print(result_check_fix.stderr)
+            print("Error during ruff check --fix")
             sys.exit(1)
 
         # Run ruff format to format the code
-        result_format = subprocess.run(
-            ["uv", "run", "ruff", "format", "."], capture_output=True, text=True
-        )
+        print("Running ruff format...")
+        result_format = subprocess.run(["uv", "run", "ruff", "format", "."], text=True)
         if result_format.returncode != 0:
-            print("Error during ruff format:")
-            print(result_format.stderr)
+            print("Error during ruff format")
             sys.exit(1)
 
         # Run final ruff check to verify everything is correct
-        result_check_final = subprocess.run(
-            ["uv", "run", "ruff", "check", "."], capture_output=True, text=True
-        )
+        print("Running final ruff check...")
+        result_check_final = subprocess.run(["uv", "run", "ruff", "check", "."], text=True)
         if result_check_final.returncode != 0:
-            print("Error during final ruff check:")
-            print(result_check_final.stderr)
+            print("Error during final ruff check")
             sys.exit(1)
 
         print("Ruff corrections and formatting completed successfully.")
