@@ -3,9 +3,10 @@ Window management module for Writing Assistant Pro
 Handles window visibility, hotkeys, and window lifecycle
 """
 
+import logging
 import threading
 import time
-import logging
+
 import webview
 
 
@@ -28,6 +29,7 @@ class WindowManager:
         Handle window close event - hide instead of closing
         This prevents the window from being destroyed
         """
+
         def hide_in_thread():
             self.log.info("Window close requested - hiding instead")
             try:
@@ -64,7 +66,7 @@ class WindowManager:
 
             # Simple toggle based on current state
             self.log.info(f"Toggle window - current state: visible={self.window_visible}")
-            
+
             if self.window_visible:
                 self.hide_window()
             else:
@@ -110,6 +112,7 @@ class WindowManager:
         except Exception as e:
             self.log.error(f"Error showing window: {e}")
             import traceback
+
             self.log.debug(f"Full traceback: {traceback.format_exc()}")
 
     def hide_window(self):

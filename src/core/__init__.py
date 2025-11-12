@@ -11,59 +11,53 @@ This package contains the core functionality modules including:
 """
 
 # Import translation system
-from .translation import (
-    LanguageManager,
-    get_language_manager,
-    init_translation,
-    _,
-    change_language,
-    get_current_language,
-    register_ui_update
-)
+# Import app system
+from .app import WritingAssistantApp
+
+# Import config system
+from .config import DARK_MODE, DEBUG, LANGUAGE, get_config, parse_arguments
+
+# Import hotkey management system
+from .hotkey_manager import setup_hotkey
 
 # Import logger system
 from .logger import setup_root_logger
 
 # Import styles system
 from .styles import apply_theme, setup_css_hot_reload, stop_css_hot_reload
-
-# Import config system
-from .config import parse_arguments, get_config, LANGUAGE, DEBUG, DARK_MODE
-
-# Import app system
-from .app import WritingAssistantApp
-
-# Import hotkey management system
-from .hotkey_manager import setup_hotkey
+from .translation import (
+    LanguageManager,
+    _,
+    change_language,
+    get_current_language,
+    get_language_manager,
+    init_translation,
+    register_ui_update,
+)
 
 __all__ = [
     # Translation system
-    'LanguageManager',
-    'get_language_manager',
-    'init_translation',
-    '_',
-    'change_language',
-    'get_current_language',
-    'register_ui_update',
-
+    "LanguageManager",
+    "get_language_manager",
+    "init_translation",
+    "_",
+    "change_language",
+    "get_current_language",
+    "register_ui_update",
     # Logger system
-    'setup_root_logger',
-
+    "setup_root_logger",
     # Styles system
-    'apply_theme',
-    'setup_css_hot_reload',
-    'stop_css_hot_reload',
-
+    "apply_theme",
+    "setup_css_hot_reload",
+    "stop_css_hot_reload",
     # Config system
-    'parse_arguments',
-    'get_config',
-    'LANGUAGE',
-    'DEBUG',
-    'DARK_MODE',
-
+    "parse_arguments",
+    "get_config",
+    "LANGUAGE",
+    "DEBUG",
+    "DARK_MODE",
     # App system
-    'WritingAssistantApp',
-
+    "WritingAssistantApp",
     # Hotkey management system
-    'setup_hotkey'
+    "setup_hotkey",
 ]

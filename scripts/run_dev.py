@@ -12,5 +12,5 @@ print("Starting in DEV mode...")
 print("-" * 50)
 
 # Lancer main.py avec l'argument --debug
-main_path = Path(__file__).parent.parent / 'main.py'
-subprocess.run(['uv', 'run', 'python', str(main_path), '--debug'])
+main_path = Path(__file__).parent.parent / "main.py"
+subprocess.run(["uv", "run", "python", str(main_path), "--debug"])

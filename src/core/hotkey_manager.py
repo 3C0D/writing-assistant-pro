@@ -24,11 +24,7 @@ def setup_hotkey(config, toggle_callback):
         # Clear all existing hotkeys first to prevent duplicates
         keyboard.unhook_all()
 
-        keyboard.add_hotkey(
-            config.HOTKEY_COMBINATION,
-            toggle_callback,
-            suppress=False
-        )
+        keyboard.add_hotkey(config.HOTKEY_COMBINATION, toggle_callback, suppress=False)
         log.info(f"Global hotkey registered: {config.HOTKEY_COMBINATION} (toggle window)")
         return True
     except Exception as e:

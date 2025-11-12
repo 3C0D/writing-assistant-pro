@@ -3,25 +3,25 @@ Main application class for Writing Assistant Pro
 Handles window visibility, hotkeys, and application lifecycle
 """
 
+import logging
 import threading
 import time
-import logging
-from nicegui import ui, app
-import keyboard
 
+import keyboard
+from nicegui import app, ui
 
 # Core imports
 from src.core import (
+    _,
     apply_theme,
     init_translation,
-    setup_root_logger,
     setup_css_hot_reload,
+    setup_root_logger,
     stop_css_hot_reload,
-    _
 )
 from src.core.hotkey_manager import setup_hotkey
 from src.core.window_manager import WindowManager
-from src.ui import create_interface, create_header
+from src.ui import create_header, create_interface
 
 
 class WritingAssistantApp:
@@ -33,14 +33,14 @@ class WritingAssistantApp:
     def __init__(self):
         self.log = logging.getLogger("WritingAssistant.WritingAssistantApp")
 
-
     def run(self):
         """Run the application"""
         try:
             print("================ START ================")
-            
+
             # Import configuration module
             from src.core import config
+
             self.config = config
             self.window_manager = WindowManager(config)
 
@@ -60,9 +60,9 @@ class WritingAssistantApp:
             )
 
             # Configure native window
-            app.native.window_args['resizable'] = config.WINDOW_RESIZABLE
-            app.native.window_args['frameless'] = config.WINDOW_FRAMELESS
-            app.native.start_args['debug'] = False
+            app.native.window_args["resizable"] = config.WINDOW_RESIZABLE
+            app.native.window_args["frameless"] = config.WINDOW_FRAMELESS
+            app.native.start_args["debug"] = False
 
             # Apply theme
             apply_theme(config.DARK_MODE)
@@ -102,8 +102,10 @@ class WritingAssistantApp:
             ui.run(
                 native=True,
                 window_size=(800, 600),
-                title="🔥 Writing Assistant Pro (DEV MODE)" if config.DEBUG else _("Writing Assistant Pro"),
-                reload=False  # Must be False in native mode to avoid multiple instances
+                title="🔥 Writing Assistant Pro (DEV MODE)"
+                if config.DEBUG
+                else _("Writing Assistant Pro"),
+                reload=True,
             )
 
         except KeyboardInterrupt:
@@ -111,6 +113,7 @@ class WritingAssistantApp:
         except Exception as e:
             self.log.error(f"Application error: {e}")
             import traceback
+
             self.log.debug(f"Full traceback: {traceback.format_exc()}")
         finally:
             self.cleanup()
