@@ -23,9 +23,10 @@ def main():
 
         # Run final ruff check to verify everything is correct
         print("Running final ruff check...")
-        result_check_final = subprocess.run(["uv", "run", "ruff", "check", "."], text=True)
+        result_check_final = subprocess.run(["uv", "run", "ruff", "check", "."], capture_output=True, text=True)
         if result_check_final.returncode != 0:
-            print("Error during final ruff check")
+            print("Manual fixes required:")
+            print(result_check_final.stdout)
             sys.exit(1)
 
         print("Ruff corrections and formatting completed successfully.")
