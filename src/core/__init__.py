@@ -5,6 +5,7 @@ This package contains the core functionality modules including:
 - translation: Language management and internationalization using gettext/Babel
 - logger: Centralized logging system
 - styles: Theme management (light/dark)
+- config: Application configuration and command line argument parsing
 """
 
 # Import translation system
@@ -22,7 +23,13 @@ from .translation import (
 from .logger import setup_root_logger
 
 # Import styles system
-from .styles import apply_theme
+from .styles import apply_theme, setup_css_hot_reload, stop_css_hot_reload
+
+# Import config system
+from .config import parse_arguments, get_config, LANGUAGE, DEBUG, DARK_MODE
+
+# Import app system
+from .app import WritingAssistantApp
 
 __all__ = [
     # Translation system
@@ -33,10 +40,22 @@ __all__ = [
     'change_language',
     'get_current_language',
     'register_ui_update',
-    
+
     # Logger system
     'setup_root_logger',
-    
+
     # Styles system
-    'apply_theme'
+    'apply_theme',
+    'setup_css_hot_reload',
+    'stop_css_hot_reload',
+
+    # Config system
+    'parse_arguments',
+    'get_config',
+    'LANGUAGE',
+    'DEBUG',
+    'DARK_MODE',
+
+    # App system
+    'WritingAssistantApp'
 ]

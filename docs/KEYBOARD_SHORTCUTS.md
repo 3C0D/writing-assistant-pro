@@ -88,7 +88,7 @@ Here's how it's implemented in your Writing Assistant:
 ```python
 import keyboard
 
-class HiddenWindowApp:
+class WritingAssistantApp:
     def setup_hotkey(self):
         """Setup hotkey using 'keyboard' library"""
         try:
