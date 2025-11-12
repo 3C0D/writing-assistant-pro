@@ -8,7 +8,7 @@ import argparse
 # Application configuration
 LANGUAGE = "fr"
 DEBUG = False
-DARK_MODE = True  # Change this value for theme
+DARK_MODE = False  # Change this value for theme
 
 # Window configuration
 WINDOW_SIZE = (800, 600)

@@ -62,7 +62,6 @@ class WritingAssistantApp:
             # Configure native window
             app.native.window_args['resizable'] = config.WINDOW_RESIZABLE
             app.native.window_args['frameless'] = config.WINDOW_FRAMELESS
-            app.native.window_args['hidden'] = config.WINDOW_START_HIDDEN
             app.native.start_args['debug'] = False
 
             # Apply theme
@@ -71,17 +70,16 @@ class WritingAssistantApp:
             # Setup CSS hot reload in debug mode
             setup_css_hot_reload(config.DARK_MODE, config.DEBUG)
 
-            # Create interface (no need to pass logger anymore)
+            # Create interface
             create_interface()
 
             # Add header with hide button
             create_header(config, self.window_manager)
 
-            # Setup hotkey in a background thread (must be after ui.run starts)
+            # Setup hotkey in background thread
             def setup_hotkey_delayed():
-                time.sleep(self.config.HOTKEY_SETUP_DELAY)  # Wait for pywebview to fully initialize
+                time.sleep(self.config.HOTKEY_SETUP_DELAY)
                 success = setup_hotkey(config, self.window_manager.toggle_window)
-
                 if success:
                     self.log.info(f"Press {self.config.HOTKEY_COMBINATION} to toggle window")
                 else:
@@ -89,16 +87,23 @@ class WritingAssistantApp:
 
             threading.Thread(target=setup_hotkey_delayed, daemon=True).start()
 
-            # Run NiceGUI in native mode with HIDDEN window
-            self.log.info("Starting NiceGUI with hidden window...")
-            self.log.info("Window will appear when you press Ctrl+Space")
+            # Setup window hiding after startup
+            def hide_window_on_startup():
+                time.sleep(1.0)  # Wait for window to be fully created
+                if config.WINDOW_START_HIDDEN:
+                    self.window_manager.hide_window()
+                    self.log.info("Window hidden on startup - Press Ctrl+Space to show")
+
+            threading.Thread(target=hide_window_on_startup, daemon=True).start()
+
+            # Run NiceGUI - DISABLE reload for native mode (causes multiple instances)
+            self.log.info("Starting NiceGUI application...")
 
             ui.run(
                 native=True,
                 window_size=(800, 600),
                 title="🔥 Writing Assistant Pro (DEV MODE)" if config.DEBUG else _("Writing Assistant Pro"),
-                reload=config.DEBUG,
-                show=False
+                reload=False  # Must be False in native mode to avoid multiple instances
             )
 
         except KeyboardInterrupt:

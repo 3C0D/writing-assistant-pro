@@ -62,16 +62,18 @@ class WindowManager:
 
             self.last_trigger_time = current_time
 
-            # Toggle visibility
-            if not self.window_visible:
-                self.show_window()
-            else:
+            # Simple toggle based on current state
+            self.log.info(f"Toggle window - current state: visible={self.window_visible}")
+            
+            if self.window_visible:
                 self.hide_window()
+            else:
+                self.show_window()
 
+        except Exception as e:
+            self.log.error(f"Error in toggle_window: {e}")
         finally:
-            # Release lock immediately instead of with delay
             self.trigger_lock.release()
-            self.log.debug("Lock released")
 
     def show_window(self):
         """Show the native window"""
@@ -93,9 +95,12 @@ class WindowManager:
 
                 # Set window always on top
                 try:
-                    window.on_top = True
+                    # Force window to front and on top
+                    window.show()  # Ensure it's shown
+                    window.on_top = True  # Set on top
                     self.log.info("Window shown - set to always on top")
-                except Exception:
+                except Exception as e:
+                    self.log.warning(f"Could not set window on top: {e}")
                     self.log.info("Window shown - Check your screen")
 
                 self.window_visible = True
