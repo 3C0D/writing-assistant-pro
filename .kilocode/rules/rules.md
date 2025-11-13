@@ -12,6 +12,19 @@
 
 - **Always use UV**: Use `uv run python <script_name>` for running any Python script
 - **Never use raw Python**: Don't use `python <script>` directly
+- **Unicode encoding fix**: When creating new scripts, always add the following code at the beginning to fix Unicode issues on Windows:
+
+  ```python
+    # Fix Unicode encoding for Windows console
+    os.environ["PYTHONIOENCODING"] = "utf-8"
+    if os.name == "nt":
+        subprocess.run(["chcp", "65001"], shell=True, capture_output=True)
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+        sys.stderr.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
+    except AttributeError:
+        pass
+  ```
 
 ## File Organization
 
@@ -50,6 +63,8 @@
 - **Prevent technical debt**: Apply these rules consistently
 - **Update dependencies**: Keep packages current and secure
 - **Maintain tests**: Ensure all new code has appropriate test coverage
+- **Code linting**: Run `uv run python scripts/run_ruff.py` at the end of each code modification to check and correct automatically
+- **Application testing**: To check if the application works after modifications, run `uv run python scripts/run_dev.py`
 
 ---
 
