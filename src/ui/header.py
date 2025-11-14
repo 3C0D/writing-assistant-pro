@@ -17,12 +17,16 @@ def create_header(config, window_manager):
     """
     logger = logging.getLogger("WritingAssistant.ui.header")
 
-    with ui.header().classes("items-center justify-between"):
+    with (
+        ui.header()
+        .classes("items-center justify-between")
+        .style("position: relative; background-color: #1976d2")
+    ):
         ui.label("Writing Assistant Pro").classes("text-h6")
         ui.button(
             f"Hide ({config.HOTKEY_COMBINATION})",
             on_click=lambda: window_manager.hide_window(),
             icon="visibility_off",
-        ).props("flat dense")
+        ).props("flat dense").style("z-index: 1000")
 
     logger.debug("Header created successfully")

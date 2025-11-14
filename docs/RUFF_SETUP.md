@@ -9,6 +9,27 @@ It does two things:
 - **Format**: Visual style (indentation, spaces, quotes)
 - **Check**: Code errors (unused imports, bugs, style violations)
 
+## Ruff Check vs Ruff Format
+
+### 1. ruff check (Linting)
+
+**What it does:**
+
+- Analyzes code to find logical and style errors
+- Checks quality rules (unused variables, missing imports, etc.)
+- Can apply automatic fixes with --fix
+
+**Command:** `ruff check src/ --fix`
+
+### 2. ruff format (Formatting)
+
+**What it does:**
+
+- Reformats only the visual style of the code
+- Indentation, spaces, quotes, line length
+- Equivalent to Black → uniform and aesthetic rendering
+- Always safe, never changes logic
+
 ## How to use Ruff in this project
 
 ### 1. VSCode Extension (everyday use)
@@ -56,7 +77,7 @@ It does two things:
 
 1. Add `pre-commit` to dependencies in `pyproject.toml`
 2. Run: `uv sync`
-3. Run once: `uv run pre-commit install`. This sets up the pre-commit hook git in your repository
+3. Run once: `uv run pre-commit install`. This sets up the pre-commit git hook in your repository ⚠️
 
 **After setup:** Just commit normally. Ruff runs automatically.
 
