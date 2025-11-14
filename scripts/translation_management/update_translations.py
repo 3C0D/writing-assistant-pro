@@ -67,11 +67,17 @@ def main():
 
         if po_file.exists():
             # Update existing language
-            update_cmd = f'uv run pybabel update -d "{translations_dir}" -i "{translations_dir}/template.pot" -l {lang} -D {domain}'
+            update_cmd = (
+                f'uv run pybabel update -d "{translations_dir}" '
+                f'-i "{translations_dir}/template.pot" -l {lang} -D {domain}'
+            )
             run_command(update_cmd, f"🔄 Updating {lang.upper()} translations")
         else:
             # Initialize new language
-            init_cmd = f'uv run pybabel init -d "{translations_dir}" -i "{translations_dir}/template.pot" -l {lang} -D {domain}'
+            init_cmd = (
+                f'uv run pybabel init -d "{translations_dir}" '
+                f'-i "{translations_dir}/template.pot" -l {lang} -D {domain}'
+            )
             run_command(init_cmd, f"✨ Initializing {lang.upper()} language")
 
     # Step 3: Compile

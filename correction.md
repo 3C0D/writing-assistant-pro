@@ -3,32 +3,38 @@ Voici la refactorisation en classe :
 ## 1. Nouveau `hotkey_manager.py`## 2. Modifications dans `__init__.py`
 
 **À RETIRER :**
+
 ```python
 # Import hotkey management system
 from .hotkey_manager import setup_hotkey, setup_hotkey_delayed
 ```
 
 **À AJOUTER :**
+
 ```python
 # Import hotkey management system
 from .hotkey_manager import HotkeyManager
 ```
 
 **Dans le `__all__` :**
+
 - **Retirer :** `"setup_hotkey"`, `"setup_hotkey_delayed"`
 - **Ajouter :** `"HotkeyManager"`
 
 ## 3. Modifications dans `app.py`
 
-### Dans `__init__` de la classe `WritingAssistantApp` :
+### Dans `__init__` de la classe `WritingAssistantApp`
+
 Après la ligne `self.log = logging.getLogger("WritingAssistant.WritingAssistantApp")`, **ajouter :**
+
 ```python
 self.hotkey_manager = None
 ```
 
-### Dans la méthode `run()` :
+### Dans la méthode `run()`
 
 **Partie des imports - remplacer :**
+
 ```python
 from . import (
     WindowManager,
@@ -43,6 +49,7 @@ from . import (
 ```
 
 **Par :**
+
 ```python
 from . import (
     HotkeyManager,  # ← NOUVEAU
@@ -57,25 +64,29 @@ from . import (
 ```
 
 **Après la ligne `self.window_manager = WindowManager(config)`, ajouter :**
+
 ```python
 self.hotkey_manager = HotkeyManager(config)
 ```
 
 **Remplacer cette ligne :**
+
 ```python
 # Setup hotkey in background thread
 setup_hotkey_delayed(config, self.window_manager.toggle_window, self.log)
 ```
 
 **Par :**
+
 ```python
 # Setup hotkey in background thread
 self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
 ```
 
-### Dans la méthode `cleanup()` :
+### Dans la méthode `cleanup()`
 
 **Remplacer :**
+
 ```python
 try:
     from . import stop_css_hot_reload
@@ -87,6 +98,7 @@ except Exception as e:
 ```
 
 **Par :**
+
 ```python
 try:
     from . import stop_css_hot_reload
@@ -104,13 +116,12 @@ except Exception as e:
 
 1. **`hotkey_manager.py`** : Complètement refactoré en classe (voir artifact)
 2. **`__init__.py`** : Import de `HotkeyManager` au lieu des fonctions
-3. **`app.py`** : 
+3. **`app.py`** :
    - Instanciation de `HotkeyManager(config)`
    - Appel `self.hotkey_manager.register_delayed(...)`
    - Appel `self.hotkey_manager.cleanup()` dans cleanup
 
 **Plus besoin d'importer `keyboard` dans `app.py`** car tout est géré par la classe maintenant ! 🎯
-
 
 """
 Hotkey management module for Writing Assistant Pro
@@ -123,11 +134,10 @@ import time
 
 import keyboard
 
-
 class HotkeyManager:
     """
     Manages global hotkey registration and lifecycle
-    
+
     Handles hotkey registration with optional delay to avoid startup conflicts,
     and proper cleanup of keyboard hooks.
     """
