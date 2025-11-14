@@ -2,12 +2,6 @@
 
 **Target Platform**: Windows, Linux, and Mac
 
-## Code Language
-
-- **English only**: All code, comments, and documentation must be in English
-- **No French**: Variable names, function names, comments, and strings must be English
-- **Consistent terminology**: Use standard English terms across the codebase
-
 ## Script Execution
 
 - **Always use UV**: Use `uv run python <script_name>` for running any Python script

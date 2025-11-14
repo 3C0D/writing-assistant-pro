@@ -1,12 +1,12 @@
-# Système de Traduction - Writing Assistant Pro
+# Translation System - Writing Assistant Pro
 
-## Vue d'ensemble
+## Overview
 
-Ce document décrit l'implémentation du système de traduction complet pour l'application Writing Assistant Pro, adapté spécifiquement pour NiceGUI.
+This document describes the complete implementation of the translation system for the Writing Assistant Pro application, specifically adapted for NiceGUI.
 
-## Structure implémentée
+## Implemented Structure
 
-### 1. Configuration des langues dans main.py
+### 1. Language Configuration in main.py
 
 ```python
 # Language configuration
@@ -14,62 +14,62 @@ LANGUAGE = "en"  # Default language
 LANGUAGE_CHOICES = ["en", "fr", "it"]  # Available languages
 ```
 
-### 2. Module de traduction (translation.py)
+### 2. Translation Module (translation.py)
 
-- **LanguageManager**: Gestionnaire principal des traductions
-- **Support gettext**: Utilisation du standard gettext pour les traductions
-- **Callbacks UI**: Système de mise à jour automatique de l'interface
-- **Fallback**: Gestion automatique des langues manquantes
+- **LanguageManager**: Main translation manager
+- **Gettext Support**: Use of the gettext standard for translations
+- **UI Callbacks**: Automatic UI update system
+- **Fallback**: Automatic handling of missing languages
 
-### 3. Structure des dossiers
+### 3. Directory Structure
 
 ```
-locales/
+translations/
 ├── en/LC_MESSAGES/
-│   └── writing_assistant.po    # English translations
+│   └── writing_assistant.mo    # English compiled translations
 ├── fr/LC_MESSAGES/
-│   └── writing_assistant.po    # French translations
+│   └── writing_assistant.mo    # French compiled translations
 └── it/LC_MESSAGES/
-    └── writing_assistant.po    # Italian translations
+    └── writing_assistant.mo    # Italian compiled translations
 ```
 
-### 4. Interface utilisateur (ui/**init**.py)
+### 4. User Interface (ui/**init**.py)
 
-- Sélecteur de langue intégré
-- Mise à jour dynamique des textes
-- Support des callbacks pour les changements de langue
+- Integrated language selector
+- Dynamic text updates
+- Support for callbacks for language changes
 
-## Utilisation
+## Usage
 
-### Dans le code Python
+### In Python Code
 
 ```python
 from translation import _, change_language, get_current_language
 
-# Traduire du texte
+# Translate text
 text = _("Hello, this is a real desktop app!")
 
-# Changer de langue
+# Change language
 change_language("fr")
 
-# Obtenir la langue actuelle
+# Get current language
 current_lang = get_current_language()
 ```
 
-### Dans les templates/markup
+### In Templates/Markup
 
 ```python
 ui.label(_('Click me'))
 ui.button(_('Click me'), on_click=callback)
 ```
 
-## Langues supportées
+## Supported Languages
 
-- **Anglais (en)** - Langue par défaut
-- **Français (fr)** - Traductions complètes
-- **Italien (it)** - Traductions complètes
+- **English (en)** - Default language
+- **French (fr)** - Complete translations
+- **Italian (it)** - Complete translations
 
-## Traductions disponibles
+## Available Translations
 
 ### Interface
 
@@ -83,82 +83,70 @@ ui.button(_('Click me'), on_click=callback)
 - "Configuration: DEBUG=" / "Configuration : DEBUG=" / "Configurazione: DEBUG="
 - "Interface created successfully" / "Interface créée avec succès" / "Interfaccia creata con successo"
 
-### Messages système
+### System Messages
 
 - "Error" / "Erreur" / "Errore"
 - "Success" / "Succès" / "Successo"
 - "Warning" / "Avertissement" / "Avviso"
 - "Information" / "Information" / "Informazione"
 
-## Compilation des traductions
+## Compiling Translations
 
-Pour que les traductions fonctionnent, il faut compiler les fichiers .po en .mo :
-
-```bash
-# Utilisation de msgfmt (recommandé)
-msgfmt -o locales/fr/LC_MESSAGES/writing_assistant.mo locales/fr/LC_MESSAGES/writing_assistant.po
-msgfmt -o locales/it/LC_MESSAGES/writing_assistant.mo locales/it/LC_MESSAGES/writing_assistant.po
-msgfmt -o locales/en/LC_MESSAGES/writing_assistant.mo locales/en/LC_MESSAGES/writing_assistant.po
-
-# Ou utilisation du script Python
-python compile_translations.py
-```
-
-## Tests
-
-Un script de test est fourni pour vérifier le bon fonctionnement :
+To make translations work, you need to run the update script which extracts, updates, and compiles the translation files:
 
 ```bash
-python test_translation.py
+uv run python scripts/translation_management/update_translations.py
 ```
 
-Ce script teste :
+This script:
 
-- La présence des fichiers de traduction
-- Le fonctionnement du LanguageManager
-- Le changement de langues
-- Les traductions de base
-- Les cas d'erreur
+1. Extracts translatable strings from the source code
+2. Updates or initializes translation files (.po)
+3. Compiles to binary format (.mo)
 
-## Fonctionnalités avancées
+## Advanced Features
 
-### Callbacks UI
+### UI Callbacks
 
 ```python
 from translation import register_ui_update
 
 def refresh_interface():
-    # Code pour actualiser l'interface
+    # Code to refresh the interface
     pass
 
 register_ui_update(refresh_interface)
 ```
 
-### Gestion des langues invalides
+### Invalid Language Handling
 
-Le système gère automatiquement les langues non supportées en revenant à la langue par défaut.
+The system automatically handles unsupported languages by falling back to the default language.
 
-### Extensibilité
+### Extensibility
 
-Pour ajouter une nouvelle langue :
+To add a new language:
 
-1. Créer le dossier `locales/[code]/LC_MESSAGES/`
-2. Créer le fichier `writing_assistant.po`
-3. Ajouter le code à `LANGUAGE_CHOICES` dans `main.py`
-4. Ajouter le nom dans `get_language_name()`
+1. First, run the update script to ensure the template.pot is up to date with all current translatable strings:
+   `uv run python scripts/translation_management/update_translations.py`
+2. Modify the script to add the new language code to the `languages` list (e.g., add "es" for Spanish)
+3. Run the update script again to initialize the new language files
+4. Edit the generated .po file in the new language directory to add translations
+5. Add the language code to `LANGUAGE_CHOICES` in `main.py`
+6. Add the language name in `get_language_name()` in `translation.py`
 
-## Notes techniques
+## Technical Notes
 
-- Utilise le standard gettext pour la compatibilité
-- Support complet des accents et caractères spéciaux
-- Fallback automatique en cas d'erreur
-- Compatible avec NiceGUI et les interfaces natives
-- Support des callbacks pour mise à jour dynamique
+- Uses the gettext standard for compatibility
+- Full support for accents and special characters
+- Automatic fallback in case of errors
+- Compatible with NiceGUI and native interfaces
+- Support for callbacks for dynamic updates
 
-## Dépendances
+## Dependencies
 
 - Python 3.13+
-- gettext (inclus avec Python)
-- NiceGUI (pour l'application principale)
+- Babel (for translation management)
+- Gettext (included with Python)
+- NiceGUI (for the main application)
 
-Le système de traduction est maintenant pleinement intégré et fonctionnel dans l'application Writing Assistant Pro.
+The translation system is now fully integrated and functional in the Writing Assistant Pro application.
