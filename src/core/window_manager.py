@@ -23,6 +23,7 @@ class WindowManager:
         self.window_ref = None
         self.window_visible = False
         self.window_initialized = False  # to register close handler only once
+        self._startup_hide_thread = None  # Thread for startup hide functionality
 
     def on_closing(self):
         """
@@ -136,3 +137,22 @@ class WindowManager:
 
         except Exception as e:
             self.log.error(f"Error hiding window: {e}")
+
+    def setup_startup_hide(self, delay=1.0):
+        """
+        Setup window hiding after startup with delay
+
+        Args:
+            delay: Time in seconds to wait before hiding (default: 1.0)
+        """
+
+        def hide_on_startup():
+            time.sleep(delay)  # Wait for window to be fully created
+            if self.config.WINDOW_START_HIDDEN:
+                self.hide_window()
+                self.log.info(
+                    f"Window hidden on startup - Press {self.config.HOTKEY_COMBINATION} to show"
+                )
+
+        self._startup_hide_thread = threading.Thread(target=hide_on_startup, daemon=True)
+        self._startup_hide_thread.start()

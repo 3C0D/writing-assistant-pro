@@ -4,8 +4,6 @@ Handles window visibility, hotkeys, and application lifecycle
 """
 
 import logging
-import threading
-import time
 
 from nicegui import app, ui
 
@@ -80,13 +78,7 @@ class WritingAssistantApp:
             self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
 
             # Setup window hiding after startup
-            def hide_window_on_startup():
-                time.sleep(1.0)  # Wait for window to be fully created
-                if config.WINDOW_START_HIDDEN:
-                    self.window_manager.hide_window()
-                    self.log.info("Window hidden on startup - Press Ctrl+Space to show")
-
-            threading.Thread(target=hide_window_on_startup, daemon=True).start()
+            self.window_manager.setup_startup_hide(delay=1.0)
 
             # Run NiceGUI - DISABLE reload for native mode (causes multiple instances)
             self.log.info("Starting NiceGUI application...")
