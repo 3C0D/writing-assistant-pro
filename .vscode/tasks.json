@@ -19,7 +19,7 @@
             "type": "shell",
             "command": "uv",
             "args": ["run", "ruff", "check", "src/", "--fix"],
-            "problemMatcher": "$ruff",
+            "problemMatcher": "$python",
             "presentation": {
                 "reveal": "always",
                 "panel": "shared"
