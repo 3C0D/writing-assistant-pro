@@ -58,9 +58,7 @@ class WritingAssistantApp:
             )
 
             # Configure native window
-            app.native.window_args["resizable"] = config.WINDOW_RESIZABLE
-            app.native.window_args["frameless"] = config.WINDOW_FRAMELESS
-            app.native.start_args["debug"] = False
+            self.window_manager.configure_native_window(app)
 
             # Apply theme
             apply_theme(config.DARK_MODE)

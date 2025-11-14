@@ -25,6 +25,21 @@ class WindowManager:
         self.window_initialized = False  # to register close handler only once
         self._startup_hide_thread = None  # Thread for startup hide functionality
 
+    def configure_native_window(self, app):
+        """
+        Configure native window arguments before UI creation
+
+        Args:
+            app: NiceGUI app instance
+        """
+        app.native.window_args["resizable"] = self.config.WINDOW_RESIZABLE
+        app.native.window_args["frameless"] = self.config.WINDOW_FRAMELESS
+        app.native.start_args["debug"] = False
+        self.log.debug(
+            f"Native window configured: resizable={self.config.WINDOW_RESIZABLE}, "
+            f"frameless={self.config.WINDOW_FRAMELESS}"
+        )
+
     def on_closing(self):
         """
         Handle window close event - hide instead of closing
