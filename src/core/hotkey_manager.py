@@ -4,6 +4,8 @@ Handles global hotkey registration and management
 """
 
 import logging
+import threading
+import time
 
 import keyboard
 
@@ -30,3 +32,24 @@ def setup_hotkey(config, toggle_callback):
     except Exception as e:
         log.error(f"Failed to register hotkey: {e}")
         return False
+
+
+def setup_hotkey_delayed(config, toggle_callback, log):
+    """
+    Setup global hotkey with delay to avoid startup conflicts
+
+    Args:
+        config: Configuration object with HOTKEY_COMBINATION and HOTKEY_SETUP_DELAY
+        toggle_callback: Function to call when hotkey is pressed
+        log: Logger instance for logging messages
+    """
+
+    def delayed_setup():
+        time.sleep(config.HOTKEY_SETUP_DELAY)
+        success = setup_hotkey(config, toggle_callback)
+        if success:
+            log.info(f"Press {config.HOTKEY_COMBINATION} to toggle window")
+        else:
+            log.error("Failed to setup hotkey")
+
+    threading.Thread(target=delayed_setup, daemon=True).start()

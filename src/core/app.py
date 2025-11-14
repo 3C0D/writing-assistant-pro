@@ -10,19 +10,6 @@ import time
 import keyboard
 from nicegui import app, ui
 
-# Core imports
-from src.core import (
-    _,
-    apply_theme,
-    init_translation,
-    setup_css_hot_reload,
-    setup_root_logger,
-    stop_css_hot_reload,
-)
-from src.core.hotkey_manager import setup_hotkey
-from src.core.window_manager import WindowManager
-from src.ui import create_header, create_interface
-
 
 class WritingAssistantApp:
     """
@@ -39,7 +26,19 @@ class WritingAssistantApp:
             print("================ START ================")
 
             # Import configuration module
-            from src.core import config
+            # Core imports
+            from src.ui import create_header, create_interface
+
+            from . import (
+                WindowManager,
+                _,
+                apply_theme,
+                config,
+                init_translation,
+                setup_css_hot_reload,
+                setup_hotkey_delayed,
+                setup_root_logger,
+            )
 
             self.config = config
             self.window_manager = WindowManager(config)
@@ -77,15 +76,7 @@ class WritingAssistantApp:
             create_header(config, self.window_manager)
 
             # Setup hotkey in background thread
-            def setup_hotkey_delayed():
-                time.sleep(self.config.HOTKEY_SETUP_DELAY)
-                success = setup_hotkey(config, self.window_manager.toggle_window)
-                if success:
-                    self.log.info(f"Press {self.config.HOTKEY_COMBINATION} to toggle window")
-                else:
-                    self.log.error("Failed to setup hotkey")
-
-            threading.Thread(target=setup_hotkey_delayed, daemon=True).start()
+            setup_hotkey_delayed(config, self.window_manager.toggle_window, self.log)
 
             # Setup window hiding after startup
             def hide_window_on_startup():
@@ -122,6 +113,8 @@ class WritingAssistantApp:
         """Clean up resources"""
         self.log.info("Cleaning up...")
         try:
+            from . import stop_css_hot_reload
+
             stop_css_hot_reload()  # Stop CSS hot reload
             keyboard.unhook_all()  # Clear all hotkeys
         except Exception as e:
