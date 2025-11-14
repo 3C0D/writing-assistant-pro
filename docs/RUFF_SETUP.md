@@ -56,7 +56,7 @@ It does two things:
 
 1. Add `pre-commit` to dependencies in `pyproject.toml`
 2. Run: `uv sync`
-3. Run once: `uv run pre-commit install`. This sets up the pre-commit hook in your repository
+3. Run once: `uv run pre-commit install`. This sets up the pre-commit hook git in your repository
 
 **After setup:** Just commit normally. Ruff runs automatically.
 
