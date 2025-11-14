@@ -20,6 +20,8 @@
         pass
   ```
 
+- **Process termination**: To kill running Python processes on Windows, use `taskkill /F /IM python.exe`
+
 ## File Organization
 
 - **Keep root clean**: Only essential files at project root (main.py, pyproject.toml, README.md, etc.)

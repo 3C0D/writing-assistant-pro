@@ -18,7 +18,7 @@ from .app import WritingAssistantApp
 from .config import DARK_MODE, DEBUG, LANGUAGE, get_config, parse_arguments
 
 # Import hotkey management system
-from .hotkey_manager import setup_hotkey, setup_hotkey_delayed
+from .hotkey_manager import HotkeyManager
 
 # Import logger system
 from .logger import setup_root_logger
@@ -62,8 +62,7 @@ __all__ = [
     # App system
     "WritingAssistantApp",
     # Hotkey management system
-    "setup_hotkey",
-    "setup_hotkey_delayed",
+    "HotkeyManager",
     # Window manager system
     "WindowManager",
 ]

@@ -7,7 +7,6 @@ import logging
 import threading
 import time
 
-import keyboard
 from nicegui import app, ui
 
 
@@ -19,6 +18,7 @@ class WritingAssistantApp:
 
     def __init__(self):
         self.log = logging.getLogger("WritingAssistant.WritingAssistantApp")
+        self.hotkey_manager = None
 
     def run(self):
         """Run the application"""
@@ -30,18 +30,19 @@ class WritingAssistantApp:
             from src.ui import create_header, create_interface
 
             from . import (
+                HotkeyManager,
                 WindowManager,
                 _,
                 apply_theme,
                 config,
                 init_translation,
                 setup_css_hot_reload,
-                setup_hotkey_delayed,
                 setup_root_logger,
             )
 
             self.config = config
             self.window_manager = WindowManager(config)
+            self.hotkey_manager = HotkeyManager(config)
 
             # Initialize translation system
             init_translation("writing_assistant", "translations", config.LANGUAGE)
@@ -76,7 +77,7 @@ class WritingAssistantApp:
             create_header(config, self.window_manager)
 
             # Setup hotkey in background thread
-            setup_hotkey_delayed(config, self.window_manager.toggle_window, self.log)
+            self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
 
             # Setup window hiding after startup
             def hide_window_on_startup():
@@ -116,7 +117,8 @@ class WritingAssistantApp:
             from . import stop_css_hot_reload
 
             stop_css_hot_reload()  # Stop CSS hot reload
-            keyboard.unhook_all()  # Clear all hotkeys
+            if self.hotkey_manager:
+                self.hotkey_manager.cleanup()  # Clean up hotkeys
         except Exception as e:
             self.log.debug(f"Cleanup error: {e}")
         self.log.info("Application stopped")
