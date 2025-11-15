@@ -2,16 +2,20 @@
 name = "writing-assistant-pro"
 version = "0.1.0"
 description = "Inspired by writting tool app"
+authors = [
+    { name = "3C0D", email = "author@example.com" }
+]
 readme = "README.md"
+license = {text = "MIT"}
 requires-python = ">=3.13"
 dependencies = [
-    "nicegui",
-    "pywebview",
+    "nicegui",  # Web-based UI framework for Python
+    "pywebview",  # Lightweight cross-platform webview library
     "babel", # For translation management
     "keyboard", # For global hotkey management
-    "watchdog>=6.0.0",
-    "ruff",
-    "pre-commit"
+    "watchdog>=6.0.0",  # File system monitoring, used to detect css changes
+    "ruff",  # Fast Python linter and formatter
+    "pre-commit"  # For managing pre-commit hooks
 ]
 
 [build-system]
@@ -20,9 +24,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.ruff]
 line-length = 100
-target-version = "py313"
-cache-dir = ".ruff_cache"
-exclude = ["build", "dist", "__pycache__", "myvenv", ".uv", ".pytest_cache", ".mypy_cache", ".venv", ".git", ".ruff_cache"]
+target-version = "py313"  # Target Python
+cache-dir = ".ruff_cache"  # For caching Ruff's analysis results
+exclude = ["build", "dist", "__pycache__", "myvenv", ".uv", ".pytest_cache", ".mypy_cache", ".venv", ".git", ".ruff_cache"]  # Exclude from linting
 
 [tool.ruff.format]
 quote-style = "double"
@@ -30,8 +34,8 @@ indent-style = "space"
 line-ending = "auto"
 
 [tool.ruff.lint]
-select = ["E", "W", "F", "I", "UP", "C4", "B"]
-ignore = []
+select = ["E", "W", "F", "I", "UP", "C4", "B"]  # Enabled rule categories: pycodestyle errors, warnings, pyflakes, isort, pyupgrade, flake8-comprehensions, flake8-bugbear
+ignore = []  # List of rules to ignore
 
 [tool.ruff.lint.isort]
-known-first-party = ["src"]
+known-first-party = ["src"]  # Treat 'src' as first-party imports for import sorting
