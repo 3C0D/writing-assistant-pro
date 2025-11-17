@@ -17,7 +17,7 @@ WINDOW_FRAMELESS = False
 WINDOW_START_HIDDEN = True
 
 # Hotkey configuration
-HOTKEY_COMBINATION = "ctrl+space"
+HOTKEY_COMBINATION = "ctrl+."
 MIN_TRIGGER_INTERVAL = 0.5  # seconds
 HOTKEY_SETUP_DELAY = 2.0  # seconds
 

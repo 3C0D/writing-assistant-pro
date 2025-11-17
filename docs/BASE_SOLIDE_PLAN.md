@@ -187,7 +187,7 @@ ui:
   theme: "auto"  # auto, light, dark
   window_size: [800, 600]
   always_on_top: true
-  hotkey: "ctrl+space"
+  hotkey: "ctrl+."
   
 llm:
   provider: "openai"  # openai, anthropic, local

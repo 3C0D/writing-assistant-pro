@@ -15,6 +15,7 @@ dependencies = [
     "keyboard", # For global hotkey management
     "watchdog>=6.0.0",  # File system monitoring, used to detect css changes
     "ruff",  # Fast Python linter and formatter
+    "loguru",  # Modern logging library with colored output
     "pre-commit"  # For managing pre-commit hooks
 ]
 

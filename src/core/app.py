@@ -3,8 +3,7 @@ Main application class for Writing Assistant Pro
 Handles window visibility, hotkeys, and application lifecycle
 """
 
-import logging
-
+from loguru import logger
 from nicegui import app, ui
 
 
@@ -15,7 +14,7 @@ class WritingAssistantApp:
     """
 
     def __init__(self):
-        self.log = logging.getLogger("WritingAssistant.WritingAssistantApp")
+        self.log = logger.bind(name="WritingAssistant.WritingAssistantApp")
         self.hotkey_manager = None
 
     def run(self):
@@ -48,8 +47,8 @@ class WritingAssistantApp:
             # Setup root logger
             setup_root_logger(debug=config.DEBUG)
 
-            # Re-get logger after setup (in case it was reconfigured)
-            self.log = logging.getLogger("WritingAssistant.App")
+            # Re-bind logger after setup (in case it was reconfigured)
+            self.log = logger.bind(name="WritingAssistant.App")
 
             self.log.info(
                 f"{_('Configuration: DEBUG=')}{config.DEBUG}, "

@@ -3,11 +3,11 @@ Window management module for Writing Assistant Pro
 Handles window visibility, hotkeys, and window lifecycle
 """
 
-import logging
 import threading
 import time
 
 import webview
+from loguru import logger
 
 
 class WindowManager:
@@ -17,7 +17,7 @@ class WindowManager:
 
     def __init__(self, config):
         self.config = config
-        self.log = logging.getLogger("WritingAssistant.WindowManager")
+        self.log = logger.bind(name="WritingAssistant.WindowManager")
         self.last_trigger_time = 0.0
         self.trigger_lock = threading.Lock()  # prevent overlapping triggers. not locked!
         self.window_ref = None
@@ -52,7 +52,7 @@ class WindowManager:
                 if self.window_ref:
                     self.window_ref.hide()  # not destroyed
                     self.window_visible = False  # Update state
-                    self.log.info("Window hidden - Press Ctrl+Space to show again")
+                    self.log.info("Window hidden - Press ctrl+. to show again")
             except Exception as e:
                 self.log.error(f"Error hiding window: {e}")
 
@@ -146,7 +146,7 @@ class WindowManager:
                     window.hide()
 
                 self.window_visible = False
-                self.log.info("Window hidden - Ctrl+Space to show")
+                self.log.info("Window hidden - ctrl+. to show")
             else:
                 self.log.warning("No webview window found")
 

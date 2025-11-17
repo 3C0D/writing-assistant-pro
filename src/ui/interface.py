@@ -2,8 +2,7 @@
 UI Module - Creates pages and interface components
 """
 
-import logging
-
+from loguru import logger
 from nicegui import ui
 
 from src.core import _, change_language, get_current_language
@@ -13,14 +12,14 @@ def create_interface():
     """
     Creates the main user interface.
     """
-    logger = logging.getLogger("WritingAssistant.ui")
+    log = logger.bind(name="WritingAssistant.ui")
 
     # Store references to UI elements that need updating
     ui_elements = {}
 
     def on_button_click():
         """Button click callback."""
-        logger.debug("Button clicked!")
+        log.debug("Button clicked!")
         ui.notify(_("Clicked!!!"))
 
     def update_all_text():
@@ -52,4 +51,4 @@ def create_interface():
             ui_elements["label_main"] = ui.label(_("Hello, this is a real desktop app!"))
             ui_elements["button_main"] = ui.button(_("Click me"), on_click=on_button_click)
 
-    logger.debug("Interface created successfully")
+    log.debug("Interface created successfully")

@@ -2,8 +2,7 @@
 Header component for the application
 """
 
-import logging
-
+from loguru import logger
 from nicegui import ui
 
 
@@ -15,7 +14,7 @@ def create_header(config, window_manager):
         config: Application configuration object
         window_manager: WindowManager instance for window control
     """
-    logger = logging.getLogger("WritingAssistant.ui.header")
+    log = logger.bind(name="WritingAssistant.ui.header")
 
     with (
         ui.header()
@@ -29,4 +28,4 @@ def create_header(config, window_manager):
             icon="visibility_off",
         ).props("flat dense").style("z-index: 1000")
 
-    logger.debug("Header created successfully")
+    log.debug("Header created successfully")

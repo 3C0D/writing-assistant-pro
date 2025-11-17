@@ -5,13 +5,14 @@ Loads CSS files from the styles/ directory with hot reload support
 
 from __future__ import annotations
 
-import logging
 import threading
 import time
 import traceback
 
 # Standard library imports
 from pathlib import Path
+
+from loguru import logger
 
 # Third-party imports
 from nicegui import ui
@@ -24,7 +25,7 @@ try:
 except ImportError:
     WATCHDOG_AVAILABLE = False
 
-log = logging.getLogger(__name__)
+log = logger.bind(name="WritingAssistant.Styles")
 
 
 def get_theme_css_path(dark_mode: bool) -> Path:

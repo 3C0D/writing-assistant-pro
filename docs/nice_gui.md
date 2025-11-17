@@ -301,7 +301,7 @@ def on_closing(self):
             if self.window_ref:
                 self.window_ref.hide()  # Pywebview API
                 self.window_visible = False
-                self.log.info("Window hidden - Press Ctrl+Space to show again")
+                self.log.info("Window hidden - Press ctrl+. to show again")
         except Exception as e:
             self.log.error(f"Error hiding window: {e}")
 

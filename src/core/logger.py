@@ -1,39 +1,43 @@
 """
 Centralized logging configuration for the application.
+Migrated to loguru for modern, colored logging with better formatting.
 """
 
-import logging
 import sys
+
+from loguru import logger
 
 
 def setup_root_logger(debug: bool) -> None:
     """
-    Configure the root logger for the entire application.
+    Configure the root logger for the entire application using loguru.
     Call this ONCE at application startup.
 
     Args:
-        debug: True to enable DEBUG mode (detailed logs), False for minimal logs
+        debug: True to enable DEBUG mode (detailed logs with colors), False for minimal logs
     """
-    root_logger = logging.getLogger()
+    # Remove default handler (console output)
+    logger.remove()
 
-    # Clear any existing handlers
-    root_logger.handlers.clear()
-
+    # Configure conditional dev/production logging
     if debug:
-        log_level = logging.DEBUG
-        log_format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+        # Development mode: detailed, colored logs with timestamps
+        logger.add(
+            sys.stderr,
+            level="DEBUG",
+            format=(
+                "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | "
+                "<cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>"
+            ),
+            colorize=True,
+        )
+        logger.debug("Root logger configured - Debug mode enabled with colored output")
     else:
-        log_level = logging.INFO
-        log_format = "%(name)s - %(levelname)s - %(message)s"
-
-    # Create handler
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setLevel(log_level)
-    handler.setFormatter(logging.Formatter(log_format))
-
-    # Configure root logger
-    root_logger.setLevel(log_level)
-    root_logger.addHandler(handler)
-
-    if debug:
-        root_logger.debug("Root logger configured - Debug mode enabled")
+        # Production mode: clean, minimal logs without timestamps
+        logger.add(
+            sys.stderr,
+            level="INFO",
+            format="<level>{level: <8}</level> | {name} - <level>{message}</level>",
+            colorize=True,
+        )
+        logger.info("Root logger configured - Production mode enabled")

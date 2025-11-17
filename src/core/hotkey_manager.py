@@ -3,11 +3,11 @@ Hotkey management module for Writing Assistant Pro
 Handles global hotkey registration and management
 """
 
-import logging
 import threading
 import time
 
 import keyboard
+from loguru import logger
 
 
 class HotkeyManager:
@@ -26,7 +26,7 @@ class HotkeyManager:
             config: Configuration object with HOTKEY_COMBINATION and HOTKEY_SETUP_DELAY
         """
         self.config = config
-        self.log = logging.getLogger("WritingAssistant.HotkeyManager")
+        self.log = logger.bind(name="WritingAssistant.HotkeyManager")
         self._hotkey_hook = None
         self._setup_thread = None
         self._toggle_callback = None

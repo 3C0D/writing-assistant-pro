@@ -4,7 +4,7 @@ This document explains how to implement global keyboard shortcuts in a NiceGUI a
 
 ## Overview
 
-NiceGUI provides built-in keyboard event handling through `ui.keyboard()`, but for global desktop shortcuts (like Ctrl+Space to show/hide windows), you need to combine NiceGUI with system-level keyboard libraries.
+NiceGUI provides built-in keyboard event handling through `ui.keyboard()`, but for global desktop shortcuts (like ctrl+. to show/hide windows), you need to combine NiceGUI with system-level keyboard libraries.
 
 ## Approaches
 
@@ -44,7 +44,7 @@ class GlobalHotkeyManager:
         Setup a global hotkey
         
         Args:
-            hotkey_combination: String like 'ctrl+space' or 'ctrl+shift+a'
+            hotkey_combination: String like 'ctrl+.' or 'ctrl+shift+a'
             callback: Function to call when hotkey is pressed
             suppress: Whether to suppress the key event (default True)
         """
@@ -75,10 +75,10 @@ class GlobalHotkeyManager:
 hotkey_manager = GlobalHotkeyManager()
 
 def on_ctrl_space():
-    print("Ctrl+Space pressed!")
+    print("ctrl+. pressed!")
     # Your window toggle logic here
 
-hotkey_manager.setup_global_hotkey('ctrl+space', on_ctrl_space)
+hotkey_manager.setup_global_hotkey('ctrl+.', on_ctrl_space)
 ```
 
 ### 3. Implementation in main.py
@@ -96,8 +96,8 @@ class WritingAssistantApp:
             keyboard.unhook_all()
             
             # Register the global hotkey
-            keyboard.add_hotkey('ctrl+space', self.toggle_window, suppress=False)
-            self.log.info("Global hotkey registered: Ctrl+Space (toggle window)")
+            keyboard.add_hotkey('ctrl+.', self.toggle_window, suppress=False)
+            self.log.info("Global hotkey registered: ctrl+. (toggle window)")
             return True
         except Exception as e:
             self.log.error(f"Failed to register hotkey: {e}")
@@ -141,7 +141,7 @@ def conditional_callback():
         perform_action()
 
 # Wait for hotkey with timeout
-keyboard.wait('ctrl+space', suppress=True, timeout=2.0)
+keyboard.wait('ctrl+.', suppress=True, timeout=2.0)
 
 # Remove specific hotkey
 keyboard.remove_hotkey(handler_id)
@@ -196,8 +196,8 @@ def setup_hotkey(self):
         # Clear all existing hotkeys first to prevent duplicates
         keyboard.unhook_all()
         
-        keyboard.add_hotkey('ctrl+space', self.toggle_window, suppress=False)
-        self.log.info("Global hotkey registered: Ctrl+Space (toggle window)")
+        keyboard.add_hotkey('ctrl+.', self.toggle_window, suppress=False)
+        self.log.info("Global hotkey registered: ctrl+. (toggle window)")
         return True
     except Exception as e:
         self.log.error(f"Failed to register hotkey: {e}")
