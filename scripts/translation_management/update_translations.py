@@ -27,13 +27,13 @@ except AttributeError:
     pass
 
 
-def run_command(cmd, description):
+def run_command(cmd, description, project_root):
     """Execute a command and handle errors"""
     print(f"\n{'=' * 70}")
     print(f"▶️  {description}")
     print(f"{'=' * 70}\n")
 
-    result = subprocess.run(cmd, shell=True, cwd=str(Path(__file__).parent.parent.parent))
+    result = subprocess.run(cmd, shell=True, cwd=str(project_root))
 
     if result.returncode != 0:
         print(f"\n❌ Error during: {description}")
@@ -56,7 +56,7 @@ def main():
     extract_cmd = (
         f'uv run pybabel extract -F babel.cfg -k _ -o "{translations_dir}/template.pot" "{src_dir}"'
     )
-    run_command(extract_cmd, "🔍 Extracting translatable texts")
+    run_command(extract_cmd, "🔍 Extracting translatable texts", project_root)
 
     # Step 2: Update/Initialize languages
     languages = ["en", "fr", "it"]
@@ -71,18 +71,18 @@ def main():
                 f'uv run pybabel update -d "{translations_dir}" '
                 f'-i "{translations_dir}/template.pot" -l {lang} -D {domain}'
             )
-            run_command(update_cmd, f"🔄 Updating {lang.upper()} translations")
+            run_command(update_cmd, f"🔄 Updating {lang.upper()} translations", project_root)
         else:
             # Initialize new language
             init_cmd = (
                 f'uv run pybabel init -d "{translations_dir}" '
                 f'-i "{translations_dir}/template.pot" -l {lang} -D {domain}'
             )
-            run_command(init_cmd, f"✨ Initializing {lang.upper()} language")
+            run_command(init_cmd, f"✨ Initializing {lang.upper()} language", project_root)
 
     # Step 3: Compile
     compile_cmd = f'uv run pybabel compile -d "{translations_dir}" -D writing_assistant'
-    run_command(compile_cmd, "⚙️  Compiling translations (.po → .mo)")
+    run_command(compile_cmd, "⚙️  Compiling translations (.po → .mo)", project_root)
 
     print("\n" + "=" * 70)
     print("✅ TRANSLATIONS UPDATED SUCCESSFULLY!")

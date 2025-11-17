@@ -20,9 +20,26 @@ try:
 except AttributeError:
     pass
 
-print("🚀 Starting in DEV mode...")
-print("─" * 50)
 
-# Launch main.py with the --debug argument
-main_path = Path(__file__).parent.parent / "main.py"
-subprocess.run(["uv", "run", "python", str(main_path), "--debug"])
+def main():
+    """Launch main.py in debug mode"""
+    print("🚀 Starting in DEV mode...")
+    print("─" * 50)
+
+    main_path = Path(__file__).parent.parent / "main.py"
+    result = subprocess.run(["uv", "run", "python", str(main_path), "--debug"])
+    sys.exit(result.returncode)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("\n\n⚠️  Operation cancelled by user")
+        sys.exit(130)
+    except Exception as e:
+        print(f"\n\n❌ Unexpected error: {e}")
+        import traceback
+
+        traceback.print_exc()
+        sys.exit(1)
