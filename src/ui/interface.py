@@ -40,15 +40,23 @@ def create_interface() -> None:
         # Language selector section
         with ui.row().classes("items-center gap-2"):
             ui_elements["label_lang"] = ui.label(_("Language") + ":")
-            language_select = ui.select(
-                options={"en": _("English"), "fr": _("Français"), "it": _("Italiano")},
-                value=get_current_language(),
-                on_change=lambda e: change_language_handler(e.value),
+            language_select = (
+                ui.select(
+                    options={"en": _("English"), "fr": _("Français"), "it": _("Italiano")},
+                    value=get_current_language(),
+                    on_change=lambda e: change_language_handler(e.value),
+                )
+                .props("outlined dense")
+                .classes("min-w-[150px]")
             )
 
         # Main content section
         with ui.column().classes("gap-2"):
-            ui_elements["label_main"] = ui.label(_("Hello, this is a real desktop app!"))
-            ui_elements["button_main"] = ui.button(_("Click me"), on_click=on_button_click)
+            ui_elements["label_main"] = ui.label(_("Hello, this is a real desktop app!")).classes(
+                "text-lg"
+            )
+            ui_elements["button_main"] = ui.button(_("Click me"), on_click=on_button_click).props(
+                "color=primary"
+            )
 
     log.debug("Interface created successfully")

@@ -16,12 +16,8 @@ def create_header(config, window_manager) -> None:
     """
     log = logger.bind(name="WritingAssistant.ui.header")
 
-    with (
-        ui.header()
-        .classes("items-center justify-between")
-        .style("position: relative; background-color: #1976d2")
-    ):
-        ui.label("Writing Assistant Pro").classes("text-h6")
+    with ui.header().classes("items-center justify-between bg-blue-600"):
+        ui.label("Writing Assistant Pro").classes("text-h6 text-white font-semibold")
 
         with ui.row().classes("items-center gap-2"):
             # Theme toggle button
@@ -42,7 +38,7 @@ def create_header(config, window_manager) -> None:
                     icon="dark_mode" if not config.DARK_MODE else "light_mode",
                     on_click=toggle_theme,
                 )
-                .props("flat round dense")
+                .props("flat round dense color=white")
                 .tooltip("Toggle Dark/Light Mode")
             )
 
@@ -50,6 +46,6 @@ def create_header(config, window_manager) -> None:
                 f"Hide ({config.HOTKEY_COMBINATION})",
                 on_click=lambda: window_manager.hide_window(),
                 icon="visibility_off",
-            ).props("flat dense").style("z-index: 1000")
+            ).props("flat dense color=white")
 
     log.debug("Header created successfully")

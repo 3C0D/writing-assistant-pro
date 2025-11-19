@@ -1,30 +1,16 @@
-/* Thème Clair */
+/* Thème Clair - Styles minimaux */
 
+/* Police personnalisée */
 body {
-    background-color: #ffffff;
-    color: #000000;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
-/* Labels */
-.nicegui-label {
-    color: #000000;
+/* Animations custom si nécessaire */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
-/* Boutons */
-.nicegui-button {
-    background-color: #f0f0f0;
-    color: #000000;
-    border: 1px solid #cccccc;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: background-color 0.2s;
-}
-
-.nicegui-button:hover {
-    background-color: #e0e0e0;
-}
-
-.nicegui-button:active {
-    background-color: #d0d0d0;
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
 }

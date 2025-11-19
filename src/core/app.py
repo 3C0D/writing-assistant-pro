@@ -95,7 +95,7 @@ class WritingAssistantApp:
                 title="🔥 Writing Assistant Pro (DEV MODE)"
                 if self.config.DEBUG
                 else _("Writing Assistant Pro"),
-                reload=True,
+                reload=self.config.DEBUG,  # Only reload in debug mode
             )
 
         except KeyboardInterrupt:
