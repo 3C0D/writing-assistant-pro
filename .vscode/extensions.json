@@ -2,15 +2,17 @@
   "recommendations": [
     "charliermarsh.ruff",
     "ms-python.python",
-    "ms-python.vscode-pylance",
+    "ms-pyright.pyright",
     "formulahendry.code-runner",
-    "ms-python.isort",
-    "ms-toolsai.jupyter"
+    "ms-toolsai.jupyter",
+    "taskbuttons.vscode-task-buttons"
   ],
   "unwantedRecommendations": [
     "ms-python.black-formatter",
     "ms-python.flake8",
     "ms-python.autopep8",
-    "ms-python.pylint"
+    "ms-python.pylint",
+    "ms-python.isort",
+    "ms-python.vscode-pylance"
   ]
 }

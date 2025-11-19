@@ -67,6 +67,44 @@ def apply_theme(dark_mode: bool) -> None:
         log.info("Light mode enabled")
 
 
+def set_theme(dark_mode: bool) -> None:
+    """
+    Updates the theme dynamically for connected clients.
+
+    Args:
+        dark_mode: True for dark mode, False for light mode
+    """
+    css_path = get_theme_css_path(dark_mode)
+
+    try:
+        with open(css_path, encoding="utf-8") as f:
+            css_content = f.read()
+
+        # Escape the CSS content for JavaScript
+        css_escaped = css_content.replace("\\", "\\\\").replace("`", "\\`").replace("$", "\\$")
+
+        js_code = f"""
+        (function() {{
+            const styleEl = document.getElementById('app-theme-styles');
+            if (styleEl) {{
+                styleEl.textContent = `{css_escaped}`;
+            }} else {{
+                // If element doesn't exist (shouldn't happen if apply_theme was called), create it
+                const newStyle = document.createElement('style');
+                newStyle.id = 'app-theme-styles';
+                newStyle.textContent = `{css_escaped}`;
+                document.head.appendChild(newStyle);
+            }}
+        }})();
+        """
+
+        ui.run_javascript(js_code)
+        log.info(f"Theme updated to {'Dark' if dark_mode else 'Light'}")
+
+    except Exception as e:
+        log.error(f"Error setting theme: {e}")
+
+
 class CSSHotReloader:
     """
     Watches CSS files and reloads them automatically in debug mode.

@@ -5,7 +5,11 @@
             "label": "Run Dev",
             "type": "shell",
             "command": "uv",
-            "args": ["run", "python", "scripts/run_dev.py"],
+            "args": [
+                "run",
+                "python",
+                "scripts/run_dev.py"
+            ],
             "group": "build",
             "presentation": {
                 "echo": true,
@@ -18,7 +22,13 @@
             "label": "Run Ruff",
             "type": "shell",
             "command": "uv",
-            "args": ["run", "ruff", "check", "src/", "--fix"],
+            "args": [
+                "run",
+                "ruff",
+                "check",
+                "src/",
+                "--fix"
+            ],
             "problemMatcher": "$python",
             "presentation": {
                 "reveal": "always",
@@ -29,8 +39,28 @@
             "label": "Update Translations",
             "type": "shell",
             "command": "uv",
-            "args": ["run", "python", "scripts/translation_management/update_translations.py"],
+            "args": [
+                "run",
+                "python",
+                "scripts/translation_management/update_translations.py"
+            ],
             "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Run Tests",
+            "type": "shell",
+            "command": "uv",
+            "args": [
+                "run",
+                "pytest"
+            ],
+            "group": "test",
             "presentation": {
                 "echo": true,
                 "reveal": "always",

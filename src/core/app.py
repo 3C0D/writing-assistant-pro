@@ -3,6 +3,8 @@ Main application class for Writing Assistant Pro
 Handles window visibility, hotkeys, and application lifecycle
 """
 
+import argparse
+
 from loguru import logger
 from nicegui import app, ui
 
@@ -17,8 +19,13 @@ class WritingAssistantApp:
         self.log = logger.bind(name="WritingAssistant.WritingAssistantApp")
         self.hotkey_manager = None
 
-    def run(self):
-        """Run the application"""
+    def run(self, args: argparse.Namespace | None = None) -> None:
+        """
+        Run the application
+
+        Args:
+            args: Command line arguments (optional)
+        """
         try:
             print("================ START ================")
 
@@ -27,55 +34,57 @@ class WritingAssistantApp:
             from src.ui import create_header, create_interface
 
             from . import (
+                ConfigManager,
                 HotkeyManager,
                 WindowManager,
                 _,
                 apply_theme,
-                config,
                 init_translation,
                 setup_css_hot_reload,
                 setup_root_logger,
             )
 
-            self.config = config
-            self.window_manager = WindowManager(config)
-            self.hotkey_manager = HotkeyManager(config)
+            self.config = ConfigManager()
+
+            # Apply command line arguments
+            if args and hasattr(args, "debug") and args.debug:
+                self.config.DEBUG = True
+
+            self.window_manager = WindowManager(self.config)
+            self.hotkey_manager = HotkeyManager(self.config)
 
             # Initialize translation system
-            init_translation("writing_assistant", "translations", config.LANGUAGE)
+            init_translation("writing_assistant", "translations", self.config.LANGUAGE)
 
             # Setup root logger
-            setup_root_logger(debug=config.DEBUG)
+            setup_root_logger(debug=self.config.DEBUG)
 
             # Re-bind logger after setup (in case it was reconfigured)
             self.log = logger.bind(name="WritingAssistant.App")
 
             self.log.info(
-                f"{_('Configuration: DEBUG=')}{config.DEBUG}, "
-                f"DARK_MODE={config.DARK_MODE}, "
-                f"LANGUAGE={config.LANGUAGE}"
+                f"{_('Configuration: DEBUG=')}{self.config.DEBUG}, "
+                f"DARK_MODE={self.config.DARK_MODE}, "
+                f"LANGUAGE={self.config.LANGUAGE}"
             )
 
             # Configure native window
             self.window_manager.configure_native_window(app)
 
             # Apply theme
-            apply_theme(config.DARK_MODE)
+            apply_theme(self.config.DARK_MODE)
 
             # Setup CSS hot reload in debug mode
-            setup_css_hot_reload(config.DARK_MODE, config.DEBUG)
+            setup_css_hot_reload(self.config.DARK_MODE, self.config.DEBUG)
 
             # Create interface
             create_interface()
 
             # Add header with hide button
-            create_header(config, self.window_manager)
+            create_header(self.config, self.window_manager)
 
             # Setup hotkey in background thread
             self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
-
-            # Setup window hiding after startup
-            self.window_manager.setup_startup_hide(delay=1.0)
 
             # Run NiceGUI - DISABLE reload for native mode (causes multiple instances)
             self.log.info("Starting NiceGUI application...")
@@ -84,7 +93,7 @@ class WritingAssistantApp:
                 native=True,
                 window_size=(800, 600),
                 title="🔥 Writing Assistant Pro (DEV MODE)"
-                if config.DEBUG
+                if self.config.DEBUG
                 else _("Writing Assistant Pro"),
                 reload=True,
             )
@@ -99,7 +108,7 @@ class WritingAssistantApp:
         finally:
             self.cleanup()
 
-    def cleanup(self):
+    def cleanup(self) -> None:
         """Clean up resources"""
         self.log.info("Cleaning up...")
         try:

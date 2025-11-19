@@ -8,7 +8,7 @@ from nicegui import ui
 from src.core import _, change_language, get_current_language
 
 
-def create_interface():
+def create_interface() -> None:
     """
     Creates the main user interface.
     """
@@ -17,18 +17,18 @@ def create_interface():
     # Store references to UI elements that need updating
     ui_elements = {}
 
-    def on_button_click():
+    def on_button_click() -> None:
         """Button click callback."""
         log.debug("Button clicked!")
         ui.notify(_("Clicked!!!"))
 
-    def update_all_text():
+    def update_all_text() -> None:
         """Update all text elements with new translations."""
         ui_elements["label_main"].text = _("Hello, this is a real desktop app!")
         ui_elements["button_main"].text = _("Click me")
         ui_elements["label_lang"].text = _("Language") + ":"
 
-    def change_language_handler(lang):
+    def change_language_handler(lang: str) -> None:
         """Handle language change."""
         change_language(lang)
         language_select.set_value(lang)

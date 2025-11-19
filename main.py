@@ -9,11 +9,11 @@ from src.core import WritingAssistantApp, parse_arguments
 def main():
     """Main entry point"""
     # Parse command line arguments first
-    parse_arguments()
+    args = parse_arguments()
 
     # Create and run application
     app = WritingAssistantApp()
-    app.run()
+    app.run(args)
 
 
 if __name__ in {"__main__", "__mp_main__"}:

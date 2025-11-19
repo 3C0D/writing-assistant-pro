@@ -15,7 +15,7 @@ This package contains the core functionality modules including:
 from .app import WritingAssistantApp
 
 # Import config system
-from .config import DARK_MODE, DEBUG, LANGUAGE, get_config, parse_arguments
+from .config import ConfigManager, parse_arguments
 
 # Import hotkey management system
 from .hotkey_manager import HotkeyManager
@@ -55,10 +55,7 @@ __all__ = [
     "stop_css_hot_reload",
     # Config system
     "parse_arguments",
-    "get_config",
-    "LANGUAGE",
-    "DEBUG",
-    "DARK_MODE",
+    "ConfigManager",
     # App system
     "WritingAssistantApp",
     # Hotkey management system

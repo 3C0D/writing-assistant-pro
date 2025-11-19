@@ -32,3 +32,5 @@ tempCodeRunnerFile.py
 .pytest_cache/
 .coverage
 htmlcov/
+.agent/rules/uv.md
+test_output.txt

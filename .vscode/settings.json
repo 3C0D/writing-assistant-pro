@@ -15,11 +15,42 @@
   },
   "ruff.enable": true,
   "ruff.organizeImports": true,
-  "python.languageServer": "Pylance",
-  "python.analysis.typeCheckingMode": "basic",
-  "editor.rulers": [88, 120],
+  "python.languageServer": "Default",
+  "editor.rulers": [
+    88,
+    120
+  ],
   "files.associations": {
     ".babelrc": "ini"
   },
-  "python.terminal.executeInFileDir": true
+  "python.terminal.executeInFileDir": true,
+  "[json]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features",
+    "editor.formatOnSave": true
+  },
+  "VsCodeTaskButtons.showCounter": false,
+  "VsCodeTaskButtons.tasks": [
+    {
+      "label": "🧹 Run Ruff",
+      "task": "Run Ruff",
+      "tooltip": "Run Ruff linter",
+      "alignment": "right"
+    },
+    {
+      "label": "▶ Run Dev",
+      "task": "Run Dev",
+      "tooltip": "Run run_dev script",
+      "alignment": "right"
+    },
+    {
+      "label": "🧪 Run Tests",
+      "task": "Run Tests",
+      "tooltip": "Run pytest",
+      "alignment": "right"
+    }
+  ]
 }
