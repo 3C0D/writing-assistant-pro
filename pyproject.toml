@@ -9,13 +9,11 @@ readme = "README.md"
 license = {text = "MIT"}
 requires-python = ">=3.13"
 dependencies = [
-    "nicegui",  # Web-based UI framework for Python
-    "pywebview",  # Lightweight cross-platform webview library
+    "flet>=0.24.0", # Flutter-based UI framework for Python (native desktop)
     "babel", # For translation management
     "keyboard", # For global hotkey management
-
-    "loguru",  # Modern logging library with colored output
-
+    "loguru", # Modern logging library with colored output
+    "flet-desktop>=0.28.3",
 ]
 
 [dependency-groups]

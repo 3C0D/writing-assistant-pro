@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Writing Assistant Pro - Final Build Script
-Production build with PyInstaller
+Cross-platform final release build with environment setup
 """
 
 import os
@@ -10,7 +10,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-# Fix Unicode encoding for Windows console
+# Fix for Windows console encoding (emojis)
 os.environ["PYTHONIOENCODING"] = "utf-8"
 if os.name == "nt":
     subprocess.run(["chcp", "65001"], shell=True, capture_output=True)
@@ -20,9 +20,11 @@ try:
 except AttributeError:
     pass
 
+# Import utilities
 from utils import (
     PYINSTALLER_EXCLUSIONS,
     BuildTimer,
+    check_data,
     clear_console,
     copy_required_files,
     get_executable_name,
@@ -33,6 +35,11 @@ from utils import (
 # Configuration
 DEFAULT_SCRIPT_NAME = "main.py"
 MODE = "build-final"
+
+
+def copy_required_files_production() -> bool:
+    """Copy required files for final release build to dist/production/"""
+    return copy_required_files("production", "production")
 
 
 def clean_build_directories() -> None:
@@ -48,19 +55,9 @@ def clean_build_directories() -> None:
             except Exception as e:
                 print(f"Warning: Could not clean {directory}: {e}")
 
-    # Clean dist/prod
-    dist_prod_dir = Path("dist/prod")
+    # Clean dist/production
+    dist_prod_dir = Path("dist/production")
     if dist_prod_dir.exists():
-        # Preserve config.json if it exists
-        config_path = dist_prod_dir / "config.json"
-        has_config = config_path.exists()
-        if has_config:
-            try:
-                shutil.copy(config_path, "config.json.bak")
-                print("Backed up existing config.json")
-            except Exception as e:
-                print(f"Warning: Could not backup config: {e}")
-
         try:
             shutil.rmtree(dist_prod_dir)
             print(f"Cleaned: {dist_prod_dir}")
@@ -78,62 +75,38 @@ def clean_build_directories() -> None:
 
 def run_build_final() -> bool:
     """Run PyInstaller build for final release"""
-    # Find NiceGUI package location
-    try:
-        import nicegui
 
-        nicegui_path = Path(nicegui.__file__).parent
-        print(f"Found NiceGUI at: {nicegui_path}")
-    except ImportError:
-        print("Warning: Could not find NiceGUI package")
-        nicegui_path = None
+    # Build icon path
+    icon_path = Path("src/config/icons/app_icon.ico")
 
     # Build PyInstaller command with exclusions - use UV
-    # Use onedir mode (default) instead of onefile to avoid NiceGUI runpy bug
     pyinstaller_command = [
         "uv",
         "run",
         "-m",
         "PyInstaller",
-        "--windowed",
+        "--windowed",  # No console
+        f"--icon={icon_path}",
         "--name=Writing Assistant Pro",
-        "--distpath=dist/prod",
+        "--distpath=dist/production",
         "--clean",
         "--noconfirm",
+        "--collect-all",
+        "flet",  # Flet assets
+        DEFAULT_SCRIPT_NAME,
     ]
-
-    # Add NiceGUI data files if found (required for NiceGUI to work)
-    if nicegui_path:
-        separator = ";" if os.name == "nt" else ":"
-        pyinstaller_command.extend(
-            [
-                "--add-data",
-                f"{nicegui_path}{separator}nicegui",
-            ]
-        )
-
-    # Note: styles, translations, and config.json are NOT included in the exe
-    # They are copied to dist/prod/ by copy_required_files()
-    # This allows users to modify them without recompiling
 
     # Add exclusions
     for module in PYINSTALLER_EXCLUSIONS:
         pyinstaller_command.extend(["--exclude-module", module])
-
-    # Add main script
-    pyinstaller_command.append(DEFAULT_SCRIPT_NAME)
 
     try:
         print("Starting PyInstaller final build...")
         subprocess.run(pyinstaller_command, check=True)
         print("PyInstaller final build completed successfully!")
         return True
-
     except subprocess.CalledProcessError as e:
-        print(f"Error: Build failed with error: {e}")
-        return False
-    except FileNotFoundError:
-        print("Error: PyInstaller not found. Install with: uv add --dev pyinstaller")
+        print(f"Error: Build failed: {e}")
         return False
 
 
@@ -146,34 +119,22 @@ def main():
     timer = BuildTimer()
     timer.start()
 
-    timer = BuildTimer()
-    timer.start()
-
     try:
-        # Ensure we are in the project root
         get_project_root()
 
         # Clean build directories
         clean_build_directories()
 
         # Copy required files
-        # We pass "prod" as target to copy_required_files
-        if not copy_required_files("prod"):
+        if not copy_required_files_production():
             print("\nFailed to copy required files!")
             return 1
-
-        # Restore backup config if exists
-        if Path("config.json.bak").exists():
-            try:
-                # We overwrite the default config copied by copy_required_files
-                shutil.move("config.json.bak", "dist/prod/config.json")
-                print("Restored existing configuration.")
-            except Exception as e:
-                print(f"Warning: Could not restore config: {e}")
 
         # Stop existing processes
         print("Terminating existing processes...")
         terminate_existing_processes(exe_name=get_executable_name())
+
+        check_data(MODE)
 
         # Run build
         if not run_build_final():
@@ -181,7 +142,7 @@ def main():
             return 1
 
         print("\n===== Final release build completed =====")
-        print("The executable and required files are in the 'dist/prod' directory.")
+        print("The executable and required files are in the 'dist/production' directory.")
 
         timer.print_duration("final release build")
 
@@ -196,5 +157,4 @@ def main():
 
 
 if __name__ == "__main__":
-    exit_code = main()
-    sys.exit(exit_code)
+    sys.exit(main())

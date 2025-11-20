@@ -1,16 +1,17 @@
 #!/usr/bin/env python3
 """
-Writing Assistant Pro - Dev Build Script
-Development build with PyInstaller (Console Mode)
+Writing Assistant Pro - Flet Dev Build Script
+Cross-platform development build with environment setup
 """
 
+import argparse
 import os
 import shutil
 import subprocess
 import sys
 from pathlib import Path
 
-# Fix Unicode encoding for Windows console
+# Fix for Windows console encoding (emojis)
 os.environ["PYTHONIOENCODING"] = "utf-8"
 if os.name == "nt":
     subprocess.run(["chcp", "65001"], shell=True, capture_output=True)
@@ -20,9 +21,11 @@ try:
 except AttributeError:
     pass
 
+# Import utilities
 from utils import (
     PYINSTALLER_EXCLUSIONS,
     BuildTimer,
+    check_data,
     clear_console,
     copy_required_files,
     get_executable_name,
@@ -30,128 +33,98 @@ from utils import (
     terminate_existing_processes,
 )
 
-# Configuration
+# ===== GLOBAL CONFIGURATION =====
 DEFAULT_SCRIPT_NAME = "main.py"
 MODE = "build-dev"
+CONSOLE_MODE_DEFAULT = True  # True = console visible by default
 
 
-def clean_build_directories() -> None:
-    """Clean build directories for a fresh build"""
-    print("Cleaning build directories...")
+def copy_required_files_dev() -> bool:
+    """Copy required files for the development build to dist/dev/."""
+    return copy_required_files("development", "dev")
 
+
+def clean_dev_cache() -> None:
+    """Clean PyInstaller cache and build directories for dev build."""
+    print("🧹 Cleaning PyInstaller cache...")
+
+    # Clean build and __pycache__ directories
     directories_to_clean = [Path("build"), Path("__pycache__")]
     for directory in directories_to_clean:
         if directory.exists():
             try:
                 shutil.rmtree(directory)
-                print(f"Cleaned: {directory}")
+                print(f"   Cleaned: {directory}")
             except Exception as e:
-                print(f"Warning: Could not clean {directory}: {e}")
-
-    # Clean dist/dev
-    dist_dev_dir = Path("dist/dev")
-    if dist_dev_dir.exists():
-        # In dev mode, we might want to keep config, but usually dev build is for testing
-        # Let's keep it simple and clean everything for now, or preserve config if needed
-        # User note: "Initially the DEV folder shares the same data for both
-        # build DEV mode and standard dev mode"
-        # So we should probably NOT delete the whole dir if it contains the shared config.
-        # But for a clean build, we usually want to clean.
-        # Let's clean but we will ensure config is preserved/copied back if we were smart,
-        # but here we will just rely on copy_required_files to restore default config if missing.
-        # Actually, if dev mode shares config, deleting it might lose dev settings.
-        # Let's try to preserve config.json if it exists.
-
-        config_path = dist_dev_dir / "config.json"
-        has_config = config_path.exists()
-        if has_config:
-            # Backup config
-            try:
-                shutil.copy(config_path, "config.json.bak")
-            except Exception:
-                pass
-
-        try:
-            shutil.rmtree(dist_dev_dir)
-            print(f"Cleaned: {dist_dev_dir}")
-        except Exception as e:
-            print(f"Warning: Could not clean {dist_dev_dir}: {e}")
-
-        # Restore config if we backed it up (or just let copy_required_files handle it)
-        # If we want to share config with "dev" mode (source), maybe we shouldn't delete it?
-        # But PyInstaller needs a clean target usually.
-        pass
+                print(f"   Warning: Could not clean {directory}: {e}")
 
     # Clean .spec files
-    for file in Path(".").glob("*.spec"):
+    current_dir = Path(".")
+    for file in current_dir.glob("*.spec"):
         try:
             file.unlink()
-            print(f"Cleaned: {file}")
+            print(f"   Cleaned: {file}")
         except Exception as e:
-            print(f"Warning: Could not clean {file}: {e}")
+            print(f"   Warning: Could not clean {file}: {e}")
+
+    print("   Cache cleanup completed!")
 
 
-def run_build_dev() -> bool:
-    """Run PyInstaller build for dev release"""
-    # Find NiceGUI package location
-    try:
-        import nicegui
+def run_dev_build(console_mode: bool = False, clean_build: bool = False) -> bool:
+    """Run PyInstaller build for development"""
 
-        nicegui_path = Path(nicegui.__file__).parent
-        print(f"Found NiceGUI at: {nicegui_path}")
-    except ImportError:
-        print("Warning: Could not find NiceGUI package")
-        nicegui_path = None
+    if clean_build:
+        print("🧹  Manual clean build requested")
+        clean_dev_cache()
+        print()
+
+    # Build icon path
+    icon_path = Path("src/config/icons/app_icon.ico")
 
     # Build PyInstaller command with exclusions - use UV
-    # Use onedir mode (default) instead of onefile to avoid NiceGUI runpy bug
     pyinstaller_command = [
         "uv",
         "run",
         "-m",
         "PyInstaller",
-        "--console",  # Console mode for dev
+        "--onedir",
+        "--console" if console_mode else "--windowed",
+        f"--icon={icon_path}",
         "--name=Writing Assistant Pro",
-        "--distpath=dist/dev",
-        "--clean",
+        "--distpath=dist/dev",  # Output to dist/dev/
         "--noconfirm",
+        "--collect-all",
+        "flet",  # Flet assets
     ]
 
-    # Add NiceGUI data files if found
-    if nicegui_path:
-        separator = ";" if os.name == "nt" else ":"
-        pyinstaller_command.extend(
-            [
-                "--add-data",
-                f"{nicegui_path}{separator}nicegui",
-            ]
-        )
+    if clean_build:
+        pyinstaller_command.append("--clean")
 
     # Add exclusions
     for module in PYINSTALLER_EXCLUSIONS:
         pyinstaller_command.extend(["--exclude-module", module])
 
     # Add main script
-    pyinstaller_command.append(DEFAULT_SCRIPT_NAME)
+    pyinstaller_command.append(f"{DEFAULT_SCRIPT_NAME}")
 
     try:
-        print("Starting PyInstaller dev build...")
+        mode_text = "console" if console_mode else "windowed"
+        print(f"Starting PyInstaller development build ({mode_text} mode)...")
         subprocess.run(pyinstaller_command, check=True)
-        print("PyInstaller dev build completed successfully!")
+        print(f"PyInstaller development build completed successfully ({mode_text} mode)!")
         return True
 
     except subprocess.CalledProcessError as e:
         print(f"Error: Build failed with error: {e}")
         return False
     except FileNotFoundError:
-        print("Error: PyInstaller not found. Install with: uv add --dev pyinstaller")
+        print("Error: PyInstaller not found. Please install it with: uv add --dev pyinstaller")
         return False
 
 
 def launch_build(extra_args: list[str] | None = None) -> bool:
-    """Launch the built executable."""
+    """Launch the built executable, killing any existing instance first."""
     exe_name = get_executable_name()
-    # In onedir mode, exe is in dist/dev/Writing Assistant Pro/<exe_name>
     exe_path = Path("dist") / "dev" / "Writing Assistant Pro" / exe_name
 
     if not exe_path.exists():
@@ -163,14 +136,12 @@ def launch_build(extra_args: list[str] | None = None) -> bool:
     if extra_args:
         cmd.extend(extra_args)
 
-    print(f"Launching {exe_path}...")
+    print(f"Launching {exe_path} with args: {' '.join(extra_args) if extra_args else 'none'}...")
     try:
-        # Use subprocess.run to launch and wait for the executable
-        # This keeps the console open and shows the app output
         if sys.platform.startswith("win"):
-            subprocess.run(cmd, shell=False)
+            subprocess.Popen(cmd, shell=False)
         else:
-            subprocess.run(cmd)
+            subprocess.Popen(cmd)
         return True
     except Exception as e:
         print(f"Error launching executable: {e}")
@@ -179,50 +150,80 @@ def launch_build(extra_args: list[str] | None = None) -> bool:
 
 def main():
     """Main function"""
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description="Writing Assistant Pro - Development Build")
+
+    mode_group = parser.add_mutually_exclusive_group()
+    mode_group.add_argument(
+        "--console",
+        action="store_true",
+        help="Force console mode (logs visible in real-time)",
+    )
+    mode_group.add_argument(
+        "--windowed",
+        action="store_true",
+        help="Force windowed mode (logs written to file)",
+    )
+
+    parser.add_argument(
+        "--clean",
+        action="store_true",
+        help="Force clean build (clear PyInstaller cache)",
+    )
+
+    parser.add_argument(
+        "extra_args", nargs="*", help="Extra arguments to pass to the built executable"
+    )
+    args = parser.parse_args()
+
     clear_console()
-    print("===== Writing Assistant Pro - Dev Build (Console) =====")
+    print("===== Writing Assistant Pro - Development Build =====")
     print()
 
     timer = BuildTimer()
     timer.start()
 
+    # Determine console mode
+    if args.console:
+        console_mode = True
+        print("🖥️  Console mode forced via --console argument")
+    elif args.windowed:
+        console_mode = False
+        print("🪟  Windowed mode forced via --windowed argument")
+    else:
+        console_mode = CONSOLE_MODE_DEFAULT
+        print(f"⚙️  Using default mode: {'console' if console_mode else 'windowed'}")
+
+    extra_args = args.extra_args or None
+
     try:
-        # Ensure we are in the project root
         get_project_root()
 
-        # Clean build directories
-        clean_build_directories()
-
         # Copy required files
-        # We pass "dev" as target to copy_required_files
-        if not copy_required_files("dev"):
+        if not copy_required_files_dev():
             print("\nFailed to copy required files!")
             return 1
-
-        # Restore backup config if exists
-        if Path("config.json.bak").exists():
-            shutil.move("config.json.bak", "dist/dev/config.json")
-            print("Restored existing configuration.")
 
         # Stop existing processes
         print("Terminating existing processes...")
         terminate_existing_processes(exe_name=get_executable_name())
 
+        # Setup development settings
+        check_data(MODE)
+
         # Run build
-        if not run_build_dev():
+        if not run_dev_build(console_mode=console_mode, clean_build=args.clean):
             print("\nBuild failed!")
             return 1
 
-        print("\n===== Dev build completed =====")
-        print("The executable and required files are in the 'dist/dev' directory.")
-
         # Launch the built application
         print()
-        if not launch_build():
+        if not launch_build(extra_args=extra_args):
             print("\nFailed to launch built application!")
             return 1
 
-        timer.print_duration("dev build")
+        print("\n===== Development build completed and launched =====")
+        timer.print_duration("development build")
 
         return 0
 
@@ -235,5 +236,4 @@ def main():
 
 
 if __name__ == "__main__":
-    exit_code = main()
-    sys.exit(exit_code)
+    sys.exit(main())
