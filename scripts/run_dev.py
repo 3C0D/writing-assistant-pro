@@ -20,13 +20,17 @@ try:
 except AttributeError:
     pass
 
+# Configuration
+DEFAULT_SCRIPT_NAME = "main.py"
+MODE = "development"
+
 
 def main():
     """Launch main.py in debug mode"""
-    print("🚀 Starting in DEV mode...")
+    print(f"🚀 Starting in {MODE} mode...")
     print("─" * 50)
 
-    main_path = Path(__file__).parent.parent / "main.py"
+    main_path = Path(__file__).parent.parent / DEFAULT_SCRIPT_NAME
     result = subprocess.run(["uv", "run", "python", str(main_path), "--debug"])
     sys.exit(result.returncode)
 

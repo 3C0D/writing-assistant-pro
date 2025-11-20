@@ -17,6 +17,8 @@ from loguru import logger
 # Third-party imports
 from nicegui import ui
 
+from .config import get_app_root
+
 try:
     from watchdog.events import FileSystemEventHandler
     from watchdog.observers import Observer
@@ -38,7 +40,9 @@ def get_theme_css_path(dark_mode: bool) -> Path:
     Returns:
         Path to the CSS file
     """
-    styles_dir = Path(__file__).parent.parent.parent / "styles"
+    # Use get_app_root() to find the styles directory correctly in all modes
+    styles_dir = get_app_root() / "styles"
+
     if dark_mode:
         return styles_dir / "dark.css"
     else:

@@ -51,6 +51,18 @@
       "task": "Run Tests",
       "tooltip": "Run pytest",
       "alignment": "right"
+    },
+    {
+      "label": "📦 Build Dev",
+      "task": "Build Dev",
+      "tooltip": "Build dev executable (console)",
+      "alignment": "right"
+    },
+    {
+      "label": "📦 Build Final",
+      "task": "Build Final",
+      "tooltip": "Build production executable",
+      "alignment": "right"
     }
   ]
 }

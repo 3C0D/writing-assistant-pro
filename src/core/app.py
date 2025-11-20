@@ -4,6 +4,7 @@ Handles window visibility, hotkeys, and application lifecycle
 """
 
 import argparse
+import sys
 
 from loguru import logger
 from nicegui import app, ui
@@ -28,6 +29,13 @@ class WritingAssistantApp:
         """
         try:
             print("================ START ================")
+
+            # Force disable NiceGUI reload in frozen mode
+            # Prevents "null bytes" error when NiceGUI tries to reload the exe
+            if getattr(sys, "frozen", False):
+                import os
+
+                os.environ["NICEGUI_RELOAD"] = "false"
 
             # Import configuration module
             # Core imports

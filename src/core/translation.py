@@ -9,6 +9,8 @@ import gettext
 from collections.abc import Callable
 from pathlib import Path
 
+from .config import get_app_root
+
 
 class LanguageManager:
     """Manages language translations for NiceGUI applications."""
@@ -28,7 +30,13 @@ class LanguageManager:
             default_language: Default language code
         """
         self.app_name = app_name
-        self.locales_dir = Path(locales_dir)
+        # Use get_app_root() to resolve relative paths
+        path = Path(locales_dir)
+        if not path.is_absolute():
+            self.locales_dir = get_app_root() / path
+        else:
+            self.locales_dir = path
+
         self.current_language = default_language
         self.available_languages = ["en", "fr", "it"]
 

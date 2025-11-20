@@ -67,6 +67,40 @@
                 "focus": false,
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Build Dev",
+            "type": "shell",
+            "command": "uv",
+            "args": [
+                "run",
+                "python",
+                "scripts/build_dev.py"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Build Final",
+            "type": "shell",
+            "command": "uv",
+            "args": [
+                "run",
+                "python",
+                "scripts/build_final.py"
+            ],
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            }
         }
     ]
 }

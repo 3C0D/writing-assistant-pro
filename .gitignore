@@ -35,5 +35,10 @@ htmlcov/
 .agent/rules/uv.md
 test_output.txt
 
+# Build artifacts
+build/
+dist/
+*.spec
+
 # copy WTA
 copy WTA

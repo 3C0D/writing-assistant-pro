@@ -24,6 +24,7 @@ dev = [
     "ruff",  # Fast Python linter and formatter
     "pre-commit",  # For managing pre-commit hooks
     "watchdog>=6.0.0",  # File system monitoring, used to detect css changes
+    "pyinstaller>=6.0.0",  # Package application into executable
 ]
 
 [build-system]
