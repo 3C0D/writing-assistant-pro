@@ -3,6 +3,8 @@ Hotkey management module for Writing Assistant Pro
 Handles global hotkey registration and management
 """
 
+from __future__ import annotations
+
 import threading
 import time
 

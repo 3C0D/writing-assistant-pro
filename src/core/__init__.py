@@ -10,6 +10,8 @@ This package contains the core functionality modules including:
 - hotkey_manager: Global hotkey registration and management
 """
 
+from __future__ import annotations
+
 # Import translation system
 # Import config system
 from .config import ConfigManager, parse_arguments

@@ -2,6 +2,8 @@
 Main Flet application for Writing Assistant Pro
 """
 
+from __future__ import annotations
+
 import flet as ft
 from loguru import logger
 

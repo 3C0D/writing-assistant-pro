@@ -3,26 +3,26 @@ Configuration module for Writing Assistant Pro
 Centralized configuration management with JSON persistence
 """
 
-import json
+from __future__ import annotations
+
 import sys
 from pathlib import Path
 from typing import Any
 
 from loguru import logger
 
+from .utils import load_json_file, save_json_file
+
+
 # Default configuration values
-DEFAULT_CONFIG = {
-    "language": "fr",
-    "debug": False,
-    "dark_mode": False,
-    "window_size": [800, 600],
-    "window_resizable": True,
-    "window_frameless": False,
-    "window_start_hidden": True,
-    "hotkey_combination": "ctrl+.",
-    "min_trigger_interval": 0.5,
-    "hotkey_setup_delay": 2.0,
-}
+# Default configuration values
+def load_default_config() -> dict[str, Any]:
+    """Load default configuration from config.json in the same directory."""
+    config_path = Path(__file__).parent / "config.json"
+    return load_json_file(config_path, default={})
+
+
+DEFAULT_CONFIG = load_default_config()
 
 
 # Global constants for paths
@@ -108,29 +108,19 @@ class ConfigManager:
     def load(self) -> None:
         """Load configuration from JSON file."""
         if self._config_file.exists():
-            try:
-                with open(self._config_file, encoding="utf-8") as f:
-                    saved_config = json.load(f)
-                    # Update default config with saved values (preserves new keys in default)
-                    self._config.update(saved_config)
+            saved_config = load_json_file(self._config_file)
+            if saved_config:
+                # Update default config with saved values (preserves new keys in default)
+                self._config.update(saved_config)
                 self.log.info(f"Configuration loaded from {self._config_file} (Mode: {self.mode})")
-            except Exception as e:
-                self.log.error(f"Failed to load configuration: {e}")
         else:
             self.log.info(f"No configuration file found at {self._config_file}, using defaults")
             self.save()
 
     def save(self) -> None:
         """Save current configuration to JSON file."""
-        try:
-            # Ensure directory exists
-            self._config_file.parent.mkdir(parents=True, exist_ok=True)
-
-            with open(self._config_file, "w", encoding="utf-8") as f:
-                json.dump(self._config, f, indent=4, ensure_ascii=False)
-            self.log.info(f"Configuration saved to {self._config_file}")
-        except Exception as e:
-            self.log.error(f"Failed to save configuration: {e}")
+        save_json_file(self._config_file, self._config)
+        self.log.info(f"Configuration saved to {self._config_file}")
 
     def get(self, key: str, default: Any = None) -> Any:
         """Get a configuration value."""

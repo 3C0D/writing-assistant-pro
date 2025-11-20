@@ -9,16 +9,19 @@ Après analyse complète du projet, voici un plan structuré pour transformer wr
 ## 🎯 Objectifs
 
 ### Court terme (4-6 semaines)
+
 - Créer une base modulaire robuste
 - Interface chat moderne et extensible
 - Tests unitaires全覆盖
 
 ### Moyen terme (2-3 mois)
+
 - Mode build/exe fonctionnel
 - Système de plugins
 - Gestion avancée des configurations
 
 ### Long terme (6 mois+)
+
 - Architecture scalable pour gros projets
 - Système complet de gestion des sessions
 - Distribution et packaging
@@ -52,6 +55,7 @@ tests/
 ```
 
 **Commandes à ajouter dans pyproject.toml** :
+
 ```toml
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -97,6 +101,7 @@ src/ui/
 ```
 
 **Fonctionnalités clés à implémenter** :
+
 - Interface de chat fluide (scroll, timestamp, статус)
 - Boutons d'action rapides (copy, regenerate, etc.)
 - Sélection de prompts prédéfinis
@@ -125,6 +130,7 @@ scripts/
 ```
 
 **Ajouts dans pyproject.toml** :
+
 ```toml
 [project.optional-dependencies]
 build = [
@@ -176,6 +182,7 @@ config/
 ```
 
 **Exemples de configuration** :
+
 ```yaml
 # default.yaml
 app:
@@ -356,26 +363,31 @@ docs/
 ## 📅 Timeline de Réalisation
 
 ### Phase 1 (Semaines 1-2) : Tests et Base
+
 - [ ] Mise en place de la suite de tests
 - [ ] Refactoring de l'interface UI de base
 - [ ] Configuration flexible
 
 ### Phase 2 (Semaines 3-4) : Interface Chat
+
 - [ ] Module chat avec historique
 - [ ] Composants UI modernes
 - [ ] Gestion des sessions
 
 ### Phase 3 (Semaines 5-6) : Build et Packaging
+
 - [ ] Système de build PyInstaller
 - [ ] Création d'executables
 - [ ] Tests de packaging
 
 ### Phase 4 (Mois 2-3) : Fonctionnalités Avancées
+
 - [ ] Système de plugins
 - [ ] Intégration LLM
 - [ ] Persistance des données
 
 ### Phase 5 (Mois 4-6) : Finalisation
+
 - [ ] Documentation complète
 - [ ] CI/CD
 - [ ] Optimisations et polish
@@ -385,18 +397,21 @@ docs/
 ## 💡 Recommandations Spécifiques
 
 ### Pour l'Interface Chat
+
 1. **Inspiration Claude/GPT** : Interface à bulles, scroll fluide, indicateurs de typing
 2. **Fonctionnalités avancées** : Copy, regenerate, edit, delete messages
 3. **Gestion des prompts** : Bibliothèque de prompts prédéfinis et sauvegarde
 4. **Multi-modalité** : Support texte + images
 
 ### Pour l'Architecture LLM
+
 1. **Multi-fournisseurs** : OpenAI, Anthropic, modèles locaux
 2. **Streaming** : Réponses en temps réel
 3. **Gestion des contextes** : Historique intelligent, mémoire
 4. **Fallback** : Redondance en cas d'échec
 
 ### Pour la Performance
+
 1. **Lazy loading** : Chargement différé des composants
 2. **Cache intelligent** : Mise en cache des réponses
 3. **Threading** : Opérations non-bloquantes

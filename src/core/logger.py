@@ -3,6 +3,8 @@ Centralized logging configuration for the application.
 Migrated to loguru for modern, colored logging with better formatting.
 """
 
+from __future__ import annotations
+
 import sys
 
 from loguru import logger

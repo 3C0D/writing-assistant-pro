@@ -3,6 +3,8 @@ Window management module for Writing Assistant Pro
 Handles window visibility, hotkeys, and window lifecycle
 """
 
+from __future__ import annotations
+
 import threading
 import time
 
