@@ -11,5 +11,16 @@
     "window_start_hidden": true,
     "hotkey_combination": "ctrl+.",
     "min_trigger_interval": 0.5,
-    "hotkey_setup_delay": 2.0
+    "hotkey_setup_delay": 2.0,
+    "available_languages": [
+        "en",
+        "fr",
+        "it",
+        "es",
+        "de",
+        "pt",
+        "ru",
+        "zh",
+        "ja"
+    ]
 }

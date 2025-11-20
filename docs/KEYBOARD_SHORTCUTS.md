@@ -38,11 +38,11 @@ import keyboard
 class GlobalHotkeyManager:
     def __init__(self):
         self.hotkeys_registered = False
-    
+
     def setup_global_hotkey(self, hotkey_combination, callback, suppress=True):
         """
         Setup a global hotkey
-        
+
         Args:
             hotkey_combination: String like 'ctrl+.' or 'ctrl+shift+a'
             callback: Function to call when hotkey is pressed
@@ -51,17 +51,17 @@ class GlobalHotkeyManager:
         try:
             # Clear existing hotkeys to prevent conflicts
             keyboard.unhook_all()
-            
+
             # Register the new hotkey
             keyboard.add_hotkey(hotkey_combination, callback, suppress=suppress)
             self.hotkeys_registered = True
             print(f"Hotkey registered: {hotkey_combination}")
             return True
-            
+
         except Exception as e:
             print(f"Failed to register hotkey {hotkey_combination}: {e}")
             return False
-    
+
     def clear_all_hotkeys(self):
         """Clear all registered hotkeys"""
         try:
@@ -94,7 +94,7 @@ class WritingAssistantApp:
         try:
             # Clear all existing hotkeys first to prevent duplicates
             keyboard.unhook_all()
-            
+
             # Register the global hotkey
             keyboard.add_hotkey('ctrl+.', self.toggle_window, suppress=False)
             self.log.info("Global hotkey registered: ctrl+. (toggle window)")
@@ -102,7 +102,7 @@ class WritingAssistantApp:
         except Exception as e:
             self.log.error(f"Failed to register hotkey: {e}")
             return False
-    
+
     def cleanup(self):
         """Clean up resources"""
         try:
@@ -195,7 +195,7 @@ def setup_hotkey(self):
     try:
         # Clear all existing hotkeys first to prevent duplicates
         keyboard.unhook_all()
-        
+
         keyboard.add_hotkey('ctrl+.', self.toggle_window, suppress=False)
         self.log.info("Global hotkey registered: ctrl+. (toggle window)")
         return True

@@ -11,7 +11,7 @@
   ```ini
   [python: src/**.py]
   [python: **.py]
-  
+
   [extractors]
   ignore_extensions = .pyc,.pyo,.egg-info,.git
   ignore_patterns = ^\.

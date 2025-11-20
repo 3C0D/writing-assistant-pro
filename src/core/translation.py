@@ -20,6 +20,7 @@ class LanguageManager:
         app_name: str = "writing_assistant",
         locales_dir: str = "translations",
         default_language: str = "en",
+        available_languages: list[str] | None = None,
     ):
         """
         Initialize the Language Manager.
@@ -28,6 +29,7 @@ class LanguageManager:
             app_name: Application name for gettext domain
             locales_dir: Directory containing locale files
             default_language: Default language code
+            available_languages: List of available language codes
         """
         self.app_name = app_name
         # Use get_app_root() to resolve relative paths
@@ -38,7 +40,7 @@ class LanguageManager:
             self.locales_dir = path
 
         self.current_language = default_language
-        self.available_languages = ["en", "fr", "it"]
+        self.available_languages = available_languages or ["en", "fr", "it"]
 
         # Translation cache
         self._translations: dict[str, gettext.NullTranslations | gettext.GNUTranslations] = {}
@@ -118,7 +120,17 @@ class LanguageManager:
         if language is None:
             language = self.current_language
 
-        language_names: dict[str, str] = {"en": "English", "fr": "Français", "it": "Italiano"}
+        language_names: dict[str, str] = {
+            "en": "English",
+            "fr": "Français",
+            "it": "Italiano",
+            "es": "Español",
+            "de": "Deutsch",
+            "pt": "Português",
+            "ru": "Русский",
+            "zh": "中文",
+            "ja": "日本語",
+        }
         return language_names.get(language, language)
 
     # Not used
@@ -169,6 +181,7 @@ def init_translation(
     app_name: str = "writing_assistant",
     locales_dir: str = "translations",
     default_language: str = "en",
+    available_languages: list[str] | None = None,
 ) -> LanguageManager:
     """
     Initialize the global translation system.
@@ -177,12 +190,15 @@ def init_translation(
         app_name: Application name for gettext domain
         locales_dir: Directory containing locale files
         default_language: Default language code
+        available_languages: List of available language codes
 
     Returns:
         Initialized LanguageManager instance
     """
     global _language_manager
-    _language_manager = LanguageManager(app_name, locales_dir, default_language)
+    _language_manager = LanguageManager(
+        app_name, locales_dir, default_language, available_languages
+    )
     return _language_manager
 
 

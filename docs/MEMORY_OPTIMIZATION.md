@@ -42,12 +42,12 @@ class LLMManager:
     def __init__(self):
         self.model = None
         self.is_loaded = False
-    
+
     def load_model_on_demand(self):
         if not self.is_loaded:
             self.model = load_model()
             self.is_loaded = True
-    
+
     def unload_if_inactive(self):
         # Décharger après période d'inactivité
         pass
@@ -106,7 +106,7 @@ class ModelCache:
     def __init__(self, max_size=2):
         self.cache = OrderedDict()
         self.max_size = max_size
-    
+
     def get_model(self, model_name):
         if model_name not in self.cache:
             if len(self.cache) >= self.max_size:
@@ -127,11 +127,11 @@ class OptimizedLLMManager:
         self.light_model = None  # Chargé au démarrage
         self.heavy_model = None  # Chargé à la demande
         self.memory_monitor = MemoryMonitor()
-    
+
     def initialize_lightweight(self):
         """Charge un modèle léger au démarrage"""
         self.light_model = load_tiny_model()
-    
+
     def load_heavy_model_if_needed(self, use_case):
         if use_case == 'advanced':
             if not self.heavy_model:
@@ -151,18 +151,18 @@ class MemoryMonitor:
     def __init__(self, threshold_mb=300):
         self.threshold = threshold_mb
         self.alert_callback = None
-    
+
     def check_memory_usage(self):
         import psutil
         current_memory = psutil.Process().memory_info().rss / 1024 / 1024
-        
+
         if current_memory > self.threshold:
             if self.alert_callback:
                 self.alert_callback(current_memory)
-            
+
             # Actions de nettoyage
             self.trigger_cleanup()
-    
+
     def trigger_cleanup(self):
         # Nettoyage agressif si nécessaire
         gc.collect()
@@ -175,18 +175,18 @@ class MemoryMonitor:
 class MemoryConfig:
     def __init__(self, total_ram_gb):
         self.total_ram_gb = total_ram_gb
-        
+
         if total_ram_gb >= 16:
             self.model_strategy = "heavy"  # 8B parameters max
         elif total_ram_gb >= 8:
             self.model_strategy = "medium"  # 3B parameters max
         else:
             self.model_strategy = "light"  # 1B parameters max
-    
+
     def get_recommended_model(self):
         return {
             "light": "TinyLlama-1.1B",
-            "medium": "Phi-2-mini-2.7B", 
+            "medium": "Phi-2-mini-2.7B",
             "heavy": "Llama-2-7B"
         }
 ```
@@ -207,11 +207,11 @@ class MemoryConfig:
 # Monitoring intégré dans main.py
 def setup_memory_monitoring(app):
     monitor = MemoryMonitor(threshold_mb=350)
-    
+
     def memory_alert(current_usage):
         app.log.warning(f"Mémoire élevée: {current_usage:.1f} Mo")
         # Actions automatiques de nettoyage
-    
+
     monitor.set_alert_callback(memory_alert)
     monitor.start_monitoring()
 ```

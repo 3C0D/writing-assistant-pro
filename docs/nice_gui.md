@@ -109,19 +109,19 @@ import sys
 
 def main():
     """Entry point for the writing assistant."""
-    
+
     # Interface similaire à Claude
     with ui.column().classes('w-full max-w-4xl mx-auto p-4'):
         # Zone de chat
         chat = ui.chat_message('Bonjour! Comment puis-je vous aider?')
-        
+
         # Zone d'input avec upload
         with ui.row().classes('w-full'):
             text_input = ui.textarea('Votre message...').classes('flex-grow')
             ui.upload(on_upload=lambda e: handle_file(e)).props('flat')
-        
+
         ui.button('Envoyer', on_click=lambda: send_message())
-    
+
     # Configuration fenêtre native
     if '--dev' in sys.argv:
         # Mode développement: hot reload

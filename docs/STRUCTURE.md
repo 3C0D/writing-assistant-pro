@@ -198,11 +198,11 @@ La langue devrait se changer automatiquement via le sélecteur dans l'interface.
 
 ## Points clés
 
-✅ **Modularité** : Code bien séparé dans `src/core/` et `src/ui/`  
-✅ **Traductions** : Système Babel simples avec une seule commande  
-✅ **Thèmes** : CSS externe, facile à modifier  
-✅ **Logging** : Centralisé, facile à réutiliser  
-✅ **Structure propre** : Fichiers à la bonne place  
+✅ **Modularité** : Code bien séparé dans `src/core/` et `src/ui/`
+✅ **Traductions** : Système Babel simples avec une seule commande
+✅ **Thèmes** : CSS externe, facile à modifier
+✅ **Logging** : Centralisé, facile à réutiliser
+✅ **Structure propre** : Fichiers à la bonne place
 
 ## Prochaines étapes
 

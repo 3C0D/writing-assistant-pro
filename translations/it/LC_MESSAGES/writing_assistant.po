@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-13 01:03+0100\n"
+"POT-Creation-Date: 2025-11-20 21:48+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -16,44 +16,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/core/app.py⁩:57
-msgid "Configuration: DEBUG="
-msgstr ""
-
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/core/app.py⁩:107
-msgid "Writing Assistant Pro"
-msgstr ""
-
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:24
-msgid "Clicked!!!"
-msgstr "Cliccato!!!"
-
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:28
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:52
-msgid "Hello, this is a real desktop app!"
-msgstr "Ciao, questa è una vera applicazione desktop!"
-
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:29
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:53
-msgid "Click me"
-msgstr "Cliccami"
-
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:30
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:43
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:113
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:165
 msgid "Language"
 msgstr "Lingua"
 
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:45
-msgid "English"
-msgstr "Inglese"
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:125
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:163
+msgid "Hello, this is a real desktop app!"
+msgstr "Ciao, questa è una vera applicazione desktop!"
 
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:45
-msgid "Français"
-msgstr "Francese"
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:130
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:164
+msgid "Click me"
+msgstr "Cliccami"
 
-#: ⁨c:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/interface.py⁩:45
-msgid "Italiano"
-msgstr "Italiano"
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:153
+msgid "Clicked!!!"
+msgstr "Cliccato!!!"
 
 #~ msgid "Click me"
 #~ msgstr "Cliccami"
@@ -79,3 +59,8 @@ msgstr "Italiano"
 #~ msgid "Language"
 #~ msgstr "Lingua"
 
+#~ msgid "Configuration: DEBUG="
+#~ msgstr ""
+
+#~ msgid "Writing Assistant Pro"
+#~ msgstr ""

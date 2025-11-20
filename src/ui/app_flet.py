@@ -14,6 +14,7 @@ from src.core import (
     _,
     change_language,
     get_current_language,
+    get_language_manager,
     init_translation,
     setup_root_logger,
 )
@@ -30,11 +31,16 @@ class WritingAssistantFletApp:
         self.log = logger.bind(name="WritingAssistant.FletApp")
 
         # Initialize translation
-        init_translation("writing_assistant", "translations", self.config.LANGUAGE)
+        init_translation(
+            "writing_assistant",
+            "translations",
+            self.config.LANGUAGE,
+            self.config.AVAILABLE_LANGUAGES,
+        )
 
         self.hotkey_manager = HotkeyManager(self.config)
-        self.window_manager = None  # Will be initialized in main
-        self.page = None
+        self.window_manager: WindowManager | None = None
+        self.page: ft.Page | None = None
 
         # UI Elements references for updates
         self.ui_elements = {}
@@ -75,11 +81,14 @@ class WritingAssistantFletApp:
 
     def on_window_event(self, e):
         """Handle window events"""
-        if e.data == "close":
+        if e.data == "close" and self.window_manager:
             self.window_manager.hide_window()
 
     def _create_ui(self):
         """Create the user interface"""
+        if not self.page:
+            return
+
         # AppBar (header)
         self.page.appbar = ft.AppBar(
             title=ft.Text("Writing Assistant Pro", color=ft.Colors.WHITE),
@@ -91,13 +100,15 @@ class WritingAssistantFletApp:
                     icon_color=ft.Colors.WHITE,
                     tooltip="Toggle Dark/Light Mode",
                     on_click=self.toggle_theme,
-                    data="theme_btn",  # ID for finding it later if needed
+                    data="theme_btn",
                 ),
                 ft.IconButton(
                     icon=ft.Icons.VISIBILITY_OFF,
                     icon_color=ft.Colors.WHITE,
                     tooltip=f"Hide ({self.config.HOTKEY_COMBINATION})",
-                    on_click=lambda _: self.window_manager.hide_window(),
+                    on_click=lambda _: self.window_manager.hide_window()
+                    if self.window_manager
+                    else None,
                 ),
             ],
         )
@@ -106,9 +117,8 @@ class WritingAssistantFletApp:
         self.ui_elements["language_select"] = ft.Dropdown(
             label=_("Language"),
             options=[
-                ft.dropdown.Option("en", _("English")),
-                ft.dropdown.Option("fr", _("Français")),
-                ft.dropdown.Option("it", _("Italiano")),
+                ft.dropdown.Option(lang, get_language_manager().get_language_name(lang))
+                for lang in get_language_manager().get_available_languages()
             ],
             value=get_current_language(),
             on_change=self.on_language_change,
@@ -133,7 +143,10 @@ class WritingAssistantFletApp:
                     [
                         ft.Row([self.ui_elements["language_select"]]),
                         ft.Column(
-                            [self.ui_elements["label_main"], self.ui_elements["button_main"]],
+                            [
+                                self.ui_elements["label_main"],
+                                self.ui_elements["button_main"],
+                            ],
                             spacing=10,
                         ),
                     ],
@@ -145,12 +158,17 @@ class WritingAssistantFletApp:
 
     def on_button_click(self, e):
         """Button click handler"""
-        self.page.snack_bar = ft.SnackBar(ft.Text(_("Clicked!!!")))
-        self.page.snack_bar.open = True
-        self.page.update()
+        if not self.page:
+            return
+
+        snack_bar = ft.SnackBar(ft.Text(_("Clicked!!!")))
+        self.page.open(snack_bar)
 
     def on_language_change(self, e):
         """Language change handler"""
+        if not self.page:
+            return
+
         new_lang = e.control.value
         change_language(new_lang)
 
@@ -161,17 +179,18 @@ class WritingAssistantFletApp:
 
         # Update dropdown options
         self.ui_elements["language_select"].options = [
-            ft.dropdown.Option("en", _("English")),
-            ft.dropdown.Option("fr", _("Français")),
-            ft.dropdown.Option("it", _("Italiano")),
+            ft.dropdown.Option(lang, get_language_manager().get_language_name(lang))
+            for lang in get_language_manager().get_available_languages()
         ]
 
-        self.page.snack_bar = ft.SnackBar(ft.Text(f"Language changed to {new_lang}"))
-        self.page.snack_bar.open = True
-        self.page.update()
+        snack_bar = ft.SnackBar(ft.Text(f"Language changed to {new_lang}"))
+        self.page.open(snack_bar)
 
     def toggle_theme(self, e):
         """Toggle dark/light theme"""
+        if not self.page:
+            return
+
         new_dark_mode = not self.config.DARK_MODE
         self.config.DARK_MODE = new_dark_mode
 

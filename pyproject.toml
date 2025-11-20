@@ -18,11 +18,12 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pytest>=9.0.1",  # Testing framework
-    "ruff",  # Fast Python linter and formatter
-    "pre-commit",  # For managing pre-commit hooks
-    "watchdog>=6.0.0",  # File system monitoring, used to detect css changes
-    "pyinstaller>=6.0.0",  # Package application into executable
+    "pytest>=9.0.1", # Testing framework
+    "ruff", # Fast Python linter and formatter
+    "pyright", # Type checker
+    "pre-commit", # For managing pre-commit hooks
+    "watchdog>=6.0.0", # File system monitoring, used to detect css changes
+    "pyinstaller>=6.0.0", # Package application into executable
 ]
 
 [build-system]
@@ -51,4 +52,5 @@ known-first-party = ["src"]  # Treat 'src' as first-party imports for import sor
 extraPaths = ["src"]
 pythonVersion = "3.13"
 typeCheckingMode = "basic"
-
+venvPath = "."
+venv = ".venv"

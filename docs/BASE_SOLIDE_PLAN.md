@@ -189,19 +189,19 @@ app:
   name: "Writing Assistant Pro"
   version: "0.2.0"
   debug: false
-  
+
 ui:
   theme: "auto"  # auto, light, dark
   window_size: [800, 600]
   always_on_top: true
   hotkey: "ctrl+."
-  
+
 llm:
   provider: "openai"  # openai, anthropic, local
   model: "gpt-3.5-turbo"
   max_tokens: 4000
   temperature: 0.7
-  
+
 features:
   clipboard_monitoring: true
   text_selection: true

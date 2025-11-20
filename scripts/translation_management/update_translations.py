@@ -59,7 +59,20 @@ def main():
     run_command(extract_cmd, "🔍 Extracting translatable texts", project_root)
 
     # Step 2: Update/Initialize languages
-    languages = ["en", "fr", "it"]
+    # Read available languages from config.json
+    config_path = src_dir / "core" / "config.json"
+    languages = ["en", "fr", "it"]  # Default fallback
+
+    if config_path.exists():
+        import json
+
+        try:
+            with open(config_path, encoding="utf-8") as f:
+                config = json.load(f)
+                languages = config.get("available_languages", languages)
+        except Exception as e:
+            print(f"⚠️  Could not load config.json: {e}")
+
     domain = "writing_assistant"
 
     for lang in languages:

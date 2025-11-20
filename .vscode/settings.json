@@ -53,6 +53,12 @@
       "alignment": "right"
     },
     {
+      "label": "🔎 Run Pyright",
+      "task": "Run Pyright",
+      "tooltip": "Run Pyright type checker",
+      "alignment": "right"
+    },
+    {
       "label": "📦 Build Dev",
       "task": "Build Dev",
       "tooltip": "Build dev executable (console)",

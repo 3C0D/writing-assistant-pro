@@ -53,6 +53,21 @@
             }
         },
         {
+            "label": "Run Pyright",
+            "type": "shell",
+            "command": "uv",
+            "args": [
+                "run",
+                "python",
+                "scripts/run_pyright.py"
+            ],
+            "problemMatcher": "$python",
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared"
+            }
+        },
+        {
             "label": "Run Tests",
             "type": "shell",
             "command": "uv",
