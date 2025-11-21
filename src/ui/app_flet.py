@@ -191,6 +191,7 @@ class WritingAssistantFletApp:
 
         snack_bar = ft.SnackBar(ft.Text(f"Language changed to {new_lang}"))
         self.page.open(snack_bar)
+        self.page.update()
 
     def toggle_theme(self, e):
         """Toggle dark/light theme"""
