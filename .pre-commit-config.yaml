@@ -17,9 +17,9 @@ repos:
     rev: v5.0.0
     hooks:
       - id: trailing-whitespace
-        stages: [push]
+        stages: [pre-push]
       - id: end-of-file-fixer
-        stages: [push]
+        stages: [pre-push]
       - id: check-yaml
       - id: check-json
       - id: check-added-large-files
@@ -28,4 +28,4 @@ repos:
       - id: check-toml
       - id: mixed-line-ending
         args: ["--fix=lf"]
-        stages: [push]
+        stages: [pre-push]
