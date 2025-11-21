@@ -11,6 +11,8 @@ import sys
 import time
 from pathlib import Path
 
+from PIL import Image
+
 
 def get_project_root() -> Path:
     """Get the project root directory"""
@@ -18,6 +20,39 @@ def get_project_root() -> Path:
     project_root = script_dir.parent  # project root
     os.chdir(project_root)
     return project_root
+
+
+def ensure_icon_exists() -> Path | None:
+    """
+    Ensure the .ico icon exists at src/config/icons/app_icon.ico.
+    If not, try to convert from assets/icons/app_icon.png.
+    """
+    project_root = get_project_root()
+    ico_path = project_root / "src" / "config" / "icons" / "app_icon.ico"
+    png_path = project_root / "assets" / "icons" / "app_icon.png"
+
+    if ico_path.exists():
+        print(f"✓ Icon found at: {ico_path}")
+        return ico_path
+
+    print(f"⚠ Icon not found at {ico_path}")
+
+    if not png_path.exists():
+        print(f"❌ Source PNG icon not found at {png_path}")
+        return None
+
+    print(f"🔄 Converting {png_path} to .ico...")
+    try:
+        # Create directory if it doesn't exist
+        ico_path.parent.mkdir(parents=True, exist_ok=True)
+
+        img = Image.open(png_path)
+        img.save(ico_path, format="ICO", sizes=[(256, 256)])
+        print(f"✓ Icon converted and saved to {ico_path}")
+        return ico_path
+    except Exception as e:
+        print(f"❌ Failed to convert icon: {e}")
+        return None
 
 
 def check_data(mode: str) -> None:
@@ -75,7 +110,8 @@ def copy_required_files(build_type: str, target_dir: str) -> bool:
     items_to_copy = [
         (Path("styles"), dist_target_dir / "styles"),
         (Path("translations"), dist_target_dir / "translations"),
-        (Path("config.json"), dist_target_dir / "config.json"),
+        (Path("src/core/config.json"), dist_target_dir / "config.json"),
+        (Path("assets/icons"), dist_target_dir / "assets/icons"),
     ]
 
     print(f"Copying required files for {build_type} build to {cwd}/dist/{target_dir}/...")
@@ -137,9 +173,96 @@ def kill_existing_exe_process(process_name: str) -> None:
         print(f"Warning: Error while trying to kill process {process_name}: {e}")
 
 
-def terminate_existing_processes(exe_name: str | None = None) -> None:
-    """Terminate any existing Writing Assistant Pro processes"""
+def kill_python_script_process(script_name: str) -> None:
+    """Terminate a Python script process by its command line."""
+    try:
+        if sys.platform.startswith("win"):
+            # Method 1: Use tasklist + taskkill for more reliable process detection
+            # First, get the list of processes with command lines
+            list_command = [
+                "wmic",
+                "process",
+                "where",
+                f"name='python.exe' and commandline like '%{script_name}%'",
+                "get",
+                "processid",
+                "/format:value",
+            ]
+
+            result = subprocess.run(list_command, check=False, capture_output=True, text=True)
+
+            if result.returncode == 0 and result.stdout:
+                # Extract process IDs
+                pids = []
+                for line in result.stdout.split("\n"):
+                    if line.startswith("ProcessId=") and line.strip() != "ProcessId=":
+                        pid = line.split("=")[1].strip()
+                        if pid:
+                            pids.append(pid)
+
+                if pids:
+                    # Kill each process by PID
+                    killed_count = 0
+                    for pid in pids:
+                        kill_cmd = ["taskkill", "/F", "/PID", pid]
+                        kill_result = subprocess.run(
+                            kill_cmd, check=False, capture_output=True, text=True
+                        )
+                        if kill_result.returncode == 0:
+                            killed_count += 1
+
+                    if killed_count > 0:
+                        print(
+                            f"Successfully terminated {killed_count} Python process(es) "
+                            f"running: {script_name}"
+                        )
+                    else:
+                        print(
+                            f"Found Python processes for {script_name} but failed to terminate them"
+                        )
+                else:
+                    print(f"No existing Python process found for: {script_name}")
+            else:
+                print(f"No existing Python process found for: {script_name}")
+
+        else:
+            # For macOS and Linux, use more precise matching
+            # Use pgrep to find processes first, then pkill
+            grep_command = ["pgrep", "-f", f"python.*{script_name}"]
+            result = subprocess.run(grep_command, check=False, capture_output=True, text=True)
+
+            if result.returncode == 0 and result.stdout.strip():
+                # Found processes, now kill them
+                kill_command = ["pkill", "-f", f"python.*{script_name}"]
+                kill_result = subprocess.run(
+                    kill_command, check=False, capture_output=True, text=True
+                )
+
+                if kill_result.returncode == 0:
+                    pids = result.stdout.strip().split("\n")
+                    print(
+                        f"Successfully terminated {len(pids)} Python process(es) "
+                        f"running: {script_name}"
+                    )
+                else:
+                    print(f"Found Python processes for {script_name} but failed to terminate them")
+            else:
+                print(f"No existing Python process found for: {script_name}")
+
+    except Exception as e:
+        print(f"Warning: Error while trying to kill Python script process {script_name}: {e}")
+
+
+def terminate_existing_processes(
+    exe_name: str | None = None, script_name: str | None = None
+) -> None:
+    """Terminate any existing Writing Assistant Pro processes (both exe and script)"""
     print("Checking for existing processes...")
+
+    # Kill Python script first (to avoid conflicts)
+    if script_name:
+        print(f"Looking for Python script processes: {script_name}")
+        kill_python_script_process(script_name)
 
     if exe_name:
         print(f"Looking for: {exe_name}")

@@ -42,3 +42,11 @@ dist/
 
 # copy WTA
 copy WTA
+
+# Output and Logs
+logs/
+*.log
+debug_output.txt
+error.txt
+pyright_output.txt
+test_output.txt

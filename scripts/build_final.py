@@ -27,6 +27,7 @@ from utils import (
     check_data,
     clear_console,
     copy_required_files,
+    ensure_icon_exists,
     get_executable_name,
     get_project_root,
     terminate_existing_processes,
@@ -77,7 +78,10 @@ def run_build_final() -> bool:
     """Run PyInstaller build for final release"""
 
     # Build icon path
-    icon_path = Path("src/config/icons/app_icon.ico")
+    icon_path = ensure_icon_exists()
+    if not icon_path:
+        print("Error: Icon file not found and could not be generated.")
+        return False
 
     # Build PyInstaller command with exclusions - use UV
     pyinstaller_command = [
@@ -85,6 +89,7 @@ def run_build_final() -> bool:
         "run",
         "-m",
         "PyInstaller",
+        "--onefile",  # Single executable file (no _internal folder)
         "--windowed",  # No console
         f"--icon={icon_path}",
         "--name=Writing Assistant Pro",
@@ -93,12 +98,14 @@ def run_build_final() -> bool:
         "--noconfirm",
         "--collect-all",
         "flet",  # Flet assets
-        DEFAULT_SCRIPT_NAME,
     ]
 
     # Add exclusions
     for module in PYINSTALLER_EXCLUSIONS:
         pyinstaller_command.extend(["--exclude-module", module])
+
+    # Add main script
+    pyinstaller_command.append(DEFAULT_SCRIPT_NAME)
 
     try:
         print("Starting PyInstaller final build...")

@@ -6,7 +6,7 @@ import multiprocessing
 
 import flet as ft
 
-from src.core import parse_arguments
+from src.core import parse_arguments, setup_root_logger
 from src.ui import WritingAssistantFletApp
 
 # Required for PyInstaller
@@ -16,9 +16,14 @@ multiprocessing.freeze_support()
 def main():
     """Main entry point"""
     # Parse arguments (useful for debug flags)
-    parse_arguments()
+    args = parse_arguments()
 
-    app = WritingAssistantFletApp()
+    # Setup logging BEFORE creating the app (important for PyInstaller)
+    debug_mode = args.debug if hasattr(args, "debug") else False
+    setup_root_logger(debug=debug_mode)
+
+    # Create app instance, passing debug mode
+    app = WritingAssistantFletApp(debug=debug_mode)
 
     # Run Flet app
     # native=True is default for desktop

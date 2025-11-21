@@ -1,5 +1,0 @@
-c:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\systray_manager.py
-  c:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\systray_manager.py:49:20 - error: Variable not allowed in type expression (reportInvalidTypeForm)
-  c:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\systray_manager.py:145:37 - error: Variable not allowed in type expression (reportInvalidTypeForm)
-  c:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\systray_manager.py:153:36 - error: Variable not allowed in type expression (reportInvalidTypeForm)
-3 errors, 0 warnings, 0 informations

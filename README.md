@@ -1,13 +1,13 @@
 # ✍️ Writing Assistant Pro
 
-Une application desktop pour l'édition de texte construite avec **NiceGUI** et **Python 3.13+**.
+Une application desktop moderne pour l'édition de texte construite avec **Flet** (Flutter pour Python) et **Python 3.13+**.
 
 ## 🚀 Démarrage rapide
 
 ### Prérequis
 
 - Python 3.13+
-- [UV](https://docs.astral.sh/uv/) (gestionnaire de dépendances)
+- [UV](https://docs.astral.sh/uv/) (gestionnaire de dépendances rapide)
 
 ### Installation
 
@@ -15,6 +15,9 @@ Une application desktop pour l'édition de texte construite avec **NiceGUI** et 
 # Cloner le projet
 git clone <repo>
 cd writing-assistant-pro
+
+# Installer les dépendances
+uv sync
 ```
 
 ### Lancer l'application
@@ -23,161 +26,91 @@ cd writing-assistant-pro
 
 ```bash
 uv run python scripts/run_dev.py
-# ou
-uv run python main.py --debug
 ```
 
-**Mode production :**
+_Lance l'application avec console visible et logs détaillés._
+
+**Mode production (simulation) :**
 
 ```bash
-python main.py
+uv run python main.py
 ```
 
-## 📖 Fonctionnalités
+## 🛠️ Build & Packaging
 
-- ✅ Application desktop native (NiceGUI + pywebview)
-- ✅ Mode développement avec hot reload
-- ✅ Système de logging complet
-- ✅ Thèmes light/dark switchables
-- ✅ Système de traduction intégré (gettext)
-- ✅ Structure modulaire et extensible
+Le projet dispose de deux modes de build distincts :
 
-## 🛠️ Stack technique
+### 1. Build Développement (`dist/dev/`)
 
-| Composant | Technologie |
-|-----------|-------------|
-| UI Framework | NiceGUI |
-| Langage | Python 3.13+ |
-| Gestionnaire de dépendances | UV |
-| Rendu | pywebview (native) |
-| Traductions | Gettext (Babel) |
-| IDE recommandé | VS Code |
+```bash
+uv run python scripts/build_dev.py
+```
 
-## 📁 Structure du projet
+- **Format** : Dossier (`--onedir`) avec dossier `_internal` visible.
+- **Console** : Visible par défaut (pour le débogage).
+- **Logs** :
+  - Console visible : Logs dans la console.
+  - Console masquée : Logs dans `dist/dev/debug.log`.
+- **Usage** : Pour tester le packaging et déboguer l'exécutable.
+
+### 2. Build Final (`dist/production/`)
+
+```bash
+uv run python scripts/build_final.py
+```
+
+- **Format** : Fichier unique (`--onefile`).
+- **Console** : Masquée (Windowed mode).
+- **Logs** : Désactivés (Silencieux) pour la performance et la propreté.
+- **Usage** : Version finale à distribuer aux utilisateurs.
+
+## 📁 Organisation des Fichiers
 
 ```
 writing-assistant-pro/
 ├── main.py                      # Point d'entrée
+├── logs/                        # Logs et fichiers générés (ignoré par git)
 ├── src/                         # Code source
-│   ├── core/
-│   │   ├── config.py            # Configuration globale
-│   │   ├── logger.py            # Logging centralisé
-│   │   ├── styles.py            # Gestion des thèmes
-│   │   └── translation.py       # Module de traduction
-│   └── ui/                      # Interface utilisateur
+│   ├── core/                    # Logique métier
+│   │   ├── config.py            # Configuration & Arguments
+│   │   ├── logger.py            # Logging centralisé (Loguru)
+│   │   ├── systray_manager.py   # Gestion icône systray
+│   │   └── ...
+│   └── ui/                      # Interface utilisateur (Flet)
+│       ├── app_flet.py          # Classe principale App
+│       └── ...
 ├── scripts/                     # Scripts utilitaires
-│   ├── run_dev.py               # Lancement mode dev
-│   └── translation_management/  # Outils de traduction
-├── styles/                      # Fichiers CSS (thèmes)
-├── translations/                # Fichiers de traduction
-└── docs/                        # Documentation détaillée
+│   ├── run_dev.py               # Lanceur dev
+│   ├── build_dev.py             # Builder dev
+│   ├── build_final.py           # Builder production
+│   └── translation_management/  # Outils traduction
+├── assets/                      # Ressources (icônes, images)
+├── styles/                      # Thèmes
+└── translations/                # Fichiers .po/.mo
 ```
-
-## 📚 Documentation complète
-
-| Document | Emplacement | Description | Lignes |
-|----------|-------------|-------------|--------|
-| **README** | `README.md` | Démarrage rapide et présentation | - |
-| **ARCHITECTURE** | `ARCHITECTURE.md` | Architecture complète, composants, workflow | 379 |
-| **STRUCTURE** | `docs/STRUCTURE.md` | Détails structure fichiers et rôles | 213 |
-| **CONFIG BABEL** | `docs/CONFIG_BABEL.md` | Configuration système de traduction | 59 |
-| **NICE GUI** | `docs/nice_gui.md` | Guide d'utilisation NiceGUI | 163 |
-| **RECAP** | `docs/RECAP.md` | Récapitulatif global du projet | 126 |
-| **TRANSLATION** | `docs/TRANSLATION_README.md` | Guide complet des traductions | 156 |
-
-### Contenu détaillé de chaque document
-
-**ARCHITECTURE.md (379 lignes)**
-
-- Vue d'ensemble des composants NiceGUI
-- Structure détaillée avec `.babelrc` et `babel.cfg`
-- Composants clés : main.py, logger.py, styles.py, ui/**init**.py
-- Workflow de développement (dev/production)
-- Gestion des thèmes light/dark
-- Système de traduction avec Babel
-- Configuration VS Code et conventions de code
-
-**docs/STRUCTURE.md (213 lignes)**
-
-- Structure complète avec tous les fichiers
-- Explication détaillée des rôles de chaque composant
-- `src/core/` (config, logger, styles, translation)
-- `src/ui/` (interface utilisateur)
-- `scripts/` (utilitaires)
-- `styles/` (thèmes CSS)
-- `translations/` (fichiers .po/.mo)
-
-**docs/CONFIG_BABEL.md (59 lignes)**
-
-- Configuration `babel.cfg` (extraction)
-- Configuration `.babelrc` (init/update/compile)
-- Workflow en 3 étapes automatisé
-- Commande unique de mise à jour
-
-**docs/nice_gui.md (163 lignes)**
-
-- Guide complet d'utilisation NiceGUI
-- Mode natif (pywebview) vs navigateur
-- Packaging en application installable
-- Exemples d'interface moderne
-
-**docs/RECAP.md (126 lignes)**
-
-- Récapitulatif des modifications de la session complète
-- Objectifs réalisés et résultats
-- Structure finale et fonctionnalités
-
-**docs/TRANSLATION_README.md (156 lignes)**
-
-- Guide complet du système de traduction
-- Workflow pratique étape par étape
-- Comment ajouter du texte à traduire
-- Ajout de nouvelles langues
-- Dépannage et outils graphiques
 
 ## 🔧 Développement
 
-### Modifier l'interface
+### Architecture Flet
 
-Édite le fichier `src/ui/__init__.py` ou crée de nouveaux modules dans `src/ui/`.
+L'application utilise Flet pour l'UI. Le point d'entrée est `src/ui/app_flet.py`.
+Les composants UI sont modulaires et réactifs.
 
-### Ajouter des traductions
+### Logging
 
-```python
-from src.core import _
-ui.label(_("Texte à traduire"))
-```
+- En développement : Les logs sont écrits dans le dossier `logs/` à la racine du projet.
+- En production (frozen) : Pas de logs fichiers par défaut.
 
-Puis met à jour les traductions :
+### Traductions
+
+Le système utilise `gettext` et `babel`.
+Pour mettre à jour les traductions après modification du code :
 
 ```bash
 uv run python scripts/translation_management/update_translations.py
 ```
 
-### Changer de thème
+## 📚 Documentation
 
-Dans `src/core/config.py`, modifie `DARK_MODE` :
-
-```python
-DARK_MODE = True  # Mode sombre
-```
-
-## 📝 Commandes utiles
-
-```bash
-# Lancer en mode dev avec hot reload
-uv run python scripts/run_dev.py
-
-# Installer des dépendances
-uv add <package>
-
-# Mettre à jour les traductions
-uv run python scripts/translation_management/update_translations.py
-
-# Mode debug détaillé
-uv run python main.py --debug
-```
-
----
-
-**Pour plus d'informations détaillées, voir [ARCHITECTURE.md](./ARCHITECTURE.md)**
+- [ARCHITECTURE.md](./ARCHITECTURE.md) : Détails techniques et architecture.
+- [docs/](./docs/) : Documentation approfondie (Structure, Babel, etc.).

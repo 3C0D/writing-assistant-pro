@@ -19,6 +19,7 @@ from PIL import Image
 from pystray import Icon, Menu, MenuItem
 
 from .autostart_manager import AutostartManager
+from .config import get_app_root
 
 if TYPE_CHECKING:
     import flet as ft
@@ -115,10 +116,25 @@ class SystrayManager:
         Returns:
             Path to the icon file
         """
-        # Try to find icon in assets/icons/
+        # Use get_app_root() to find the correct root directory in both dev and frozen modes
+        app_root = get_app_root()
+
+        # In frozen mode (PyInstaller), assets are usually in the root or _internal
+        # In dev mode, they are in assets/
+
+        # Check common locations
+        possible_paths = [
+            app_root / "assets" / "icons" / "app_icon.png",  # Dev structure
+            app_root / "app_icon.png",  # Flat structure (if copied to root)
+        ]
+
+        for path in possible_paths:
+            if path.exists():
+                return path
+
+        # Fallback to dev path relative to this file if get_app_root fails or structure is weird
         project_root = Path(__file__).parent.parent.parent
-        icon_path = project_root / "assets" / "icons" / "app_icon.png"
-        return icon_path
+        return project_root / "assets" / "icons" / "app_icon.png"
 
     def _create_default_icon(self) -> Image.Image:
         """

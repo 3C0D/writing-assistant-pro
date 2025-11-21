@@ -37,13 +37,15 @@ def get_mode() -> str:
     """
     # Check if frozen (PyInstaller)
     if getattr(sys, "frozen", False):
-        # In onedir mode, exe is in dist/dev/Writing Assistant Pro/
-        # So we need to check the grandparent directory name
-        exe_parent = Path(sys.executable).parent  # "Writing Assistant Pro"
-        dist_dir = exe_parent.parent  # "dev" or "prod"
+        # After flattening: exe is at dist/dev/Writing Assistant Pro.exe
+        # So exe parent is directly the dist subfolder (dev or final)
+        exe_parent = Path(sys.executable).parent  # "dev" or "final"
 
-        if dist_dir.name == "dev":
+        if exe_parent.name == "dev":
             return "build-dev"
+        elif exe_parent.name == "final":
+            return "build-final"
+        # Fallback if structure is unexpected
         return "build-final"
 
     return "dev"
@@ -59,26 +61,17 @@ def get_app_root() -> Path:
     mode = get_mode()
 
     if mode == "dev":
-        # In dev mode, we want to share data with build-dev
-        # So we point to dist/dev if it exists, otherwise project root
-        # User note: "Initially the DEV folder shares the same data for both
-        # build DEV mode and standard dev mode"
-        # So dev mode should look into dist/dev for config/data
-
-        # However, for static assets (styles, translations) in dev mode,
-        # they are in the source tree (APP_ROOT).
-        # But for CONFIG, we want it in dist/dev.
-
-        # Let's return the project root here, and let specific managers decide
-        # if they want to look in dist/dev or root.
+        # In dev mode, return project root
+        # Static assets (styles, translations) are in source tree
+        # Config will be in dist/dev (handled by ConfigManager)
         return APP_ROOT
 
     else:
         # In frozen modes (build-dev, build-final)
-        # In onedir mode, exe is in dist/dev/Writing Assistant Pro/
-        # but external files are in dist/dev/
-        # So we need to go up one level from the exe directory
-        return Path(sys.executable).parent.parent
+        # After flattening: exe is at dist/dev/Writing Assistant Pro.exe
+        # External files are also in dist/dev/
+        # So app_root is the same as exe parent directory
+        return Path(sys.executable).parent
 
 
 class ConfigManager:

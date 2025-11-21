@@ -10,6 +10,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from utils import check_data, copy_required_files
+
 # Fix Unicode encoding for Windows console
 os.environ["PYTHONIOENCODING"] = "utf-8"
 if os.name == "nt":
@@ -29,6 +31,12 @@ def main():
     """Launch main.py in debug mode"""
     print(f"🚀 Starting in {MODE} mode...")
     print("─" * 50)
+
+    # Setup development environment
+    if not copy_required_files("development", "dev"):
+        print("⚠️  Failed to copy required files")
+
+    check_data("build-dev")  # Use build-dev mode to setup data_dev.json path logic
 
     main_path = Path(__file__).parent.parent / DEFAULT_SCRIPT_NAME
     result = subprocess.run(["uv", "run", "python", str(main_path), "--debug"])
