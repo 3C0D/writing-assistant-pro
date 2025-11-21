@@ -18,6 +18,8 @@ from typing import TYPE_CHECKING, Any
 from PIL import Image
 from pystray import Icon, Menu, MenuItem
 
+from .autostart_manager import AutostartManager
+
 if TYPE_CHECKING:
     import flet as ft
 
@@ -139,6 +141,12 @@ class SystrayManager:
         return Menu(
             MenuItem("About", self._on_about_click),
             Menu.SEPARATOR,
+            MenuItem(
+                "Run on Startup",
+                self._on_autostart_click,
+                checked=lambda item: AutostartManager.check_autostart(),
+            ),
+            Menu.SEPARATOR,
             MenuItem("Quit", self._on_quit_click),
         )
 
@@ -149,6 +157,23 @@ class SystrayManager:
         logger.debug("About menu item clicked")
         if self.on_about:
             self.on_about()
+
+    def _on_autostart_click(self, icon: Any, item: Any) -> None:
+        """
+        Handle Run on Startup menu item click.
+        """
+        new_state = not item.checked
+        logger.info(f"Toggling autostart to {new_state}")
+
+        if self.app and hasattr(self.app, "config"):
+            success = AutostartManager.set_autostart_with_sync(new_state, self.app.config)
+            if success:
+                logger.info("Autostart setting updated successfully")
+            else:
+                logger.error("Failed to update autostart setting")
+        else:
+            logger.warning("App config not available, setting system autostart only")
+            AutostartManager.set_autostart(new_state)
 
     def _on_quit_click(self, icon: Any, item: Any) -> None:
         """

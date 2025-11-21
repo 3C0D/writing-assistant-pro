@@ -45,11 +45,13 @@ class HotkeyManager:
         """
         try:
             # Clear all existing hotkeys first to prevent duplicates
+            self.log.debug("Clearing all existing keyboard hooks...")
             keyboard.unhook_all()
             self._hotkey_hook = None
 
             # Register new hotkey
             self._toggle_callback = toggle_callback
+            self.log.debug(f"Adding hotkey: {self.config.HOTKEY_COMBINATION} (suppress=False)")
             keyboard.add_hotkey(self.config.HOTKEY_COMBINATION, toggle_callback, suppress=False)
 
             self._hotkey_hook = self.config.HOTKEY_COMBINATION
@@ -60,6 +62,9 @@ class HotkeyManager:
 
         except Exception as e:
             self.log.error(f"Failed to register hotkey: {e}")
+            import traceback
+
+            self.log.error(f"Traceback: {traceback.format_exc()}")
             return False
 
     def register_delayed(self, toggle_callback):
@@ -71,15 +76,20 @@ class HotkeyManager:
         """
 
         def delayed_setup():
+            self.log.info(f"Waiting {self.config.HOTKEY_SETUP_DELAY}s before registering hotkey...")
             time.sleep(self.config.HOTKEY_SETUP_DELAY)
+            self.log.info(f"Attempting to register hotkey: {self.config.HOTKEY_COMBINATION}")
             success = self.register(toggle_callback)
             if success:
-                self.log.info(f"Press {self.config.HOTKEY_COMBINATION} to toggle window")
+                self.log.info(
+                    f"✓ Hotkey ready! Press {self.config.HOTKEY_COMBINATION} to toggle window"
+                )
             else:
-                self.log.error("Failed to setup hotkey")
+                self.log.error("✗ Failed to setup hotkey - please check logs")
 
         self._setup_thread = threading.Thread(target=delayed_setup, daemon=True)
         self._setup_thread.start()
+        self.log.debug("Hotkey registration thread started")
 
     def unregister(self):
         """

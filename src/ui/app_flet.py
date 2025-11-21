@@ -74,7 +74,8 @@ class WritingAssistantFletApp:
         # Create UI
         self._create_ui()
 
-        # Setup hotkey for toggle
+        # Setup hotkey for toggle with logging
+        self.log.info(f"Registering hotkey: {self.config.HOTKEY_COMBINATION}")
         self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
 
         # Initialize and start systray
