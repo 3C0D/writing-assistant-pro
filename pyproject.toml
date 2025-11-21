@@ -14,6 +14,8 @@ dependencies = [
     "keyboard", # For global hotkey management
     "loguru", # Modern logging library with colored output
     "flet-desktop>=0.28.3",
+    "pystray>=0.19.5",
+    "pillow>=12.0.0",
 ]
 
 [dependency-groups]

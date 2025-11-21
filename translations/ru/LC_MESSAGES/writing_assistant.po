@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-20 21:48+0100\n"
+"POT-Creation-Date: 2025-11-21 02:14+0100\n"
 "PO-Revision-Date: 2025-11-20 21:48+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,21 +19,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:113
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:165
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:124
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:184
 msgid "Language"
 msgstr ""
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:125
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:163
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:136
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:182
 msgid "Hello, this is a real desktop app!"
 msgstr ""
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:130
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:164
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:141
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:183
 msgid "Click me"
 msgstr ""
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:153
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:170
 msgid "Clicked!!!"
+msgstr ""
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app_flet.py⁩:216
+msgid "About window - Coming soon!"
 msgstr ""

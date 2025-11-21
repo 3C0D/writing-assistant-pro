@@ -18,6 +18,7 @@ from src.core import (
     init_translation,
     setup_root_logger,
 )
+from src.core.systray_manager import SystrayManager
 
 
 class WritingAssistantFletApp:
@@ -41,6 +42,7 @@ class WritingAssistantFletApp:
         self.hotkey_manager = HotkeyManager(self.config)
         self.window_manager: WindowManager | None = None
         self.page: ft.Page | None = None
+        self.systray_manager: SystrayManager | None = None
 
         # UI Elements references for updates
         self.ui_elements = {}
@@ -66,15 +68,19 @@ class WritingAssistantFletApp:
         page.window.prevent_close = True
         page.window.on_event = self.on_window_event
 
-        # Hide window on start if configured
-        if self.config.WINDOW_START_HIDDEN:
-            page.window.visible = False
+        # Hide window on start (systray mode)
+        page.window.visible = False
 
         # Create UI
         self._create_ui()
 
         # Setup hotkey for toggle
         self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
+
+        # Initialize and start systray
+        self.systray_manager = SystrayManager(page, on_about=self.show_about, app=self)
+        self.systray_manager.run_async()
+        self.log.info("Systray manager started")
 
         page.update()
         self.log.info("Flet application started")
@@ -193,8 +199,27 @@ class WritingAssistantFletApp:
 
         new_dark_mode = not self.config.DARK_MODE
         self.config.DARK_MODE = new_dark_mode
-
         self.page.theme_mode = ft.ThemeMode.DARK if new_dark_mode else ft.ThemeMode.LIGHT
-        e.control.icon = ft.Icons.DARK_MODE if not new_dark_mode else ft.Icons.LIGHT_MODE
 
+        # Safely update icon if appbar exists and is of correct type
+        if (
+            self.page.appbar
+            and isinstance(self.page.appbar, ft.AppBar)
+            and self.page.appbar.actions
+        ):
+            self.page.appbar.actions[0].icon = (  # type: ignore[union-attr]
+                ft.Icons.DARK_MODE if not new_dark_mode else ft.Icons.LIGHT_MODE
+            )
+        self.page.update()
+
+    def show_about(self):
+        """Show about window (placeholder for now)"""
+        if not self.page:
+            return
+
+        self.log.info("About window requested (not implemented yet)")
+        # Show window and display a simple message
+        self.page.window.visible = True
+        snack_bar = ft.SnackBar(ft.Text(_("About window - Coming soon!")))
+        self.page.open(snack_bar)
         self.page.update()
