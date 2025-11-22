@@ -90,7 +90,8 @@
             "args": [
                 "run",
                 "python",
-                "scripts/build_dev.py"
+                "scripts/build_dev.py",
+                "--console"
             ],
             "group": "build",
             "presentation": {

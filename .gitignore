@@ -24,7 +24,6 @@ Thumbs.db
 
 # Project specific
 tempCodeRunnerFile.py
-*.log
 *.db
 *.sqlite
 
@@ -33,7 +32,6 @@ tempCodeRunnerFile.py
 .coverage
 htmlcov/
 .agent/rules/uv.md
-test_output.txt
 
 # Build artifacts
 build/
@@ -41,10 +39,9 @@ dist/
 *.spec
 
 # copy WTA
-copy WTA
+legacy_project
 
 # Output and Logs
-logs/
 *.log
 debug_output.txt
 error.txt

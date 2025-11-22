@@ -20,7 +20,8 @@ def main():
 
     # Setup logging BEFORE creating the app (important for PyInstaller)
     debug_mode = args.debug if hasattr(args, "debug") else False
-    setup_root_logger(debug=debug_mode)
+    log_file = args.log_file if hasattr(args, "log_file") else None
+    setup_root_logger(debug=debug_mode, log_filename=log_file)
 
     # Create app instance, passing debug mode
     app = WritingAssistantFletApp(debug=debug_mode)

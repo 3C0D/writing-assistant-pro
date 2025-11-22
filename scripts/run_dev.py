@@ -39,7 +39,10 @@ def main():
     check_data("build-dev")  # Use build-dev mode to setup data_dev.json path logic
 
     main_path = Path(__file__).parent.parent / DEFAULT_SCRIPT_NAME
-    result = subprocess.run(["uv", "run", "python", str(main_path), "--debug"])
+    result = subprocess.run(
+        ["uv", "run", "python", str(main_path), "--debug", "--log-file", "run_dev.log"]
+    )
+    print("\nℹ️  Log file: logs/run_dev.log")
     sys.exit(result.returncode)
 
 

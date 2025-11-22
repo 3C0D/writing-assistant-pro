@@ -72,10 +72,61 @@ def clean_dev_cache() -> None:
     print("   Cache cleanup completed!")
 
 
-def run_dev_build(console_mode: bool = False, clean_build: bool = False) -> bool:
+def should_auto_clean() -> bool:
+    """
+    Detect if we should automatically clean cache based on Git state or build artifacts age.
+    This helps avoid slow builds after Git operations without always cleaning.
+    """
+    try:
+        # Check if .git exists (we're in a Git repo)
+        git_dir = Path(".git")
+        if not git_dir.exists():
+            return False
+
+        # Get last commit time
+        result = subprocess.run(
+            ["git", "log", "-1", "--format=%ct"], capture_output=True, text=True, timeout=5
+        )
+
+        if result.returncode != 0:
+            return False
+
+        last_commit_time = int(result.stdout.strip())
+
+        # Check if build directory exists and get its modification time
+        build_dir = Path("build")
+        if not build_dir.exists():
+            return False  # No cache to clean
+
+        build_time = build_dir.stat().st_mtime
+
+        # If there's a significant time difference (in either direction) between
+        # last commit and build cache, suggest cleaning
+        # This catches: reverts, checkouts, merges, rebases
+        time_diff = abs(last_commit_time - build_time)
+        if time_diff > 600:  # 10 minutes buffer
+            return True
+
+    except Exception:
+        # If anything fails, don't auto-clean
+        pass
+
+    return False
+
+
+def run_dev_build(console_mode: bool = False, clean_build: bool = False) -> tuple[bool, bool]:
     """Run PyInstaller build for development"""
 
-    if clean_build:
+    # Auto-detect if we should clean based on Git state
+    auto_clean = should_auto_clean()
+    if auto_clean:
+        print(
+            "⚠️  Detected recent Git operations - "
+            "automatically cleaning cache for optimal build time"
+        )
+        clean_dev_cache()
+        print()
+    elif clean_build:
         print("🧹  Manual clean build requested")
         clean_dev_cache()
         print()
@@ -84,7 +135,7 @@ def run_dev_build(console_mode: bool = False, clean_build: bool = False) -> bool
     icon_path = ensure_icon_exists()
     if not icon_path:
         print("Error: Icon file not found and could not be generated.")
-        return False
+        return False, False
 
     # Build PyInstaller command with exclusions - use UV
     pyinstaller_command = [
@@ -102,7 +153,7 @@ def run_dev_build(console_mode: bool = False, clean_build: bool = False) -> bool
         "flet",  # Flet assets
     ]
 
-    if clean_build:
+    if clean_build or auto_clean:
         pyinstaller_command.append("--clean")
 
     # Add exclusions
@@ -114,20 +165,21 @@ def run_dev_build(console_mode: bool = False, clean_build: bool = False) -> bool
 
     try:
         mode_text = "console" if console_mode else "windowed"
-        print(f"Starting PyInstaller development build ({mode_text} mode)...")
+        clean_text = " (auto-clean)" if auto_clean else " (clean)" if clean_build else ""
+        print(f"Starting PyInstaller development build ({mode_text} mode{clean_text})...")
         subprocess.run(pyinstaller_command, check=True)
         print(f"PyInstaller development build completed successfully ({mode_text} mode)!")
-        return True
+        return True, auto_clean
 
     except subprocess.CalledProcessError as e:
         print(f"Error: Build failed with error: {e}")
-        return False
+        return False, False
     except FileNotFoundError:
         print("Error: PyInstaller not found. Please install it with: uv add --dev pyinstaller")
-        return False
+        return False, False
 
 
-def launch_build(extra_args: list[str] | None = None) -> bool:
+def launch_build(extra_args: list[str] | None = None, console_mode: bool = False) -> bool:
     """Launch the built executable, killing any existing instance first."""
     exe_name = get_executable_name()
     exe_path = Path("dist") / "dev" / exe_name
@@ -137,27 +189,41 @@ def launch_build(extra_args: list[str] | None = None) -> bool:
         return False
 
     # Build command with extra arguments
-    cmd = [str(exe_path)]
+    # Calculate absolute path to project logs directory
+    project_root = get_project_root()
+    log_file_path = project_root / "logs" / "build_dev.log"
+    cmd = [str(exe_path), "--debug", "--log-file", str(log_file_path)]
     if extra_args:
         cmd.extend(extra_args)
 
     print(f"Launching {exe_path} with args: {' '.join(extra_args) if extra_args else 'none'}...")
     try:
-        if sys.platform.startswith("win"):
-            process = subprocess.Popen(cmd, shell=False)
-        else:
-            process = subprocess.Popen(cmd)
-
-        # Wait briefly to ensure the process starts
-        time.sleep(1)
-
-        # Check if process is still running
-        if process.poll() is None:
-            print(f"✓ Application launched successfully (PID: {process.pid})")
+        if console_mode:
+            # Blocking call for console mode to keep stdout attached
+            print("ℹ️  Console mode: Waiting for application to exit...")
+            subprocess.run(cmd)
+            print("✓ Application exited")
+            print("ℹ️  Log file: logs/build_dev.log")
             return True
         else:
-            print(f"❌ Application exited immediately with code: {process.returncode}")
-            return False
+            # Non-blocking call for windowed mode
+            if sys.platform.startswith("win"):
+                process = subprocess.Popen(cmd, shell=False)
+            else:
+                process = subprocess.Popen(cmd)
+
+            # Wait briefly to ensure the process starts
+            time.sleep(1)
+
+            # Check if process is still running
+            if process.poll() is None:
+                print(f"✓ Application launched successfully (PID: {process.pid})")
+                print("ℹ️  Log file: logs/build_dev.log")
+                return True
+            else:
+                print(f"❌ Application exited immediately with code: {process.returncode}")
+                print("ℹ️  Check log file: logs/build_dev.log")
+                return False
 
     except Exception as e:
         print(f"Error launching executable: {e}")
@@ -231,7 +297,10 @@ def main():
         check_data(MODE)
 
         # Run build
-        if not run_dev_build(console_mode=console_mode, clean_build=args.clean):
+        build_success, was_auto_cleaned = run_dev_build(
+            console_mode=console_mode, clean_build=args.clean
+        )
+        if not build_success:
             print("\nBuild failed!")
             return 1
 
@@ -269,11 +338,13 @@ def main():
 
         # Launch the built application
         print()
-        if not launch_build(extra_args=extra_args):
+        if not launch_build(extra_args=extra_args, console_mode=console_mode):
             print("\nFailed to launch built application!")
             return 1
 
         print("\n===== Development build completed and launched =====")
+        if was_auto_cleaned:
+            print("ℹ️  Auto-clean was triggered due to recent Git changes.")
         timer.print_duration("development build")
 
         return 0
