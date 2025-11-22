@@ -3,7 +3,6 @@
     "charliermarsh.ruff",
     "ms-python.python",
     "ms-pyright.pyright",
-    "formulahendry.code-runner",
     "ms-toolsai.jupyter",
     "taskbuttons.vscode-task-buttons"
   ],
