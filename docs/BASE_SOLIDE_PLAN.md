@@ -12,7 +12,7 @@ Après analyse complète du projet, voici un plan structuré pour transformer wr
 
 - Créer une base modulaire robuste
 - Interface chat moderne et extensible
-- Tests unitaires全覆盖
+- Tests unitaires 全覆盖
 
 ### Moyen terme (2-3 mois)
 
@@ -191,13 +191,13 @@ app:
   debug: false
 
 ui:
-  theme: "auto"  # auto, light, dark
+  theme: "auto" # auto, light, dark
   window_size: [800, 600]
   always_on_top: true
   hotkey: "ctrl+."
 
 llm:
-  provider: "openai"  # openai, anthropic, local
+  provider: "openai" # openai, anthropic, local
   model: "gpt-3.5-turbo"
   max_tokens: 4000
   temperature: 0.7
@@ -246,8 +246,8 @@ class PluginInterface:
 ```python
 resources/
 ├── icons/                   # Icônes de l'application
-│   ├── app_icon.ico
-│   ├── tray_icon.ico
+│   ├── app_icon.png
+│   ├── tray_icon.png
 │   └── menu_icons/
 ├── sounds/                  # Sons de notification
 │   ├── notification.wav

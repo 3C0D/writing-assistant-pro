@@ -108,24 +108,6 @@ uv run python scripts/translation_management/update_translations.py
 
 ---
 
-#### `convert_icon.py`
-
-Convertit les icônes PNG en ICO pour Windows.
-
-```bash
-uv run python scripts/convert_icon.py
-```
-
-**Fonctionnalités :**
-
-- Scanne automatiquement les PNG dans `assets/icons/`
-- Convertit uniquement les ICO manquants dans `assets/icons/icons/`
-- Ignore les fichiers déjà convertis
-
-**Voir aussi :** [Documentation complète sur les icônes](ICONS.md)
-
----
-
 ## 🔧 Workflow de Développement Recommandé
 
 ### 1. Avant de Commencer
