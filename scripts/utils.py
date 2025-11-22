@@ -11,8 +11,6 @@ import sys
 import time
 from pathlib import Path
 
-from PIL import Image
-
 
 def get_project_root() -> Path:
     """Get the project root directory"""
@@ -24,35 +22,18 @@ def get_project_root() -> Path:
 
 def ensure_icon_exists() -> Path | None:
     """
-    Ensure the .ico icon exists at src/config/icons/app_icon.ico.
-    If not, try to convert from assets/icons/app_icon.png.
+    Get the icon path from assets/icons/app_icon.png.
+    PyInstaller supports PNG icons on all platforms.
     """
     project_root = get_project_root()
-    ico_path = project_root / "src" / "config" / "icons" / "app_icon.ico"
     png_path = project_root / "assets" / "icons" / "app_icon.png"
 
-    if ico_path.exists():
-        print(f"✓ Icon found at: {ico_path}")
-        return ico_path
-
-    print(f"⚠ Icon not found at {ico_path}")
-
     if not png_path.exists():
-        print(f"❌ Source PNG icon not found at {png_path}")
+        print(f"❌ Icon not found at {png_path}")
         return None
 
-    print(f"🔄 Converting {png_path} to .ico...")
-    try:
-        # Create directory if it doesn't exist
-        ico_path.parent.mkdir(parents=True, exist_ok=True)
-
-        img = Image.open(png_path)
-        img.save(ico_path, format="ICO", sizes=[(256, 256)])
-        print(f"✓ Icon converted and saved to {ico_path}")
-        return ico_path
-    except Exception as e:
-        print(f"❌ Failed to convert icon: {e}")
-        return None
+    print(f"✓ Icon found at: {png_path}")
+    return png_path
 
 
 def check_data(mode: str) -> None:
