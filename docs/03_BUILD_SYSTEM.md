@@ -16,10 +16,10 @@ Le projet utilise **PyInstaller** pour créer des exécutables autonomes. Deux m
 
 ### Scripts de Build
 
-| Script                                        | Mode          | Format      | Console         | Logs       | Usage        |
-| --------------------------------------------- | ------------- | ----------- | --------------- | ---------- | ------------ |
-| [`build_dev.py`](../scripts/build_dev.py)     | Développement | `--onedir`  | Visible/Masquée | Activés    | Débogage     |
-| [`build_final.py`](../scripts/build_final.py) | Production    | `--onefile` | Masquée         | Désactivés | Distribution |
+| Script                                                  | Mode          | Format      | Console         | Logs       | Usage        |
+| ------------------------------------------------------- | ------------- | ----------- | --------------- | ---------- | ------------ |
+| [`build_dev.py`](../scripts/dev_build/build_dev.py)     | Développement | `--onedir`  | Visible/Masquée | Activés    | Débogage     |
+| [`build_final.py`](../scripts/dev_build/build_final.py) | Production    | `--onefile` | Masquée         | Désactivés | Distribution |
 
 ### Fichiers Utilitaires
 
@@ -130,7 +130,7 @@ pyinstaller_command = [
     "uv", "run", "-m", "PyInstaller",
     "--onedir",                    # Dossier éclaté
     "--console",                   # ou --windowed
-    "--icon=assets/icons/app_icon.png",
+    "--icon=src/core/config/icons/app_icon.png",
     "--name=Writing Assistant Pro",
     "--distpath=dist/dev",
     "--collect-all", "flet",       # Collecter assets Flet
@@ -307,7 +307,7 @@ pyinstaller_command.extend(["--hidden-import", "nom_du_module"])
 
 **Solution** :
 
-Vérifiez que le fichier `assets/icons/app_icon.png` existe bien. PyInstaller gère nativement le format PNG, aucune conversion en `.ico` n'est nécessaire.
+Vérifiez que le fichier `src/core/config/icons/app_icon.png` existe bien. PyInstaller gère nativement le format PNG, aucune conversion en `.ico` n'est nécessaire.
 
 ### Build Très Lent
 
@@ -439,8 +439,8 @@ Automatiser les builds pour Windows, Linux et macOS.
 
 ### Code Source
 
-- [`scripts/build_dev.py`](../scripts/build_dev.py) - Build développement
-- [`scripts/build_final.py`](../scripts/build_final.py) - Build production
+- [`scripts/dev_build/build_dev.py`](../scripts/dev_build/build_dev.py) - Build développement
+- [`scripts/dev_build/build_final.py`](../scripts/dev_build/build_final.py) - Build production
 - [`scripts/utils.py`](../scripts/utils.py) - Utilitaires communs
 
 ### Documentation Externe

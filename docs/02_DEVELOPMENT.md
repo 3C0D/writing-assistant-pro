@@ -31,7 +31,7 @@ C'est le mode standard pour coder. Les logs sont affichés dans la console et sa
 
 ```bash
 # Lancer le script principal
-uv run python scripts/run_dev.py
+uv run python scripts/dev_build/run_dev.py
 ```
 
 ### Mode Build (Test)
@@ -40,7 +40,7 @@ Pour tester l'application telle qu'elle sera distribuée (mais sans la compiler 
 
 ```bash
 # Construire et lancer
-uv run python scripts/build_dev.py
+uv run python scripts/dev_build/build_dev.py
 ```
 
 ## 🧪 Qualité du Code
@@ -51,14 +51,14 @@ Le projet utilise des outils stricts pour maintenir la qualité.
 
 ```bash
 # Vérifier et corriger automatiquement
-uv run python scripts/run_ruff.py
+uv run python scripts/quality/run_ruff.py
 ```
 
 ### Vérification de Types (Pyright)
 
 ```bash
 # Vérifier les types
-uv run python scripts/run_pyright.py
+uv run python scripts/quality/run_pyright.py
 ```
 
 ### Pre-commit Hooks

@@ -26,8 +26,8 @@ Le projet utilise **pre-commit** pour garantir la qualité du code avant chaque 
 
 ### Scripts Utilitaires
 
-- [`scripts/run_ruff.py`](../scripts/run_ruff.py) - Lance Ruff (check + format)
-- [`scripts/run_pyright.py`](../scripts/run_pyright.py) - Lance Pyright
+- [`scripts/quality/run_ruff.py`](../scripts/quality/run_ruff.py) - Lance Ruff (check + format)
+- [`scripts/quality/run_pyright.py`](../scripts/quality/run_pyright.py) - Lance Pyright
 
 ## 🔧 Hooks Configurés
 
@@ -52,6 +52,35 @@ Les hooks sont installés automatiquement lors de l'initialisation de l'environn
 uv run pre-commit install
 ```
 
+> [!IMPORTANT] > **N'installez PAS le hook pre-push** avec `uv run pre-commit install --hook-type pre-push`.
+>
+> **Raison** : Notre configuration `.pre-commit-config.yaml` n'utilise **aucun** `stages: [push]`.
+> Tous les hooks s'exécutent uniquement au **commit**.
+>
+> **Problème si installé** : Le hook pre-push s'exécuterait quand même à chaque push et
+> relancerait **tous les hooks** (comportement par défaut), créant une vérification redondante
+> et ralentissant vos push.
+>
+> **Vérifier si installé** :
+>
+> ```bash
+> # Sous Windows PowerShell
+> Test-Path .git\hooks\pre-push
+>
+> # Sous Linux/Mac
+> test -f .git/hooks/pre-push && echo "Installé" || echo "Non installé"
+> ```
+>
+> **Désinstaller si nécessaire** :
+>
+> ```bash
+> # Windows PowerShell
+> Remove-Item .git\hooks\pre-push -Force
+>
+> # Linux/Mac
+> rm .git/hooks/pre-push
+> ```
+
 ### Exécution Manuelle
 
 Vous pouvez lancer les vérifications manuellement sans commiter :
@@ -68,20 +97,20 @@ Pour un usage plus ciblé pendant le développement :
 **Ruff (Lint + Format)**
 
 ```bash
-uv run python scripts/run_ruff.py
+uv run python scripts/quality/run_ruff.py
 ```
 
 **Pyright (Types)**
 
 ```bash
-uv run python scripts/run_pyright.py
+uv run python scripts/quality/run_pyright.py
 ```
 
 ## ⚙️ Workflow Recommandé
 
 1. **Coder** : Faire vos modifications.
-2. **Vérifier** : Lancer `scripts/run_ruff.py` pour formater et corriger.
-3. **Typer** : Lancer `scripts/run_pyright.py` pour vérifier les types.
+2. **Vérifier** : Lancer `scripts/quality/run_ruff.py` pour formater et corriger.
+3. **Typer** : Lancer `scripts/quality/run_pyright.py` pour vérifier les types.
 4. **Commiter** : `git commit ...`
    - Les hooks se lancent automatiquement.
    - Si un hook échoue (ex: formatage modifié), le commit est bloqué.
@@ -121,8 +150,8 @@ git commit -m "Message" --no-verify
 ### Code Source
 
 - [`.pre-commit-config.yaml`](../.pre-commit-config.yaml)
-- [`scripts/run_ruff.py`](../scripts/run_ruff.py)
-- [`scripts/run_pyright.py`](../scripts/run_pyright.py)
+- [`scripts/quality/run_ruff.py`](../scripts/quality/run_ruff.py)
+- [`scripts/quality/run_pyright.py`](../scripts/quality/run_pyright.py)
 
 ### Documentation Externe
 

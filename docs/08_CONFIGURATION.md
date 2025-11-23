@@ -16,7 +16,7 @@ Le système de configuration centralise la gestion des paramètres de l'applicat
 
 ### Fichier Principal
 
-- [`src/core/config.py`](../src/core/config.py)
+- [`src/core/config/manager.py`](../src/core/config/manager.py)
 
 ### Fichier de Données
 
@@ -145,7 +145,7 @@ Exemple de structure :
 
 ### Code Source
 
-- [`src/core/config.py`](../src/core/config.py)
+- [`src/core/config/manager.py`](../src/core/config/manager.py)
 
 ### Documentation Externe
 

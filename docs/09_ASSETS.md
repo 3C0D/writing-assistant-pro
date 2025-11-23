@@ -83,4 +83,4 @@ ui.image(src=str(image_path))
 ### Code Source
 
 - [`scripts/utils.py`](../scripts/utils.py) - Logique de copie des assets
-- [`src/core/systray_manager.py`](../src/core/systray_manager.py) - Utilisation de l'icône
+- [`src/core/managers/systray.py`](../src/core/managers/systray.py) - Utilisation de l'icône

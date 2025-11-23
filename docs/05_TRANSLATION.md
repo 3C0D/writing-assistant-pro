@@ -18,7 +18,7 @@ Le projet utilise **gettext** et **Babel** pour l'internationalisation (i18n). L
 
 | Fichier                                                                                                             | Rôle                               |
 | ------------------------------------------------------------------------------------------------------------------- | ---------------------------------- |
-| [`src/core/translation.py`](../src/core/translation.py)                                                             | Gestionnaire de traductions        |
+| [`src/core/services/translation.py`](../src/core/services/translation.py)                                           | Gestionnaire de traductions        |
 | [`babel.cfg`](../babel.cfg)                                                                                         | Configuration Babel                |
 | [`scripts/translation_management/update_translations.py`](../scripts/translation_management/update_translations.py) | Script de mise à jour              |
 | `translations/`                                                                                                     | Dossier des fichiers de traduction |
@@ -137,11 +137,11 @@ Ouvrir les fichiers `.po` et ajouter les traductions :
 ```po
 # translations/fr/LC_MESSAGES/writing_assistant.po
 
-#: src/ui/app_flet.py:45
+#: src/ui/app.py:45
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: src/ui/app_flet.py:67
+#: src/ui/app.py:67
 msgid "Settings"
 msgstr "Paramètres"
 ```
@@ -155,7 +155,7 @@ uv run python scripts/translation_management/update_translations.py
 ### 5. Redémarrer l'Application
 
 ```bash
-uv run python scripts/run_dev.py
+uv run python scripts/dev_build/run_dev.py
 ```
 
 ## ⚙️ Configuration
@@ -174,7 +174,7 @@ encoding = utf-8
 
 ### Langues Disponibles
 
-Modifier dans `src/core/translation.py` :
+Modifier dans `src/core/services/translation.py` :
 
 ```python
 available_languages = ["en", "fr", "it", "es", "de"]
@@ -424,7 +424,7 @@ msgstr "Paramètres"
 
 ### Code Source
 
-- [`src/core/translation.py`](../src/core/translation.py) - Gestionnaire de traductions
+- [`src/core/services/translation.py`](../src/core/services/translation.py) - Gestionnaire de traductions
 - [`scripts/translation_management/update_translations.py`](../scripts/translation_management/update_translations.py) - Script de mise à jour
 - [`babel.cfg`](../babel.cfg) - Configuration Babel
 

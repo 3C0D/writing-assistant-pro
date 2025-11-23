@@ -15,7 +15,7 @@ L'application utilise la librairie `keyboard` pour gérer des raccourcis clavier
 
 ### Fichier Principal
 
-- [`src/core/hotkey_manager.py`](../src/core/hotkey_manager.py)
+- [`src/core/managers/hotkey.py`](../src/core/managers/hotkey.py)
 
 ### Dépendances
 
@@ -80,7 +80,7 @@ Cela arrive si `unhook_all()` n'est pas appelé correctement. Le `HotkeyManager`
 
 ### Code Source
 
-- [`src/core/hotkey_manager.py`](../src/core/hotkey_manager.py)
+- [`src/core/managers/hotkey.py`](../src/core/managers/hotkey.py)
 
 ### Documentation Externe
 

@@ -15,7 +15,7 @@ Le gestionnaire de démarrage automatique (`AutostartManager`) permet à l'appli
 
 ### Fichier Principal
 
-- [`src/core/autostart_manager.py`](../src/core/autostart_manager.py)
+- [`src/core/managers/autostart.py`](../src/core/managers/autostart.py)
 
 ### Mécanismes Utilisés
 
@@ -125,7 +125,7 @@ Si vous développez et utilisez la version installée en même temps, le gestion
 
 ### Code Source
 
-- [`src/core/autostart_manager.py`](../src/core/autostart_manager.py)
+- [`src/core/managers/autostart.py`](../src/core/managers/autostart.py)
 
 ### Documentation Externe
 

@@ -38,7 +38,7 @@ Ce document liste **tous les thèmes** abordés dans la documentation actuelle d
 
 - `docs/LOGGING.md`
 
-**État du code** : ✅ Implémenté (`src/core/logger.py`)
+**État du code** : ✅ Implémenté (`src/core/services/logger.py`)
 **Vérification nécessaire** :
 
 - [ ] Logs en mode dev vont dans `logs/`
@@ -58,7 +58,7 @@ Ce document liste **tous les thèmes** abordés dans la documentation actuelle d
 - `docs/TRANSLATION_README.md`
 - `docs/CONFIG_BABEL.md`
 
-**État du code** : ✅ Implémenté (`src/core/translation.py`, `scripts/translation_management/`)
+**État du code** : ✅ Implémenté (`src/core/services/translation.py`, `scripts/translation_management/`)
 **Vérification nécessaire** :
 
 - [ ] Extraction des chaînes avec `_("")`
@@ -77,7 +77,7 @@ Ce document liste **tous les thèmes** abordés dans la documentation actuelle d
 - `docs/MODES_AND_COMPARISON.md`
 - Sections dans `ARCHITECTURE.md` et `README.md`
 
-**État du code** : ✅ Implémenté (`scripts/build_dev.py`, `scripts/build_final.py`)
+**État du code** : ✅ Implémenté (`scripts/dev_build/build_dev.py`, `scripts/dev_build/build_final.py`)
 **Vérification nécessaire** :
 
 - [ ] Build dev (--onedir) fonctionne
@@ -96,7 +96,7 @@ Ce document liste **tous les thèmes** abordés dans la documentation actuelle d
 
 - Sections dans `ARCHITECTURE.md`
 
-**État du code** : ✅ Implémenté (`src/core/systray_manager.py`)
+**État du code** : ✅ Implémenté (`src/core/managers/systray.py`)
 **Vérification nécessaire** :
 
 - [ ] Icône visible en dev
@@ -114,7 +114,7 @@ Ce document liste **tous les thèmes** abordés dans la documentation actuelle d
 
 - Sections dans `ARCHITECTURE.md`
 
-**État du code** : ✅ Implémenté (`src/core/autostart_manager.py`)
+**État du code** : ✅ Implémenté (`src/core/managers/autostart.py`)
 **Vérification nécessaire** :
 
 - [ ] Activation du démarrage auto
@@ -132,7 +132,7 @@ Ce document liste **tous les thèmes** abordés dans la documentation actuelle d
 
 - Sections dans `ARCHITECTURE.md`
 
-**État du code** : ✅ Implémenté (`src/core/config.py`, `config.json`)
+**État du code** : ✅ Implémenté (`src/core/config/manager.py`, `src/core/config/config.json`)
 **Vérification nécessaire** :
 
 - [ ] Chargement de `config.json`
@@ -187,10 +187,11 @@ Ce document liste **tous les thèmes** abordés dans la documentation actuelle d
 
 - `docs/ICONS.md`
 
-**État du code** : ✅ Implémenté (`assets/icons/`, `scripts/convert_icon.py`)
-**Vérification nécessaire** :
+**État du code** : ✅ Implémenté (`src/core/config/icons/`)
 
-- [ ] Conversion PNG → ICO
+**Prochaines étapes** :
+
+- [x] Centralisation dans `src/core/config/icons/` PNG → ICO
 - [ ] Centralisation dans `assets/icons/`
 - [ ] Utilisation dans l'app et le build
 

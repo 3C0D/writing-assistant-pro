@@ -16,7 +16,7 @@ Le gestionnaire de Systray (`SystrayManager`) permet à l'application de s'exéc
 
 ### Fichier Principal
 
-- [`src/core/systray_manager.py`](../src/core/systray_manager.py)
+- [`src/core/managers/systray.py`](../src/core/managers/systray.py)
 
 ### Dépendances
 
@@ -41,7 +41,7 @@ Le gestionnaire cherche l'icône de l'application (`app_icon.png`) à plusieurs 
 
 **Chemins vérifiés :**
 
-1. `assets/icons/app_icon.png` (Mode Dev)
+1. `src/core/config/icons/app_icon.png` (Mode Dev)
 2. `app_icon.png` (Mode Frozen/Flat)
 
 Si aucune icône n'est trouvée, une icône par défaut (carré vert) est générée dynamiquement.
@@ -72,7 +72,7 @@ def run_async(self) -> None:
 Le `SystrayManager` est généralement initialisé dans la classe principale de l'application (`WritingAssistantFletApp`).
 
 ```python
-# Dans src/ui/app_flet.py
+# Dans src/ui/app.py
 
 self.systray_manager = SystrayManager(
     page=self.page,
@@ -128,7 +128,7 @@ L'action "Quit" effectue un nettoyage complet avant de terminer le processus :
 
 ### Icône Manquante
 
-Si l'icône ne s'affiche pas, vérifiez que le fichier `app_icon.png` est bien présent dans `assets/icons/` et qu'il est correctement copié lors du build (voir [Système de Build](./03_BUILD_SYSTEM.md)).
+Si l'icône ne s'affiche pas, vérifiez que le fichier `app_icon.png` est bien présent dans `src/core/config/icons/` et qu'il est correctement copié lors du build (voir [Système de Build](./03_BUILD_SYSTEM.md)).
 
 ### Fermeture de Fenêtre
 
@@ -138,7 +138,7 @@ Sur Windows, fermer la fenêtre principale ne doit pas nécessairement quitter l
 
 ### Code Source
 
-- [`src/core/systray_manager.py`](../src/core/systray_manager.py)
+- [`src/core/managers/systray.py`](../src/core/managers/systray.py)
 
 ### Documentation Externe
 

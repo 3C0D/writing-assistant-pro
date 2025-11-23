@@ -118,7 +118,7 @@ class MyClass:
 ### Lancer en Mode Dev avec Logs Console
 
 ```bash
-uv run python scripts/run_dev.py
+uv run python scripts/dev_build/run_dev.py
 ```
 
 **Résultat** :
@@ -129,7 +129,7 @@ uv run python scripts/run_dev.py
 ### Lancer Build Dev en Mode Console
 
 ```bash
-uv run python scripts/build_dev.py --console
+uv run python scripts/dev_build/build_dev.py --console
 ```
 
 **Résultat** :
@@ -140,7 +140,7 @@ uv run python scripts/build_dev.py --console
 ### Lancer Build Dev en Mode Windowed
 
 ```bash
-uv run python scripts/build_dev.py --windowed
+uv run python scripts/dev_build/build_dev.py --windowed
 ```
 
 **Résultat** :
@@ -370,7 +370,7 @@ Pour tester la capture des crashes :
 
 ```bash
 # Utiliser le script de test fourni
-uv run python scripts/test_crash.py
+uv run python scripts/tests/test_crash.py
 
 # Vérifier le fichier de crash créé
 cat logs/crash_run_dev.log
@@ -380,9 +380,9 @@ cat logs/crash_run_dev.log
 
 ### Code Source
 
-- [`src/core/logger.py`](../src/core/logger.py#L14-L93) - Configuration du logger
-- [`scripts/run_dev.py`](../scripts/run_dev.py#L43) - Utilisation en dev
-- [`scripts/build_dev.py`](../scripts/build_dev.py#L194-L195) - Utilisation en build
+- [`src/core/services/logger.py`](../src/core/services/logger.py#L14-L93) - Configuration du logger
+- [`scripts/dev_build/run_dev.py`](../scripts/dev_build/run_dev.py#L43) - Utilisation en dev
+- [`scripts/dev_build/build_dev.py`](../scripts/dev_build/build_dev.py#L194-L195) - Utilisation en build
 
 ### Documentation Externe
 

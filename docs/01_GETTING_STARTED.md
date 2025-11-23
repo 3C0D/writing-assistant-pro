@@ -29,7 +29,7 @@ Bienvenue dans la documentation de **Writing Assistant Pro**. Ce projet est une 
 
 3. **Lancer l'application**
    ```bash
-   uv run python scripts/run_dev.py
+   uv run python scripts/dev_build/run_dev.py
    ```
 
 ## 🧭 Tour du Propriétaire
@@ -45,12 +45,12 @@ L'application se lance avec une interface moderne. Voici les fonctionnalités cl
 
 Voici les commandes que vous utiliserez le plus souvent :
 
-| Action                 | Commande                               |
-| ---------------------- | -------------------------------------- |
-| **Lancer (Dev)**       | `uv run python scripts/run_dev.py`     |
-| **Vérifier le code**   | `uv run python scripts/run_ruff.py`    |
-| **Vérifier les types** | `uv run python scripts/run_pyright.py` |
-| **Construire (Exe)**   | `uv run python scripts/build_dev.py`   |
+| Action                 | Commande                                       |
+| ---------------------- | ---------------------------------------------- |
+| **Lancer (Dev)**       | `uv run python scripts/dev_build/run_dev.py`   |
+| **Vérifier le code**   | `uv run python scripts/quality/run_ruff.py`    |
+| **Vérifier les types** | `uv run python scripts/quality/run_pyright.py` |
+| **Construire (Exe)**   | `uv run python scripts/dev_build/build_dev.py` |
 
 ## 📚 Où aller ensuite ?
 
