@@ -20,7 +20,7 @@ from .config import ConfigManager, parse_arguments
 from .hotkey_manager import HotkeyManager
 
 # Import logger system
-from .logger import setup_root_logger
+from .logger import setup_exception_handler, setup_root_logger
 from .translation import (
     LanguageManager,
     _,
@@ -45,6 +45,7 @@ __all__ = [
     "register_ui_update",
     # Logger system
     "setup_root_logger",
+    "setup_exception_handler",
     # Config system
     "parse_arguments",
     "ConfigManager",

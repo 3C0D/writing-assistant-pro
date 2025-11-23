@@ -6,7 +6,11 @@ import multiprocessing
 
 import flet as ft
 
-from src.core import parse_arguments, setup_root_logger
+from src.core import (
+    parse_arguments,
+    setup_exception_handler,
+    setup_root_logger,
+)
 from src.ui import WritingAssistantFletApp
 
 # Required for PyInstaller
@@ -22,6 +26,9 @@ def main():
     debug_mode = args.debug if hasattr(args, "debug") else False
     log_file = args.log_file if hasattr(args, "log_file") else None
     setup_root_logger(debug=debug_mode, log_filename=log_file)
+
+    # Setup exception handler to log crashes to dedicated files
+    setup_exception_handler()
 
     # Create app instance, passing debug mode
     app = WritingAssistantFletApp(debug=debug_mode)

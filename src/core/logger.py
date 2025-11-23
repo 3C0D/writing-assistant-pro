@@ -6,7 +6,11 @@ Migrated to loguru for modern, colored logging with better formatting.
 from __future__ import annotations
 
 import sys
+import threading
+import traceback
+from datetime import datetime
 from pathlib import Path
+from types import TracebackType
 
 from loguru import logger
 
@@ -17,7 +21,7 @@ def setup_root_logger(debug: bool, log_filename: str | None = None) -> None:
     Call this ONCE at application startup.
 
     Args:
-        debug: True to enable DEBUG mode (detailed logs), False for minimal logs
+        debug: True to enable DEBUG mode (logs), False for minimal logs
         log_filename: Optional custom filename for the log file
     """
     # Remove default handler (console output)
@@ -57,7 +61,7 @@ def setup_root_logger(debug: bool, log_filename: str | None = None) -> None:
         logger.add(
             str(debug_log_path),
             level="DEBUG",
-            format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function} - {message}",
+            format=("{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | {name}:{function} - {message}"),
         )
 
         if has_console:
@@ -66,8 +70,10 @@ def setup_root_logger(debug: bool, log_filename: str | None = None) -> None:
                 sys.stdout,
                 level="DEBUG",
                 format=(
-                    "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | <level>{level: <8}</level> | "
-                    "<cyan>{name}</cyan>:<cyan>{function}</cyan> - <level>{message}</level>"
+                    "<green>{time:YYYY-MM-DD HH:mm:ss}</green> | "
+                    "<level>{level: <8}</level> | "
+                    "<cyan>{name}</cyan>:<cyan>{function}</cyan> - "
+                    "<level>{message}</level>"
                 ),
                 colorize=True,
             )
@@ -82,7 +88,7 @@ def setup_root_logger(debug: bool, log_filename: str | None = None) -> None:
             logger.add(
                 sys.stdout,
                 level="INFO",
-                format="<level>{level: <8}</level> | {name} - <level>{message}</level>",
+                format=("<level>{level: <8}</level> | {name} - <level>{message}</level>"),
                 colorize=True,
             )
             logger.info("Root logger configured - Production mode enabled")
@@ -90,3 +96,77 @@ def setup_root_logger(debug: bool, log_filename: str | None = None) -> None:
             # Production windowed mode - disable logging to avoid errors
             # Logger is already removed, so no handlers = no logging
             pass  # Silent mode for production windowed builds
+
+
+def setup_exception_handler() -> None:
+    """
+    Configure exception handlers to log crashes to dedicated crash files.
+    Call this ONCE after setup_root_logger() at application startup.
+
+    Creates separate crash log files:
+    - Mode run_dev: logs/crash_run_dev.log
+    - Mode build_dev: logs/crash_build_dev.log
+    - Mode production: crash.log (in exe parent directory)
+
+    Normal logs continue in their respective files (run_dev.log, etc.)
+    """
+
+    # Determine crash log file path based on execution mode
+    if getattr(sys, "frozen", False):
+        # Frozen: crash log in the directory containing the exe
+        crash_dir = Path(sys.executable).parent
+        crash_filename = "crash_build_dev.log" if "dev" in crash_dir.name.lower() else "crash.log"
+        crash_log_path = crash_dir / crash_filename
+    else:
+        # Development: crash log in logs directory
+        crash_dir = Path("logs")
+        crash_dir.mkdir(exist_ok=True)
+        crash_log_path = crash_dir / "crash_run_dev.log"
+
+    def exception_handler(
+        exc_type: type[BaseException],
+        exc_value: BaseException,
+        exc_traceback: TracebackType | None,
+    ) -> None:
+        """Handle uncaught exceptions by logging them to crash file."""
+        if issubclass(exc_type, KeyboardInterrupt):
+            # Don't log keyboard interrupts
+            sys.__excepthook__(exc_type, exc_value, exc_traceback)
+            return
+
+        # Format the exception with full traceback
+        tb_lines = traceback.format_exception(exc_type, exc_value, exc_traceback)
+        tb_text = "".join(tb_lines)
+
+        # Log to crash file with critical level
+        try:
+            # Ensure crash log path exists
+            crash_log_path.parent.mkdir(parents=True, exist_ok=True)
+
+            # Write crash info to dedicated crash file
+            with open(crash_log_path, "a", encoding="utf-8") as f:
+                f.write(f"\n{'=' * 80}\n")
+                f.write(f"CRASH DETECTED - {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
+                f.write(f"{'=' * 80}\n")
+                f.write(tb_text)
+                f.write(f"{'=' * 80}\n\n")
+
+            # Also log to normal logger if available
+            logger.critical(f"Application crashed!\n{tb_text}")
+        except Exception as e:
+            # Fallback if logging fails
+            print(f"Failed to log crash: {e}", file=sys.stderr)
+            sys.__excepthook__(exc_type, exc_value, exc_traceback)
+
+    def thread_exception_handler(args: threading.ExceptHookArgs) -> None:
+        """Handle uncaught exceptions in threads."""
+        # ExceptHookArgs can have None for exc_value, handle that case
+        if args.exc_value is None:
+            return
+        exception_handler(args.exc_type, args.exc_value, args.exc_traceback)
+
+    # Install exception handlers
+    sys.excepthook = exception_handler
+    threading.excepthook = thread_exception_handler
+
+    logger.debug(f"Exception handler configured - Crash log: {crash_log_path}")

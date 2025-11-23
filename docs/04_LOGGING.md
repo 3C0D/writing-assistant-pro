@@ -277,6 +277,11 @@ logger.debug("Application crashed!")
 logger.critical("Application crashed!")
 ```
 
+> [!NOTE]
+> Depuis l'implémentation de la capture automatique des crashes, le
+> `logger.critical()` est maintenant utilisé activement par le système de
+> gestion d'exceptions non gérées.
+
 ### 3. Messages Informatifs
 
 ```python
@@ -295,6 +300,81 @@ logger.error("Failed")
 
 # ✅ Bon
 logger.error(f"Failed to load config file: {config_path}")
+```
+
+## 💥 Capture Automatique des Crashes
+
+### Vue d'ensemble
+
+Le système capture automatiquement **toutes** les exceptions non gérées et
+les logue dans des **fichiers crash dédiés** pour faciliter l'identification.
+
+- ✅ Capture active dans **tous les modes** (dev et production)
+- ✅ Fichiers crash **séparés** pour visibilité immédiate
+- ✅ Les logs normaux continuent en parallèle
+- ✅ Traceback complet inclus dans chaque crash
+
+### Emplacements des Fichiers Crash
+
+| Mode          | Fichier Crash         | Emplacement                |
+| ------------- | --------------------- | -------------------------- |
+| `run_dev`     | `crash_run_dev.log`   | `logs/crash_run_dev.log`   |
+| `build_dev`   | `crash_build_dev.log` | `logs/crash_build_dev.log` |
+| `build_final` | `crash.log`           | Dossier parent de l'exe    |
+
+> [!TIP]
+> En production, le fichier `crash.log` suit l'exe : si vous déplacez
+> l'exécutable, le crash log sera créé dans le nouveau dossier.
+
+### Configuration
+
+La capture des crashes est configurée dans [`main.py`](../main.py#L26-L27) :
+
+```python
+# Setup logging
+setup_root_logger(debug=debug_mode, log_filename=log_file)
+
+# Setup exception handler to log crashes to dedicated files
+setup_exception_handler()
+```
+
+**Appeler `setup_exception_handler()` une seule fois** après
+`setup_root_logger()`.
+
+### Format des Logs de Crash
+
+Exemple de contenu dans `logs/crash_run_dev.log` :
+
+```
+================================================================================
+CRASH DETECTED - 2025-11-23 03:28:30
+================================================================================
+Traceback (most recent call last):
+  File "c:\\Users\\dd200\\Documents\\...\\test_crash.py", line 31, in <module>
+    raise RuntimeError("This is an intentional crash for testing!")
+RuntimeError: This is an intentional crash for testing!
+================================================================================
+```
+
+### Avantages
+
+1. **Visibilité immédiate** : Fichier crash séparé = pas besoin de fouiller
+   dans les logs normaux
+2. **Mode spécifique** : Nom du fichier indique le mode d'exécution
+   (run_dev, build_dev, production)
+3. **Historique** : Mode append, tous les crashes sont conservés
+4. **Production-ready** : Fonctionne même en mode prod sans logs normaux
+
+### Test de la Capture
+
+Pour tester la capture des crashes :
+
+```bash
+# Utiliser le script de test fourni
+uv run python scripts/test_crash.py
+
+# Vérifier le fichier de crash créé
+cat logs/crash_run_dev.log
 ```
 
 ## 🔗 Références
