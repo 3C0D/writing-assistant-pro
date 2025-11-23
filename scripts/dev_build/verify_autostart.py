@@ -1,8 +1,7 @@
 import sys
 from pathlib import Path
 
-from src.core.autostart_manager import AutostartManager
-from src.core.lifecycle_manager import LifecycleManager
+from src.core.managers.autostart import AutostartManager
 
 # Add project root to path
 project_root = Path(__file__).parent.parent
@@ -45,14 +44,5 @@ def verify_autostart():
         print("ERROR: Autostart should be disabled but check returned True")
 
 
-def verify_lifecycle():
-    print("\nVerifying LifecycleManager...")
-    if hasattr(LifecycleManager, "restart_app"):
-        print("LifecycleManager.restart_app exists")
-    else:
-        print("ERROR: LifecycleManager.restart_app missing")
-
-
 if __name__ == "__main__":
     verify_autostart()
-    verify_lifecycle()

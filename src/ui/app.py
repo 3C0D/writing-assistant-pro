@@ -17,7 +17,7 @@ from src.core import (
     get_language_manager,
     init_translation,
 )
-from src.core.systray_manager import SystrayManager
+from src.core.managers.systray import SystrayManager
 
 
 class WritingAssistantFletApp:

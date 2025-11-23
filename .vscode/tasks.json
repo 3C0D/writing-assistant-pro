@@ -8,7 +8,7 @@
             "args": [
                 "run",
                 "python",
-                "scripts/run_dev.py"
+                "scripts/dev_build/run_dev.py"
             ],
             "group": "build",
             "presentation": {
@@ -59,7 +59,7 @@
             "args": [
                 "run",
                 "python",
-                "scripts/run_pyright.py"
+                "scripts/quality/run_pyright.py"
             ],
             "problemMatcher": "$python",
             "presentation": {
@@ -90,7 +90,7 @@
             "args": [
                 "run",
                 "python",
-                "scripts/build_dev.py",
+                "scripts/dev_build/build_dev.py",
                 "--console"
             ],
             "group": "build",
@@ -108,7 +108,7 @@
             "args": [
                 "run",
                 "python",
-                "scripts/build_final.py"
+                "scripts/dev_build/build_final.py"
             ],
             "group": "build",
             "presentation": {

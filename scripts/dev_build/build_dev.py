@@ -23,7 +23,7 @@ except AttributeError:
     pass
 
 # Import utilities
-from utils import (
+from build_utils import (
     PYINSTALLER_EXCLUSIONS,
     BuildTimer,
     check_data,

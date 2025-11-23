@@ -47,3 +47,4 @@ debug_output.txt
 error.txt
 pyright_output.txt
 test_output.txt
+.kilocode/rules/rules.md

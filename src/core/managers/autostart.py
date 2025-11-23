@@ -13,7 +13,7 @@ from pathlib import Path
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from .config import ConfigManager
+    from ..config.manager import ConfigManager
 
 try:
     if sys.platform.startswith("win32"):

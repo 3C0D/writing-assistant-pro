@@ -1,21 +1,19 @@
 """
-Configuration module for Writing Assistant Pro
+Configuration manager for Writing Assistant Pro
 Centralized configuration management with JSON persistence
 """
 
 from __future__ import annotations
 
-import sys
 from pathlib import Path
 from typing import Any
 
 from loguru import logger
 
-from .utils import load_json_file, save_json_file
+from ..utils.json_helpers import load_json_file, save_json_file
+from ..utils.paths import get_app_root, get_mode
 
 
-# Default configuration values
-# Default configuration values
 def load_default_config() -> dict[str, Any]:
     """Load default configuration from config.json in the same directory."""
     config_path = Path(__file__).parent / "config.json"
@@ -23,55 +21,6 @@ def load_default_config() -> dict[str, Any]:
 
 
 DEFAULT_CONFIG = load_default_config()
-
-
-# Global constants for paths
-APP_ROOT = Path(__file__).parent.parent.parent  # Default for dev mode
-
-
-def get_mode() -> str:
-    """
-    Detect the running mode of the application.
-    Returns:
-        str: "dev", "build-dev", or "build-final"
-    """
-    # Check if frozen (PyInstaller)
-    if getattr(sys, "frozen", False):
-        # After flattening: exe is at dist/dev/Writing Assistant Pro.exe
-        # So exe parent is directly the dist subfolder (dev or final)
-        exe_parent = Path(sys.executable).parent  # "dev" or "final"
-
-        if exe_parent.name == "dev":
-            return "build-dev"
-        elif exe_parent.name == "final":
-            return "build-final"
-        # Fallback if structure is unexpected
-        return "build-final"
-
-    return "dev"
-
-
-def get_app_root() -> Path:
-    """
-    Get the application root directory based on running mode.
-
-    Returns:
-        Path: The base directory for resolving external resources (config, styles, etc.)
-    """
-    mode = get_mode()
-
-    if mode == "dev":
-        # In dev mode, return project root
-        # Static assets (styles, translations) are in source tree
-        # Config will be in dist/dev (handled by ConfigManager)
-        return APP_ROOT
-
-    else:
-        # In frozen modes (build-dev, build-final)
-        # After flattening: exe is at dist/dev/Writing Assistant Pro.exe
-        # External files are also in dist/dev/
-        # So app_root is the same as exe parent directory
-        return Path(sys.executable).parent
 
 
 class ConfigManager:
@@ -103,7 +52,8 @@ class ConfigManager:
         if self._config_file.exists():
             saved_config = load_json_file(self._config_file)
             if saved_config:
-                # Update default config with saved values (preserves new keys in default)
+                # Update default config with saved values (
+                # preserves new keys in default)
                 self._config.update(saved_config)
                 self.log.info(f"Configuration loaded from {self._config_file} (Mode: {self.mode})")
         else:
@@ -139,7 +89,15 @@ class ConfigManager:
         Allow attribute-style assignment for configuration keys (uppercase).
         Example: config.DEBUG = True -> config.set('debug', True)
         """
-        if name.startswith("_") or name == "log" or name in ["mode", "app_root"]:
+        if (
+            name.startswith("_")
+            or name == "log"
+            or name
+            in [
+                "mode",
+                "app_root",
+            ]
+        ):
             super().__setattr__(name, value)
             return
 
@@ -148,11 +106,6 @@ class ConfigManager:
             self.set(key, value)
         else:
             super().__setattr__(name, value)
-
-
-# Global instance for backward compatibility if needed,
-# but prefer creating an instance in App
-# config = ConfigManager()
 
 
 def parse_arguments():
@@ -166,6 +119,7 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Writing Assistant Pro")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
     parser.add_argument("--log-file", type=str, help="Custom log filename")
-    # Use parse_known_args to allow unknown arguments (Flet may pass extra args)
+    # Use parse_known_args to allow unknown arguments (
+    # Flet may pass extra args)
     args, _ = parser.parse_known_args()
     return args

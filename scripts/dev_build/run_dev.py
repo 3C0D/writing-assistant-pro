@@ -2,7 +2,7 @@
 Development script - Launches main.py with --debug argument
 
 Usage:
-    uv run python scripts/run_dev.py
+    uv run python scripts/dev_build/run_dev.py
 """
 
 import os
@@ -10,7 +10,10 @@ import subprocess
 import sys
 from pathlib import Path
 
-from utils import check_data, copy_required_files
+# Add parent directory to path to allow importing from package
+sys.path.insert(0, str(Path(__file__).parent))
+
+from build_utils import check_data, copy_required_files
 
 # Fix Unicode encoding for Windows console
 os.environ["PYTHONIOENCODING"] = "utf-8"
@@ -38,7 +41,7 @@ def main():
 
     check_data("build-dev")  # Use build-dev mode to setup data_dev.json path logic
 
-    main_path = Path(__file__).parent.parent / DEFAULT_SCRIPT_NAME
+    main_path = Path(__file__).parent.parent.parent / DEFAULT_SCRIPT_NAME
     result = subprocess.run(
         ["uv", "run", "python", str(main_path), "--debug", "--log-file", "run_dev.log"]
     )

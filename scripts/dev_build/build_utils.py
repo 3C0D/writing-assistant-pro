@@ -14,19 +14,20 @@ from pathlib import Path
 
 def get_project_root() -> Path:
     """Get the project root directory"""
-    script_dir = Path(__file__).parent  # scripts/
-    project_root = script_dir.parent  # project root
+    script_dir = Path(__file__).parent  # scripts/dev_build/
+    scripts_dir = script_dir.parent  # scripts/
+    project_root = scripts_dir.parent  # project root
     os.chdir(project_root)
     return project_root
 
 
 def ensure_icon_exists() -> Path | None:
     """
-    Get the icon path from assets/icons/app_icon.png.
+    Get the icon path from src/core/config/icons/app_icon.png.
     PyInstaller supports PNG icons on all platforms.
     """
     project_root = get_project_root()
-    png_path = project_root / "assets" / "icons" / "app_icon.png"
+    png_path = project_root / "src" / "core" / "config" / "icons" / "app_icon.png"
 
     if not png_path.exists():
         print(f"❌ Icon not found at {png_path}")
@@ -87,12 +88,12 @@ def copy_required_files(build_type: str, target_dir: str) -> bool:
     cwd = Path(".")
 
     # Only copy what actually exists in the CURRENT project structure
-    # We do NOT copy legacy assets from src/config if they don't exist
+    # Icons and config are now in src/core/config/
     items_to_copy = [
         (Path("styles"), dist_target_dir / "styles"),
         (Path("translations"), dist_target_dir / "translations"),
-        (Path("src/core/config.json"), dist_target_dir / "config.json"),
-        (Path("assets/icons"), dist_target_dir / "assets/icons"),
+        (Path("src/core/config/config.json"), dist_target_dir / "config.json"),
+        (Path("src/core/config/icons"), dist_target_dir / "icons"),
     ]
 
     print(f"Copying required files for {build_type} build to {cwd}/dist/{target_dir}/...")

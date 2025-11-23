@@ -140,8 +140,8 @@ def setup_exception_handler() -> None:
 
         # Log to crash file with critical level
         try:
-            # Ensure crash log path exists
-            crash_log_path.parent.mkdir(parents=True, exist_ok=True)
+            # Ensure crash log directory exists
+            crash_dir.mkdir(parents=True, exist_ok=True)
 
             # Write crash info to dedicated crash file
             with open(crash_log_path, "a", encoding="utf-8") as f:

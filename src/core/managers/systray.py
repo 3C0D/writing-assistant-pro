@@ -18,8 +18,8 @@ from typing import TYPE_CHECKING, Any
 from PIL import Image
 from pystray import Icon, Menu, MenuItem
 
-from .autostart_manager import AutostartManager
-from .config import get_app_root
+from ..utils.paths import get_app_root
+from .autostart import AutostartManager
 
 if TYPE_CHECKING:
     import flet as ft
@@ -116,25 +116,32 @@ class SystrayManager:
         Returns:
             Path to the icon file
         """
-        # Use get_app_root() to find the correct root directory in both dev and frozen modes
+        # Use get_app_root() to find the correct root directory in both
+        # dev and frozen modes
         app_root = get_app_root()
 
-        # In frozen mode (PyInstaller), assets are usually in the root or _internal
-        # In dev mode, they are in assets/
+        # In frozen mode (PyInstaller), assets are usually in the root
+        # or _internal
+        # In dev mode, they are in src/core/config/icons/
 
         # Check common locations
         possible_paths = [
-            app_root / "assets" / "icons" / "app_icon.png",  # Dev structure
-            app_root / "app_icon.png",  # Flat structure (if copied to root)
+            # Dev structure - NEW LOCATION after refactoring
+            app_root / "src" / "core" / "config" / "icons" / "app_icon.png",
+            # Flat structure (if copied to root during build)
+            app_root / "app_icon.png",
+            # Old dev structure (fallback)
+            app_root / "assets" / "icons" / "app_icon.png",
         ]
 
         for path in possible_paths:
             if path.exists():
                 return path
 
-        # Fallback to dev path relative to this file if get_app_root fails or structure is weird
-        project_root = Path(__file__).parent.parent.parent
-        return project_root / "assets" / "icons" / "app_icon.png"
+        # Fallback to dev path relative to this file if get_app_root
+        # fails or structure is weird
+        project_root = Path(__file__).parent.parent.parent.parent
+        return project_root / "src" / "core" / "config" / "icons" / "app_icon.png"
 
     def _create_default_icon(self) -> Image.Image:
         """

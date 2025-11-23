@@ -16,7 +16,7 @@ Le projet utilise **Loguru** pour un système de logging moderne, coloré et fle
 
 ### Fichier Principal
 
-- [`src/core/logger.py`](../src/core/logger.py) - Configuration centralisée du logger
+- [`src/core/services/logger.py`](../src/core/services/logger.py) - Configuration centralisée du logger
 
 ### Fonction Principale
 
@@ -306,8 +306,7 @@ logger.error(f"Failed to load config file: {config_path}")
 
 ### Vue d'ensemble
 
-Le système capture automatiquement **toutes** les exceptions non gérées et
-les logue dans des **fichiers crash dédiés** pour faciliter l'identification.
+Le système capture automatiquement **toutes** les exceptions non gérées et les logs dans des **fichiers crash dédiés** pour faciliter l'identification.
 
 - ✅ Capture active dans **tous les modes** (dev et production)
 - ✅ Fichiers crash **séparés** pour visibilité immédiate

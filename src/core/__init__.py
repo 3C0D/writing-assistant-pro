@@ -2,7 +2,8 @@
 Core modules for Writing Assistant Pro
 
 This package contains the core functionality modules including:
-- translation: Language management and internationalization using gettext/Babel
+- translation: Language management and internationalization using
+  gettext/Babel
 - logger: Centralized logging system
 - styles: Theme management (placeholder for Flet)
 - config: Application configuration and command line argument parsing
@@ -12,16 +13,23 @@ This package contains the core functionality modules including:
 
 from __future__ import annotations
 
-# Import translation system
 # Import config system
-from .config import ConfigManager, parse_arguments
+from .config.manager import ConfigManager, parse_arguments
 
 # Import hotkey management system
-from .hotkey_manager import HotkeyManager
+from .managers.hotkey import HotkeyManager
+
+# Import systray management system
+from .managers.systray import SystrayManager
+
+# Import window manager system
+from .managers.window import WindowManager
 
 # Import logger system
-from .logger import setup_exception_handler, setup_root_logger
-from .translation import (
+from .services.logger import setup_exception_handler, setup_root_logger
+
+# Import translation system
+from .services.translation import (
     LanguageManager,
     _,
     change_language,
@@ -30,9 +38,6 @@ from .translation import (
     init_translation,
     register_ui_update,
 )
-
-# Import window manager system
-from .window_manager import WindowManager
 
 __all__ = [
     # Translation system
@@ -51,6 +56,8 @@ __all__ = [
     "ConfigManager",
     # Hotkey management system
     "HotkeyManager",
+    # Systray management system
+    "SystrayManager",
     # Window manager system
     "WindowManager",
 ]

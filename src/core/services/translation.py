@@ -9,7 +9,7 @@ import gettext
 from collections.abc import Callable
 from pathlib import Path
 
-from .config import get_app_root
+from ..utils.paths import get_app_root
 
 
 class LanguageManager:
