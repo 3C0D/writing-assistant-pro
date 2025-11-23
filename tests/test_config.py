@@ -1,4 +1,4 @@
-from src.core.config import ConfigManager
+from src.core.config.manager import ConfigManager
 
 
 def test_config_defaults(temp_config_file):
