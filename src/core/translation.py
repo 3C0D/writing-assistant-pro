@@ -1,5 +1,5 @@
 """
-Translation module for NiceGUI applications.
+Translation module for Flet applications.
 Provides internationalization support using gettext.
 """
 
@@ -13,7 +13,7 @@ from .config import get_app_root
 
 
 class LanguageManager:
-    """Manages language translations for NiceGUI applications."""
+    """Manages language translations for Flet applications."""
 
     def __init__(
         self,

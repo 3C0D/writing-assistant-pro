@@ -1,5 +1,7 @@
 # Optimisations de la Mémoire - Writing Assistant Pro
 
+> [!WARNING] > **Document d'archive** : Ce document contient des recherches et estimations faites lors de la phase de planification du projet. Les valeurs mentionnées sont des estimations et n'ont pas été mesurées sur l'implémentation actuelle avec Flet. Pour des informations à jour, consultez la documentation principale.
+
 ## Vue d'ensemble
 
 Ce document détaille les stratégies d'optimisation mémoire pour Writing Assistant Pro, particulièrement après l'intégration des modèles de langage (LLM).
@@ -10,7 +12,7 @@ Ce document détaille les stratégies d'optimisation mémoire pour Writing Assis
 
 - **Total observé** : ~200 Mo
 - **Répartition** :
-  - NiceGUI + Pywebview : 50-80 Mo
+  - Flet (Framework UI) : ~100 Mo
   - Système de traduction : 10-20 Mo
   - Bibliothèques Python : 30-50 Mo
   - Python runtime : 30-50 Mo
@@ -22,13 +24,13 @@ Ce document détaille les stratégies d'optimisation mémoire pour Writing Assis
 
 ## Comparaisons avec applications similaires
 
-| Application | Mémoire (Mo) | Type |
-|-------------|--------------|------|
-| VS Code | 200-500 | Éditeur de code |
-| Navigateur web simple | 100-300 | Web browser |
-| App desktop Python | 50-150 | Desktop app |
-| **Writing Assistant Pro (avec LLM)** | **300-400** | **AI Text Editor** |
-| ChatGPT web | 500+ | AI Service |
+| Application                          | Mémoire (Mo) | Type               |
+| ------------------------------------ | ------------ | ------------------ |
+| VS Code                              | 200-500      | Éditeur de code    |
+| Navigateur web simple                | 100-300      | Web browser        |
+| App desktop Python                   | 50-150       | Desktop app        |
+| **Writing Assistant Pro (avec LLM)** | **300-400**  | **AI Text Editor** |
+| ChatGPT web                          | 500+         | AI Service         |
 
 ## Stratégies d'optimisation
 
@@ -63,11 +65,11 @@ class LLMManager:
 
 #### Modèles recommandés par taille
 
-| Modèle | Paramètres | Disque (Mo) | RAM (Mo) | Qualité |
-|--------|------------|-------------|----------|---------|
-| **TinyLlama** | 1.1B | 500 | 200 | ⭐⭐⭐ |
-| **GPT-2 small** | 117M | 500 | 200 | ⭐⭐ |
-| **Phi-2 mini** | 2.7B | 1300 | 600 | ⭐⭐⭐⭐ |
+| Modèle          | Paramètres | Disque (Mo) | RAM (Mo) | Qualité  |
+| --------------- | ---------- | ----------- | -------- | -------- |
+| **TinyLlama**   | 1.1B       | 500         | 200      | ⭐⭐⭐   |
+| **GPT-2 small** | 117M       | 500         | 200      | ⭐⭐     |
+| **Phi-2 mini**  | 2.7B       | 1300        | 600      | ⭐⭐⭐⭐ |
 
 #### Critères de sélection
 

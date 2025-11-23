@@ -1,116 +1,47 @@
 # ✍️ Writing Assistant Pro
 
-Une application desktop moderne pour l'édition de texte construite avec **Flet** (Flutter pour Python) et **Python 3.13+**.
-
-## 🚀 Démarrage rapide
-
-### Prérequis
-
-- Python 3.13+
-- [UV](https://docs.astral.sh/uv/) (gestionnaire de dépendances rapide)
-
-### Installation
-
-```bash
-# Cloner le projet
-git clone <repo>
-cd writing-assistant-pro
-
-# Installer les dépendances
-uv sync
-```
-
-### Lancer l'application
-
-**Mode développement (recommandé) :**
-
-```bash
-uv run python scripts/run_dev.py
-```
-
-_Lance l'application avec console visible et logs détaillés._
-
-**Mode production (simulation) :**
-
-```bash
-uv run python main.py
-```
-
-## 🛠️ Build & Packaging
-
-Le projet dispose de deux modes de build distincts :
-
-### 1. Build Développement (`dist/dev/`)
-
-```bash
-uv run python scripts/build_dev.py
-```
-
-- **Format** : Dossier (`--onedir`) avec dossier `_internal` visible.
-- **Console** : Visible par défaut (pour le débogage).
-- **Logs** :
-  - Console visible : Logs dans la console.
-  - Console masquée : Logs dans `dist/dev/debug.log`.
-- **Usage** : Pour tester le packaging et déboguer l'exécutable.
-
-### 2. Build Final (`dist/production/`)
-
-```bash
-uv run python scripts/build_final.py
-```
-
-- **Format** : Fichier unique (`--onefile`).
-- **Console** : Masquée (Windowed mode).
-- **Logs** : Désactivés (Silencieux) pour la performance et la propreté.
-- **Usage** : Version finale à distribuer aux utilisateurs.
-
-## 📁 Organisation des Fichiers
-
-```
-writing-assistant-pro/
-├── main.py                      # Point d'entrée
-├── logs/                        # Logs et fichiers générés (ignoré par git)
-├── src/                         # Code source
-│   ├── core/                    # Logique métier
-│   │   ├── config.py            # Configuration & Arguments
-│   │   ├── logger.py            # Logging centralisé (Loguru)
-│   │   ├── systray_manager.py   # Gestion icône systray
-│   │   └── ...
-│   └── ui/                      # Interface utilisateur (Flet)
-│       ├── app_flet.py          # Classe principale App
-│       └── ...
-├── scripts/                     # Scripts utilitaires
-│   ├── run_dev.py               # Lanceur dev
-│   ├── build_dev.py             # Builder dev
-│   ├── build_final.py           # Builder production
-│   └── translation_management/  # Outils traduction
-├── assets/                      # Ressources (icônes, images)
-├── styles/                      # Thèmes
-└── translations/                # Fichiers .po/.mo
-```
-
-## 🔧 Développement
-
-### Architecture Flet
-
-L'application utilise Flet pour l'UI. Le point d'entrée est `src/ui/app_flet.py`.
-Les composants UI sont modulaires et réactifs.
-
-### Logging
-
-- En développement : Les logs sont écrits dans le dossier `logs/` à la racine du projet.
-- En production (frozen) : Pas de logs fichiers par défaut.
-
-### Traductions
-
-Le système utilise `gettext` et `babel`.
-Pour mettre à jour les traductions après modification du code :
-
-```bash
-uv run python scripts/translation_management/update_translations.py
-```
+Une application desktop moderne pour l'édition de texte construite avec **Flet** (Flutter pour Python) et **Python 3.10+**.
 
 ## 📚 Documentation
 
-- [ARCHITECTURE.md](./ARCHITECTURE.md) : Détails techniques et architecture.
-- [docs/](./docs/) : Documentation approfondie (Structure, Babel, etc.).
+La documentation complète est disponible dans le dossier [`docs/`](docs/).
+
+### 🚀 Pour commencer
+
+- [**Guide de Démarrage**](docs/01_GETTING_STARTED.md) : Installation et premier lancement.
+- [**Guide de Développement**](docs/02_DEVELOPMENT.md) : Outils, conventions et workflow.
+
+### 🏗️ Architecture & Systèmes
+
+- [**Système de Build**](docs/03_BUILD_SYSTEM.md) : Création des exécutables (Dev/Prod).
+- [**Logging**](docs/04_LOGGING.md) : Gestion des logs.
+- [**Traduction**](docs/05_TRANSLATION.md) : Internationalisation (i18n).
+- [**Configuration**](docs/08_CONFIGURATION.md) : Gestion des paramètres.
+- [**Assets**](docs/09_ASSETS.md) : Gestion des ressources (Icônes, Images).
+
+### 🔧 Fonctionnalités Clés
+
+- [**Systray**](docs/06_SYSTRAY.md) : Intégration dans la barre des tâches.
+- [**Démarrage Auto**](docs/07_AUTOSTART.md) : Lancement au démarrage Windows/Linux.
+- [**Raccourcis Clavier**](docs/12_KEYBOARD_SHORTCUTS.md) : Raccourcis globaux.
+
+### 🧪 Qualité
+
+- [**Pre-commit**](docs/10_PRECOMMIT.md) : Hooks de qualité de code.
+- [**Tests**](docs/11_TESTING.md) : Tests unitaires.
+
+### 🔮 Futur
+
+- [**Roadmap**](docs/99_ROADMAP.md) : Fonctionnalités planifiées.
+
+---
+
+## ⚡ Démarrage Rapide
+
+```bash
+# 1. Installer les dépendances
+uv sync
+
+# 2. Lancer en mode développement
+uv run python scripts/run_dev.py
+```

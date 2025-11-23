@@ -166,6 +166,6 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description="Writing Assistant Pro")
     parser.add_argument("--debug", action="store_true", help="Enable debug mode")
     parser.add_argument("--log-file", type=str, help="Custom log filename")
-    # Use parse_known_args to ignore NiceGUI's multiprocessing arguments
+    # Use parse_known_args to allow unknown arguments (Flet may pass extra args)
     args, _ = parser.parse_known_args()
     return args
