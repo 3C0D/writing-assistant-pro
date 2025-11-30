@@ -26,9 +26,8 @@ def get_mode() -> str:
 
         if exe_parent.name == "dev":
             return "build-dev"
-        elif exe_parent.name == "final":
-            return "build-final"
-        # Fallback if structure is unexpected
+
+        # Any other folder name (production, final, etc.) is treated as final build
         return "build-final"
 
     return "dev"

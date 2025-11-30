@@ -47,5 +47,8 @@ debug_output.txt
 error.txt
 pyright_output.txt
 test_output.txt
+
+# others
 .kilocode/rules/rules.md
 A_voir.md
+release_autre_app_obisidian
