@@ -12,6 +12,7 @@ from src.core import (
     setup_root_logger,
 )
 from src.ui import WritingAssistantFletApp
+from src.version import __version__
 
 # Required for PyInstaller
 multiprocessing.freeze_support()
@@ -30,8 +31,8 @@ def main():
     # Setup exception handler to log crashes to dedicated files
     setup_exception_handler()
 
-    # Create app instance, passing debug mode
-    app = WritingAssistantFletApp(debug=debug_mode)
+    # Create app instance, passing debug mode and version
+    app = WritingAssistantFletApp(debug=debug_mode, version=__version__)
 
     # Run Flet app
     # native=True is default for desktop

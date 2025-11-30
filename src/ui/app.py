@@ -29,17 +29,21 @@ from src.ui.design_system import AppColors
 class WritingAssistantFletApp:
     """Main Flet application class"""
 
-    def __init__(self, debug: bool = False):
+    def __init__(self, debug: bool = False, version: str = "0.0.0"):
         """
         Initialize the Flet application.
 
         Args:
-            debug: Whether to run in debug mode (passed from main.py after logging setup)
+            debug: Whether to run in debug mode (passed from main.py)
+            version: Application version string
         """
         self.config = ConfigManager()
         # Override DEBUG from config if explicitly passed
         if debug:
             self.config.DEBUG = debug
+
+        # Store version
+        self.version = version
 
         # Get logger instance (logging already configured in main.py)
         self.log = logger.bind(name="WritingAssistant.FletApp")
@@ -75,7 +79,9 @@ class WritingAssistantFletApp:
 
         # Page configuration
         page.title = (
-            "🔥 Writing Assistant Pro (DEV MODE)" if self.config.DEBUG else "Writing Assistant Pro"
+            f"🔥 Writing Assistant Pro v{self.version} (DEV MODE)"
+            if self.config.DEBUG
+            else f"Writing Assistant Pro v{self.version}"
         )
         page.window.width = 800
         page.window.height = 600
@@ -361,6 +367,14 @@ class WritingAssistantFletApp:
                     language_dropdown,
                     ft.Container(height=20),
                     hotkey_input,
+                    ft.Container(height=20),
+                    # Check for updates button
+                    ft.ElevatedButton(
+                        text=_("Check for Updates"),
+                        icon=ft.Icons.SYSTEM_UPDATE,
+                        on_click=self.on_check_updates,
+                        width=300,
+                    ),
                 ],
                 spacing=10,
                 scroll=ft.ScrollMode.AUTO,
@@ -409,3 +423,27 @@ class WritingAssistantFletApp:
         snack_bar = ft.SnackBar(ft.Text(_("About window - Coming soon!")))
         self.page.open(snack_bar)
         self.page.update()
+
+    def on_check_updates(self, e):
+        """Handle check for updates button click"""
+        if not self.page:
+            return
+
+        from src.core.services.updater import check_for_updates
+        from src.ui.dialogs import (
+            show_no_update_dialog,
+            show_update_dialog,
+            show_update_error_dialog,
+        )
+
+        # Show loading indication
+        self.log.info("Checking for updates...")
+
+        result = check_for_updates()
+
+        if "error" in result:
+            show_update_error_dialog(self.page, str(result.get("error", "")), self.config.DARK_MODE)
+        elif result.get("available"):
+            show_update_dialog(self.page, result, self.config.DARK_MODE)
+        else:
+            show_no_update_dialog(self.page, self.config.DARK_MODE)

@@ -16,6 +16,8 @@ dependencies = [
     "flet-desktop>=0.28.3",
     "pystray>=0.19.5",
     "pillow>=12.0.0",
+    "requests>=2.32.0", # For GitHub API calls (update checking)
+    "packaging>=24.0", # For version comparison (update checking)
 ]
 
 [dependency-groups]
