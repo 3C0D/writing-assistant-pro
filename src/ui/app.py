@@ -18,6 +18,12 @@ from src.core import (
     init_translation,
 )
 from src.core.managers.systray import SystrayManager
+from src.ui.components import (
+    create_navigation_rail,
+    create_sidebar,
+    icon_button,
+)
+from src.ui.design_system import AppColors
 
 
 class WritingAssistantFletApp:
@@ -150,59 +156,15 @@ class WritingAssistantFletApp:
 
     def _create_navigation_rail(self):
         """Create the permanent navigation rail on the left"""
-        return ft.Container(
-            width=50,
-            bgcolor="#3a3a3a" if self.config.DARK_MODE else "#e0e0e0",
-            content=ft.Column(
-                [
-                    # Menu button at top
-                    ft.IconButton(
-                        icon=ft.Icons.MENU,
-                        icon_color="#b0b0b0" if self.config.DARK_MODE else "#505050",
-                        tooltip="Toggle Menu",
-                        on_click=self.toggle_sidebar,
-                    ),
-                    # Spacer
-                    ft.Container(expand=True),
-                    # Settings button at bottom
-                    ft.IconButton(
-                        icon=ft.Icons.SETTINGS,
-                        icon_color="#b0b0b0" if self.config.DARK_MODE else "#505050",
-                        tooltip="Settings",
-                        on_click=lambda _: self.toggle_settings_view(),
-                        icon_size=20,
-                    ),
-                ],
-                spacing=0,
-                alignment=ft.MainAxisAlignment.START,
-            ),
+        return create_navigation_rail(
+            dark_mode=self.config.DARK_MODE,
+            on_menu_click=self.toggle_sidebar,
+            on_settings_click=lambda _: self.toggle_settings_view(),
         )
 
     def _create_sidebar(self):
         """Create the collapsible sidebar"""
-        return ft.Container(
-            width=250,
-            bgcolor="#2e2e2e" if self.config.DARK_MODE else "#f5f5f5",
-            padding=10,
-            content=ft.Column(
-                [
-                    ft.Text(
-                        "Menu",
-                        size=20,
-                        weight=ft.FontWeight.BOLD,
-                        color=("#b0b0b0" if self.config.DARK_MODE else "#404040"),
-                    ),
-                    ft.Divider(),
-                    # Placeholder for future menu items
-                    ft.ListTile(
-                        leading=ft.Icon(ft.Icons.HOME),
-                        title=ft.Text("Home"),
-                        on_click=lambda _: None,
-                    ),
-                ],
-                spacing=10,
-            ),
-        )
+        return create_sidebar(dark_mode=self.config.DARK_MODE)
 
     def _create_main_content(self):
         """Create the main content area"""
@@ -222,7 +184,7 @@ class WritingAssistantFletApp:
         self.ui_elements["label_main"] = ft.Text(
             _("Hello, this is a real desktop app!"),
             size=18,
-            color="#b0b0b0" if self.config.DARK_MODE else "#404040",
+            color=AppColors.get_text_primary(self.config.DARK_MODE),
         )
 
         self.ui_elements["button_main"] = ft.ElevatedButton(
@@ -231,17 +193,17 @@ class WritingAssistantFletApp:
         )
 
         # Floating buttons at top right
-        theme_btn = ft.IconButton(
+        theme_btn = icon_button(
             icon=(ft.Icons.DARK_MODE if not self.config.DARK_MODE else ft.Icons.LIGHT_MODE),
-            icon_color="#b0b0b0" if self.config.DARK_MODE else "#505050",
             tooltip="Toggle Dark/Light Mode",
+            dark_mode=self.config.DARK_MODE,
             on_click=self.toggle_theme,
         )
 
-        hide_btn = ft.IconButton(
+        hide_btn = icon_button(
             icon=ft.Icons.VISIBILITY_OFF,
-            icon_color="#b0b0b0" if self.config.DARK_MODE else "#505050",
             tooltip=f"Hide ({self.config.HOTKEY_COMBINATION})",
+            dark_mode=self.config.DARK_MODE,
             on_click=lambda _: (self.window_manager.hide_window() if self.window_manager else None),
         )
 
@@ -386,14 +348,14 @@ class WritingAssistantFletApp:
                         _("Settings"),
                         size=24,
                         weight=ft.FontWeight.BOLD,
-                        color=("#b0b0b0" if self.config.DARK_MODE else "#404040"),
+                        color=AppColors.get_text_primary(self.config.DARK_MODE),
                     ),
                     ft.Divider(),
                     ft.Text(
                         _("General"),
                         size=18,
                         weight=ft.FontWeight.BOLD,
-                        color=("#b0b0b0" if self.config.DARK_MODE else "#404040"),
+                        color=AppColors.get_text_primary(self.config.DARK_MODE),
                     ),
                     ft.Divider(),
                     language_dropdown,
