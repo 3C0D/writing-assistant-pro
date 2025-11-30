@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "../../.."
+		}
+	],
+	"settings": {
+		"ruff.enable": true,
+		"ruff.organizeImports": true,
+		"python.languageServer": "Default",
+		"files.associations": {
+			".babelrc": "ini"
+		}
+	}
+}

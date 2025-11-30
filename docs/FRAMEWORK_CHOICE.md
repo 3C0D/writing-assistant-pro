@@ -98,18 +98,255 @@ ft.ElevatedButton(
 )
 ```
 
-## Alternatives Considérées
+## Alternatives Utility-First pour Flutter
 
-### Utility-First pour Flutter
+Des packages existent pour apporter l'approche utility-first de
+Tailwind CSS à Flutter :
 
-Des packages tentent d'apporter une approche Tailwind à Flutter :
+- **Mix** ([fluttermix.com](https://fluttermix.com)) : API composable
+  style Tailwind avec builder pattern
+- **Wind** ([fluttersdk/wind](https://github.com/fluttersdk/wind)) :
+  Interprète des class names directement (syntaxe quasi-identique à
+  Tailwind)
+- **tailwind_cli/tailwind_standards** : Widgets pré-stylés avec
+  conventions Tailwind
 
-- **Mix** : Inspiré de Tailwind, réduit la verbosité
-- **wind** : Utility-first avec class names, dark mode, breakpoints
-- **tailwind_cli/tailwind_standards** : Wrappers des concepts Tailwind
+### ⚠️ Pourquoi Ces Alternatives Ne Sont Pas Adaptées
 
-> **Limitation** : Flutter n'a pas de support CSS natif, ces packages
-> sont des traductions/wrappers
+**Limitation fondamentale** : Tous ces packages nécessitent
+**Flutter natif** (développement en Dart).
+
+Flet est une **abstraction Python** au-dessus de Flutter qui ne donne
+**pas accès aux widgets Flutter bruts**. Vous êtes limité à l'API Flet
+qui encapsule Material Design.
+
+**Verdict** : Ces solutions utility-first ne sont donc **pas
+utilisables** dans Writing Assistant Pro. Pour bénéficier de
+Tailwind-like styling, il faudrait réécrire l'application en
+Flutter/Dart pur, ce qui contredirait la raison principale d'utiliser
+Flet : le développement rapide en Python.
+
+## Architecture Actuelle et Améliorations Possibles
+
+### ✅ Ce Que L'Application Utilise Déjà
+
+L'application implémente actuellement une approche **Flet + composants
+custom** dans [`app.py`](file:///c:/Users/dd200/Documents/Mes_projets/WritingTools%20Related/writing-assistant-pro/src/ui/app.py) :
+
+**Points forts existants :**
+
+- ✅ **Dark/Light Mode** : `ft.ThemeMode.DARK` / `LIGHT` avec toggle
+- ✅ **Composants réutilisables** : Méthodes comme
+  `_create_navigation_rail()`, `_create_sidebar()`
+- ✅ **Styling manuel** : Utilisation de `ft.Container` avec
+  `bgcolor`, `border_radius`, `padding`
+- ✅ **Couleurs conditionnelles** : Adaptation selon `DARK_MODE`
+
+**Exemple existant (lignes 153-179) :**
+
+```python
+def _create_navigation_rail(self):
+    return ft.Container(
+        width=50,
+        bgcolor="#3a3a3a" if self.config.DARK_MODE else "#e0e0e0",
+        content=ft.Column([...])
+    )
+```
+
+### 🎯 Améliorations Recommandées
+
+Pour réduire la verbosité et améliorer la maintenabilité, voici les
+évolutions à considérer :
+
+#### 1. 📐 Design System Centralisé
+
+**Problème actuel** : Couleurs hardcodées dispersées dans le code
+(`#3a3a3a`, `#b0b0b0`, etc.)
+
+**Solution** : Créer `src/ui/design_system.py` :
+
+```python
+"""Design System centralisé pour Writing Assistant Pro"""
+import flet as ft
+
+class AppColors:
+    """Palette de couleurs de l'application"""
+    # Dark Mode
+    DARK_BG_PRIMARY = "#2b2b2b"
+    DARK_BG_SECONDARY = "#2e2e2e"
+    DARK_BG_RAIL = "#3a3a3a"
+    DARK_TEXT_PRIMARY = "#b0b0b0"
+    DARK_TEXT_SECONDARY = "#808080"
+
+    # Light Mode
+    LIGHT_BG_PRIMARY = "#fafafa"
+    LIGHT_BG_SECONDARY = "#f5f5f5"
+    LIGHT_BG_RAIL = "#e0e0e0"
+    LIGHT_TEXT_PRIMARY = "#404040"
+    LIGHT_TEXT_SECONDARY = "#707070"
+
+    @staticmethod
+    def get_bg_primary(dark_mode: bool) -> str:
+        return (
+            AppColors.DARK_BG_PRIMARY
+            if dark_mode
+            else AppColors.LIGHT_BG_PRIMARY
+        )
+
+class AppSpacing:
+    """Espacements standardisés"""
+    XS = 4
+    SM = 8
+    MD = 16
+    LG = 24
+    XL = 32
+
+class AppTypography:
+    """Styles de typographie"""
+    HEADING_LARGE = ft.TextStyle(
+        size=24, weight=ft.FontWeight.BOLD
+    )
+    HEADING_MEDIUM = ft.TextStyle(
+        size=18, weight=ft.FontWeight.BOLD
+    )
+    BODY = ft.TextStyle(size=16)
+```
+
+**Utilisation :**
+
+```python
+# Avant
+bgcolor="#2b2b2b" if self.config.DARK_MODE else "#fafafa"
+
+# Après
+bgcolor=AppColors.get_bg_primary(self.config.DARK_MODE)
+```
+
+#### 2. 🧩 Composants comme Classes (UserControl)
+
+**Problème actuel** : Tout dans des méthodes de `WritingAssistantFletApp`
+
+**Solution** : Créer `src/ui/components/navigation_rail.py` :
+
+```python
+"""Navigation Rail Component"""
+import flet as ft
+from src.ui.design_system import AppColors, AppSpacing
+
+class NavigationRail(ft.UserControl):
+    """Navigation rail réutilisable"""
+
+    def __init__(
+        self,
+        dark_mode: bool,
+        on_menu_click,
+        on_settings_click
+    ):
+        super().__init__()
+        self.dark_mode = dark_mode
+        self.on_menu_click = on_menu_click
+        self.on_settings_click = on_settings_click
+
+    def build(self):
+        return ft.Container(
+            width=50,
+            bgcolor=AppColors.get_bg_rail(self.dark_mode),
+            content=ft.Column([
+                ft.IconButton(
+                    icon=ft.Icons.MENU,
+                    on_click=self.on_menu_click,
+                ),
+                ft.Container(expand=True),
+                ft.IconButton(
+                    icon=ft.Icons.SETTINGS,
+                    on_click=self.on_settings_click,
+                ),
+            ])
+        )
+```
+
+**Avantages :**
+
+- ✅ Type-safe avec autocomplétion Python
+- ✅ Réutilisable comme composants React
+- ✅ Isolé et testable
+- ✅ Réduit la taille de `app.py`
+
+#### 3. 🏭 Factory Functions pour Patterns Répétitifs
+
+**Solution** : Créer `src/ui/components/common.py` :
+
+```python
+"""Composants UI communs réutilisables"""
+import flet as ft
+from src.ui.design_system import AppColors, AppSpacing
+
+def styled_card(
+    content: ft.Control,
+    dark_mode: bool,
+    elevation: int = 2,
+    padding: int = AppSpacing.MD
+) -> ft.Container:
+    """Card avec style uniforme"""
+    return ft.Container(
+        content=content,
+        padding=ft.padding.all(padding),
+        border_radius=ft.border_radius.all(12),
+        shadow=ft.BoxShadow(
+            spread_radius=1,
+            blur_radius=elevation * 2,
+            color=ft.Colors.with_opacity(
+                0.1, ft.Colors.BLACK
+            )
+        ),
+        bgcolor=AppColors.get_surface(dark_mode)
+    )
+
+def icon_button(
+    icon: str,
+    tooltip: str,
+    dark_mode: bool,
+    on_click
+) -> ft.IconButton:
+    """Icon button avec style cohérent"""
+    return ft.IconButton(
+        icon=icon,
+        icon_color=AppColors.get_icon_color(dark_mode),
+        tooltip=tooltip,
+        on_click=on_click
+    )
+```
+
+#### 4. 🎨 Exploiter Material Design 3
+
+Flet permet d'utiliser les capacités natives de Material Design :
+
+- **Gradients** : `ft.LinearGradient`, `ft.RadialGradient`
+- **Animations** : `ft.AnimatedContainer` pour transitions fluides
+- **Markdown** : `ft.Markdown()` avec syntax highlighting
+- **Scrolling** : `ft.ListView()` ou `scroll=ft.ScrollMode.AUTO`
+
+#### 5. 🎭 Inspiration de Projets Existants
+
+Références pour des interfaces Flet avancées :
+
+- [Flet Material Library](https://flet-material.vercel.app)
+- [material_design_flet](https://github.com/LineIndent/material_design_flet)
+- Galerie d'exemples Flet officielle
+
+### 📊 Comparaison des Approches
+
+| Aspect              | Actuel (app.py) | Design System         |
+| ------------------- | --------------- | --------------------- |
+| **Couleurs**        | Hardcodées      | Centralisées          |
+| **Composants**      | Méthodes        | Classes `UserControl` |
+| **Réutilisabilité** | Limitée         | Maximale              |
+| **Maintenabilité**  | Moyenne         | Excellente            |
+| **Verbosité**       | Élevée          | Réduite               |
+
+> **Verdict** : Flet + design system bien architecturé = meilleur
+> ratio rapidité/qualité/maintenabilité pour une application desktop
+> Python, malgré l'absence de styling utility-first à la Tailwind.
 
 ## Conclusion
 
