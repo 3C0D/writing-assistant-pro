@@ -60,7 +60,7 @@ def main():
 
     # Step 2: Update/Initialize languages
     # Read available languages from config.json
-    config_path = src_dir / "core" / "config.json"
+    config_path = src_dir / "core" / "config" / "config.json"
     languages = ["en", "fr", "it"]  # Default fallback
 
     if config_path.exists():

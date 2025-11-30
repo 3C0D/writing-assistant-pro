@@ -174,18 +174,6 @@ class WritingAssistantFletApp:
 
     def _create_main_content(self):
         """Create the main content area"""
-        # Language selector
-        self.ui_elements["language_select"] = ft.Dropdown(
-            label=_("Language"),
-            options=[
-                ft.dropdown.Option(lang, get_language_manager().get_language_name(lang))
-                for lang in get_language_manager().get_available_languages()
-            ],
-            value=get_current_language(),
-            on_change=self.on_language_change,
-            width=150,
-        )
-
         # Main content
         self.ui_elements["label_main"] = ft.Text(
             _("Hello, this is a real desktop app!"),
@@ -226,8 +214,6 @@ class WritingAssistantFletApp:
                         ],
                         spacing=5,
                     ),
-                    # Language selector
-                    ft.Row([self.ui_elements["language_select"]]),
                     # Main content
                     ft.Column(
                         [
@@ -260,20 +246,11 @@ class WritingAssistantFletApp:
         new_lang = e.control.value
         change_language(new_lang)
 
-        # Update all text
-        self.ui_elements["label_main"].value = _("Hello, this is a real desktop app!")
-        self.ui_elements["button_main"].text = _("Click me")
-        self.ui_elements["language_select"].label = _("Language")
-
-        # Update dropdown options
-        self.ui_elements["language_select"].options = [
-            ft.dropdown.Option(lang, get_language_manager().get_language_name(lang))
-            for lang in get_language_manager().get_available_languages()
-        ]
+        # Recreate UI to apply new language everywhere
+        self._create_ui()
 
         snack_bar = ft.SnackBar(ft.Text(f"Language changed to {new_lang}"))
         self.page.open(snack_bar)
-        self.page.update()
 
     def toggle_theme(self, e):
         """Toggle dark/light theme"""
