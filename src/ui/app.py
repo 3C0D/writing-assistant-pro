@@ -235,7 +235,7 @@ class WritingAssistantFletApp:
             ),
             padding=20,
             expand=True,
-            bgcolor="#2b2b2b" if self.config.DARK_MODE else "#fafafa",
+            bgcolor=AppColors.get_bg_primary(self.config.DARK_MODE),
         )
 
     def on_button_click(self, e):
@@ -318,17 +318,17 @@ class WritingAssistantFletApp:
         )
 
         # Floating buttons at top right
-        theme_btn = ft.IconButton(
+        theme_btn = icon_button(
             icon=(ft.Icons.DARK_MODE if not self.config.DARK_MODE else ft.Icons.LIGHT_MODE),
-            icon_color="#b0b0b0" if self.config.DARK_MODE else "#505050",
             tooltip="Toggle Dark/Light Mode",
+            dark_mode=self.config.DARK_MODE,
             on_click=self.toggle_theme,
         )
 
-        hide_btn = ft.IconButton(
+        hide_btn = icon_button(
             icon=ft.Icons.VISIBILITY_OFF,
-            icon_color="#b0b0b0" if self.config.DARK_MODE else "#505050",
             tooltip=f"Hide ({self.config.HOTKEY_COMBINATION})",
+            dark_mode=self.config.DARK_MODE,
             on_click=lambda _: (self.window_manager.hide_window() if self.window_manager else None),
         )
 
@@ -367,7 +367,7 @@ class WritingAssistantFletApp:
             ),
             padding=20,
             expand=True,
-            bgcolor="#2b2b2b" if self.config.DARK_MODE else "#fafafa",
+            bgcolor=AppColors.get_bg_primary(self.config.DARK_MODE),
         )
 
     def on_hotkey_blur(self, e):

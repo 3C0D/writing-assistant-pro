@@ -2,6 +2,11 @@
 
 Ce document recense les fonctionnalités planifiées et les améliorations techniques identifiées pour **Writing Assistant Pro**.
 
+## ✅ Récemment Complété
+
+- [x] **Refactoring UI** : Mise en place d'un Design System centralisé (`AppColors`, `AppTypography`) et composants réutilisables.
+- [x] **Architecture** : Séparation claire `src/ui/components` et `src/ui/design_system.py`.
+
 ## 📅 Court Terme (Priorité Haute)
 
 ### 🛠️ Technique
