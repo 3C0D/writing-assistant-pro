@@ -36,7 +36,7 @@ htmlcov/
 # Build artifacts
 build/
 dist/
-*.spec
+# *.spec
 
 # copy WTA
 legacy_project
@@ -48,3 +48,4 @@ error.txt
 pyright_output.txt
 test_output.txt
 .kilocode/rules/rules.md
+A_voir.md

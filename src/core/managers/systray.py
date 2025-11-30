@@ -126,12 +126,10 @@ class SystrayManager:
 
         # Check common locations
         possible_paths = [
-            # Dev structure - NEW LOCATION after refactoring
+            # Dev structure (Source)
             app_root / "src" / "core" / "config" / "icons" / "app_icon.png",
-            # Flat structure (if copied to root during build)
-            app_root / "app_icon.png",
-            # Old dev structure (fallback)
-            app_root / "assets" / "icons" / "app_icon.png",
+            # Production/Build structure
+            app_root / "icons" / "app_icon.png",
         ]
 
         for path in possible_paths:
