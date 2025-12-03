@@ -184,7 +184,8 @@
                 "reveal": "always",
                 "focus": true,
                 "panel": "shared"
-            }
+            },
+            "problemMatcher": []
         }
     ]
 }
