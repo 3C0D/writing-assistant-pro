@@ -177,7 +177,7 @@
             "command": "git",
             "args": [
                 "push",
-                "--follow-tags"
+                "--tags"
             ],
             "presentation": {
                 "echo": true,
