@@ -83,7 +83,20 @@ git push origin main
    - `CHANGELOG.md`
 4. **Création du commit** : `bump: version X.Y.Z → A.B.C`
 5. **Création du tag** : `vA.B.C` (ex: `v1.1.0`)
-6. **Push automatique** du tag (si configuré avec `--push`)
+
+#### c) Pusher le tag vers GitHub
+
+La tâche crée le tag localement. **Il faut le pusher manuellement** :
+
+```powershell
+git push --follow-tags
+```
+
+Ou pour pusher uniquement le tag :
+
+```powershell
+git push origin v1.1.0
+```
 
 ### 2bis. Création d'une Pré-Release (Beta)
 
@@ -103,13 +116,20 @@ Pour créer une version beta (tests avant release finale) :
    - Si déjà une beta : `1.0.1-beta.1` → Crée `1.0.1-beta.2`
 3. **Mise à jour des fichiers** (comme pour une release normale)
 4. **Création du tag** : `v1.0.1-beta.1`
-5. **Push automatique** du tag
-6. **GitHub Actions** crée automatiquement une **pré-release** (détection automatique via le tiret dans le tag)
+
+#### c) Pusher le tag vers GitHub
+
+```powershell
+git push --follow-tags
+```
+
+Une fois poussé, **GitHub Actions** crée automatiquement une **pré-release** (détection automatique via le tiret dans le tag).
 
 > 💡 **Autres types de pré-release :**
 >
-> - Pour alpha : `uv run cz bump --prerelease alpha --changelog --push`
-> - Pour release candidate : `uv run cz bump --prerelease rc --changelog --push`
+> - Pour alpha : `uv run cz bump --prerelease alpha --changelog`
+> - Pour release candidate : `uv run cz bump --prerelease rc --changelog`
+> - Puis : `git push --follow-tags`
 >
 > Ces versions apparaissent marquées "Pre-release" sur GitHub et ne sont pas considérées comme des releases stables.
 
@@ -250,10 +270,10 @@ Fournis uniquement le message de commit, rien d'autre.
 
 **Accès :** `Ctrl+Shift+P` → `Tasks: Run Task` → Sélectionner la tâche
 
-- **`Commitizen: Bump Version`** : Créer une release stable (utilise `--changelog --push`)
-- **`Commitizen: Bump Pre-release (Beta)`** : Créer une pré-release beta
+- **`Commitizen: Bump Version`** : Créer une release stable (puis pusher avec `git push --follow-tags`)
+- **`Commitizen: Bump Pre-release (Beta)`** : Créer une pré-release beta (puis pusher)
 
-Ces tâches gèrent automatiquement tout le processus !
+> ⚠️ **Rappel** : Les tâches créent le tag localement. Pensez à pusher avec `git push --follow-tags` !
 
 ### Commandes Alternatives (Ligne de Commande)
 
@@ -263,13 +283,10 @@ Si vous préférez la ligne de commande ou avez besoin de plus de contrôle :
 # Bump automatique basé sur les commits
 uv run cz bump --changelog
 
-# Bump automatique avec push du tag
-uv run cz bump --changelog --push
-
 # Pré-releases
-uv run cz bump --prerelease beta --changelog --push   # Beta
-uv run cz bump --prerelease alpha --changelog --push  # Alpha
-uv run cz bump --prerelease rc --changelog --push     # RC
+uv run cz bump --prerelease beta --changelog   # Beta
+uv run cz bump --prerelease alpha --changelog  # Alpha
+uv run cz bump --prerelease rc --changelog     # RC
 
 # Bump spécifique
 uv run cz bump --increment MAJOR  # 1.0.0 → 2.0.0
@@ -278,6 +295,9 @@ uv run cz bump --increment PATCH  # 1.0.0 → 1.0.1
 
 # Version exacte
 uv run cz bump --version 2.5.0
+
+# Après le bump, pusher le tag
+git push --follow-tags
 ```
 
 ### Gestion des Tags

@@ -142,8 +142,7 @@
                 "run",
                 "cz",
                 "bump",
-                "--changelog",
-                "--push"
+                "--changelog"
             ],
             "presentation": {
                 "echo": true,
@@ -162,8 +161,22 @@
                 "bump",
                 "--prerelease",
                 "beta",
-                "--changelog",
-                "--push"
+                "--changelog"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Git: Push Tags",
+            "type": "shell",
+            "command": "git",
+            "args": [
+                "push",
+                "--follow-tags"
             ],
             "presentation": {
                 "echo": true,
