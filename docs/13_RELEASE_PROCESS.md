@@ -6,6 +6,19 @@ Ce document décrit le processus complet de création d'une release pour
 Writing Assistant Pro. Le système génère automatiquement des exécutables
 pour Windows, Linux et macOS à chaque tag de version.
 
+## ⚙️ Configuration Requise (Important)
+
+Pour que la création automatique de release fonctionne, vous devez configurer les permissions du repository sur GitHub :
+
+1. Allez sur votre repository GitHub
+2. **Settings** → **Actions** → **General**
+3. Descendez à la section **Workflow permissions**
+4. Sélectionnez ✅ **Read and write permissions**
+5. Cochez ✅ **Allow GitHub Actions to create and approve pull requests**
+6. Cliquez sur **Save**
+
+> ⚠️ **Sans cette configuration, le workflow échouera avec une erreur 403 lors de la création de la release.**
+
 ## 🔄 Flux de Release Complet
 
 ```mermaid
