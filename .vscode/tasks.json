@@ -149,7 +149,8 @@
                 "reveal": "always",
                 "focus": true,
                 "panel": "shared"
-            }
+            },
+            "problemMatcher": []
         },
         {
             "label": "Commitizen: Bump Pre-release (Beta)",
