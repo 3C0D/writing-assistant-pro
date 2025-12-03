@@ -1,3 +1,10 @@
+## v1.1.0 (2025-12-03)
+
+### Feat
+
+- Add VS Code tasks for development and document the multi-OS release process.
+- Add release workflow, commitizen integration, and initial project documentation structure.
+
 ## v1.0.0 (2025-12-02)
 
 ### BREAKING CHANGE
