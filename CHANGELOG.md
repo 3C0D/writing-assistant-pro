@@ -2,7 +2,7 @@
 
 ### Feat
 
-- Ajoute la documentation du système de traduction i18n, des guides de développement et de build, et un fichier de système de design UI, mettant à jour l'architecture.
+- Add i18n translation system documentation, development and build guides, and a UI design system file, updating the architecture.
 
 ## v1.1.0 (2025-12-03)
 
