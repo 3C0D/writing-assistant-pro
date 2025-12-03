@@ -23,7 +23,7 @@ Le projet utilise **PyInstaller** pour créer des exécutables autonomes. Deux m
 
 ### Fichiers Utilitaires
 
-- [`scripts/utils.py`](../scripts/utils.py) - Fonctions communes aux builds
+- [`scripts/dev_build/build_utils.py`](../scripts/dev_build/build_utils.py) - Fonctions communes aux builds
 
 ## 📂 Structure des Builds
 
@@ -441,7 +441,7 @@ Automatiser les builds pour Windows, Linux et macOS.
 
 - [`scripts/dev_build/build_dev.py`](../scripts/dev_build/build_dev.py) - Build développement
 - [`scripts/dev_build/build_final.py`](../scripts/dev_build/build_final.py) - Build production
-- [`scripts/utils.py`](../scripts/utils.py) - Utilitaires communs
+- [`scripts/dev_build/build_utils.py`](../scripts/dev_build/build_utils.py) - Utilitaires communs
 
 ### Documentation Externe
 

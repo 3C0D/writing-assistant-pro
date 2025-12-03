@@ -74,22 +74,22 @@ writing-assistant-pro/
 │   ├── ui/               # Interface utilisateur (Flet)
 │   │   ├── design_system.py # Tokens de design (Couleurs, Typo)
 │   │   └── components/   # Composants réutilisables
-│   └── utils/            # Utilitaires divers
-
-## 🎨 Développement UI
-
-L'interface utilise un **Design System** centralisé.
-
-### Règles
-1. **Couleurs** : Toujours utiliser `AppColors` (ex: `AppColors.get_bg_primary(dark_mode)`), jamais de valeurs hardcodées.
-2. **Composants** : Utiliser les factory functions de `src/ui/components/` (ex: `icon_button`, `styled_container`) au lieu des contrôles Flet bruts quand c'est possible.
-3. **Typographie** : Utiliser `AppTypography` pour les styles de texte.
 ├── assets/               # Ressources (Icônes, Images)
 ├── scripts/              # Scripts de build et maintenance
 ├── tests/                # Tests unitaires (pytest)
 ├── translations/         # Fichiers de traduction (.po/.mo)
 └── docs/                 # Documentation
 ```
+
+## 🎨 Développement UI
+
+L'interface utilise un **Design System** centralisé.
+
+### Règles
+
+1. **Couleurs** : Toujours utiliser `AppColors` (ex: `AppColors.get_bg_primary(dark_mode)`), jamais de valeurs hardcodées.
+2. **Composants** : Utiliser les factory functions de `src/ui/components/` (ex: `icon_button`, `styled_container`) au lieu des contrôles Flet bruts quand c'est possible.
+3. **Typographie** : Utiliser `AppTypography` pour les styles de texte.
 
 ## 🔄 Workflow de Développement
 

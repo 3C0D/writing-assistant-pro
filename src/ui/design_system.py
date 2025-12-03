@@ -36,39 +36,56 @@ class AppColors:
     LIGHT_ICON_COLOR = "#505050"
 
     @staticmethod
+    def _get_color(dark_value: str, light_value: str, dark_mode: bool) -> str:
+        """Generic color getter based on mode"""
+        return dark_value if dark_mode else light_value
+
+    @staticmethod
     def get_bg_primary(dark_mode: bool) -> str:
         """Get primary background color based on mode"""
-        return AppColors.DARK_BG_PRIMARY if dark_mode else AppColors.LIGHT_BG_PRIMARY
+        return AppColors._get_color(
+            AppColors.DARK_BG_PRIMARY, AppColors.LIGHT_BG_PRIMARY, dark_mode
+        )
 
     @staticmethod
     def get_bg_secondary(dark_mode: bool) -> str:
         """Get secondary background color based on mode"""
-        return AppColors.DARK_BG_SECONDARY if dark_mode else AppColors.LIGHT_BG_SECONDARY
+        return AppColors._get_color(
+            AppColors.DARK_BG_SECONDARY, AppColors.LIGHT_BG_SECONDARY, dark_mode
+        )
 
     @staticmethod
     def get_bg_rail(dark_mode: bool) -> str:
         """Get navigation rail background color"""
-        return AppColors.DARK_BG_RAIL if dark_mode else AppColors.LIGHT_BG_RAIL
+        return AppColors._get_color(AppColors.DARK_BG_RAIL, AppColors.LIGHT_BG_RAIL, dark_mode)
 
     @staticmethod
     def get_bg_surface(dark_mode: bool) -> str:
         """Get surface background color for elevated elements"""
-        return AppColors.DARK_BG_SURFACE if dark_mode else AppColors.LIGHT_BG_SURFACE
+        return AppColors._get_color(
+            AppColors.DARK_BG_SURFACE, AppColors.LIGHT_BG_SURFACE, dark_mode
+        )
 
     @staticmethod
     def get_text_primary(dark_mode: bool) -> str:
         """Get primary text color based on mode"""
-        return AppColors.DARK_TEXT_PRIMARY if dark_mode else AppColors.LIGHT_TEXT_PRIMARY
+        return AppColors._get_color(
+            AppColors.DARK_TEXT_PRIMARY, AppColors.LIGHT_TEXT_PRIMARY, dark_mode
+        )
 
     @staticmethod
     def get_text_secondary(dark_mode: bool) -> str:
         """Get secondary text color based on mode"""
-        return AppColors.DARK_TEXT_SECONDARY if dark_mode else AppColors.LIGHT_TEXT_SECONDARY
+        return AppColors._get_color(
+            AppColors.DARK_TEXT_SECONDARY, AppColors.LIGHT_TEXT_SECONDARY, dark_mode
+        )
 
     @staticmethod
     def get_icon_color(dark_mode: bool) -> str:
         """Get icon color based on mode"""
-        return AppColors.DARK_ICON_COLOR if dark_mode else AppColors.LIGHT_ICON_COLOR
+        return AppColors._get_color(
+            AppColors.DARK_ICON_COLOR, AppColors.LIGHT_ICON_COLOR, dark_mode
+        )
 
 
 class AppSpacing:

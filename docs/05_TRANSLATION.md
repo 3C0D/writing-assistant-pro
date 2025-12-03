@@ -405,11 +405,11 @@ msgstr ""
 "Language: fr\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 
-#: src/ui/app_flet.py:45
+#: src/ui/app.py:45
 msgid "Welcome"
 msgstr "Bienvenue"
 
-#: src/ui/app_flet.py:67
+#: src/ui/app.py:67
 msgid "Settings"
 msgstr "Paramètres"
 ```
