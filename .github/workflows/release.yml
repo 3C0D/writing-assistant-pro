@@ -1,0 +1,109 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*" # Triggers on version tags (e.g., v1.0.0, v2.1.3)
+
+jobs:
+  build-and-release:
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+        include:
+          - os: windows-latest
+            os_name: windows
+            archive_ext: zip
+          - os: ubuntu-latest
+            os_name: linux
+            archive_ext: tar.gz
+          - os: macos-latest
+            os_name: macos
+            archive_ext: tar.gz
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for changelog
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: |
+          uv sync --all-extras
+
+      - name: Build production executable
+        run: |
+          uv run python scripts/dev_build/build_final.py
+
+      - name: Create production archive (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: pwsh
+        run: |
+          # Compress the entire production folder
+          # Remove 'v' prefix from tag for filename
+          $version = "${{ github.ref_name }}" -replace '^v', ''
+          Compress-Archive -Path "dist/production/*" `
+                           -DestinationPath "writing-assistant-pro-$version-${{ matrix.os_name }}.${{ matrix.archive_ext }}"
+
+      - name: Create production archive (Linux/macOS)
+        if: matrix.os != 'windows-latest'
+        run: |
+          # Create tar.gz archive
+          # Remove 'v' prefix from tag for filename
+          version="${{ github.ref_name }}"
+          version="${version#v}"
+          tar -czf "writing-assistant-pro-${version}-${{ matrix.os_name }}.${{ matrix.archive_ext }}" -C dist/production .
+
+      # Save build artifacts (.zip or .tar.gz) for download from GitHub Actions
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: writing-assistant-pro-${{ matrix.os_name }}
+          path: writing-assistant-pro-*-${{ matrix.os_name }}.${{ matrix.archive_ext }}
+
+  create-release:
+    needs: build-and-release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Extract changelog for this version
+        shell: bash
+        run: |
+          # Extract the changelog section for the current version
+          # Tag format is v1.0.0, CHANGELOG format is ## v1.0.0
+          version="${{ github.ref_name }}"
+
+          # Use awk to extract the version section
+          awk "/^## $version/,/^## / {print; if (/^## / && NR>1) exit}" CHANGELOG.md > release_notes.md || \
+            echo "Release version $version" > release_notes.md
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            writing-assistant-pro-windows/writing-assistant-pro-*-windows.zip
+            writing-assistant-pro-linux/writing-assistant-pro-*-linux.tar.gz
+            writing-assistant-pro-macos/writing-assistant-pro-*-macos.tar.gz
+            README.md
+          body_path: release_notes.md
+          draft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          fail_on_unmatched_files: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,6 +1,6 @@
 [project]
 name = "writing-assistant-pro"
-version = "0.1.0"
+version = "1.0.0"
 description = "Inspired by writting tool app"
 authors = [
     { name = "3C0D", email = "author@example.com" }
@@ -28,6 +28,7 @@ dev = [
     "pre-commit", # For managing pre-commit hooks
     "watchdog>=6.0.0", # File system monitoring, used to detect css changes
     "pyinstaller>=6.0.0", # Package application into executable
+    "commitizen>=4.10.0",
 ]
 
 [build-system]
@@ -58,3 +59,15 @@ pythonVersion = "3.13"
 typeCheckingMode = "basic"
 venvPath = "."
 venv = ".venv"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "1.0.0"
+version_provider = "pep621"
+version_files = [
+    "src/version.py:__version__",
+    "pyproject.toml:project.version"
+]
+tag_format = "v$version"
+update_changelog_on_bump = true
+bump_message = "bump: version $current_version → $new_version"

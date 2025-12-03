@@ -10,7 +10,7 @@ Ce guide détaille l'environnement de développement, les outils et les workflow
 
 - **Python** : 3.10+
 - **UV** : Gestionnaire de paquets et de projet (remplace pip/poetry)
-- **VS Code** : Éditeur recommandé (avec extensions Python, Pylance, Ruff)
+- **VS Code** : Éditeur recommandé (avec extensions Python, Pyright, Ruff)
 
 ### Installation
 

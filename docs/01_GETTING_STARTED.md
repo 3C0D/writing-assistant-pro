@@ -27,7 +27,13 @@ Bienvenue dans la documentation de **Writing Assistant Pro**. Ce projet est une 
    uv sync
    ```
 
-3. **Lancer l'application**
+3. **Lancer l'application (Recommandé : Tâche VS Code)**
+
+   - Ouvrir la palette de commandes : `Ctrl+Shift+P`
+   - Sélectionner : `Tasks: Run Task` → `Run Dev`
+
+   **Alternative (ligne de commande) :**
+
    ```bash
    uv run python scripts/dev_build/run_dev.py
    ```
@@ -41,9 +47,26 @@ L'application se lance avec une interface moderne. Voici les fonctionnalités cl
 - **Configuration** : Les paramètres sont sauvegardés dans `dist/dev/config.json`.
 - **Traduction** : L'interface est prête pour le multi-langue (Anglais/Français/Italien...).
 
-## 🛠️ Commandes Utiles
+## 🛠️ Tâches VS Code Disponibles
 
-Voici les commandes que vous utiliserez le plus souvent :
+**Recommandation :** Utilisez les tâches VS Code pour plus de simplicité !
+
+Accès : `Ctrl+Shift+P` → `Tasks: Run Task` → Sélectionner la tâche
+
+| Tâche                                   | Description                                |
+| --------------------------------------- | ------------------------------------------ |
+| **Run Dev**                             | Lancer l'application en mode développement |
+| **Run Ruff**                            | Vérifier et corriger le code (linting)     |
+| **Run Pyright**                         | Vérifier les types                         |
+| **Build Dev**                           | Construire l'exécutable de développement   |
+| **Build Final**                         | Construire l'exécutable de production      |
+| **Commitizen: Create Commit**           | Créer un commit conventionnel              |
+| **Commitizen: Bump Version**            | Créer une nouvelle version (release)       |
+| **Commitizen: Bump Pre-release (Beta)** | Créer une pré-release (beta)               |
+
+### Commandes Alternatives (Ligne de Commande)
+
+Si vous préférez la ligne de commande :
 
 | Action                 | Commande                                       |
 | ---------------------- | ---------------------------------------------- |

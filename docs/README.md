@@ -15,7 +15,6 @@ Bienvenue dans la documentation officielle du projet. Cette documentation est st
 - [**04_LOGGING.md**](./04_LOGGING.md) : Système de logs (Loguru, rotation, fichiers).
 - [**05_TRANSLATION.md**](./05_TRANSLATION.md) : Système d'internationalisation (i18n, Babel).
 - [**08_CONFIGURATION.md**](./08_CONFIGURATION.md) : Gestion de la configuration (JSON, Chemins).
-- [**09_ASSETS.md**](./09_ASSETS.md) : Gestion des ressources (Icônes, Images).
 
 ### 🔧 Fonctionnalités Clés
 
@@ -27,6 +26,12 @@ Bienvenue dans la documentation officielle du projet. Cette documentation est st
 
 - [**10_PRECOMMIT.md**](./10_PRECOMMIT.md) : Hooks de qualité de code (Ruff, Pyright).
 - [**11_TESTING.md**](./11_TESTING.md) : Tests unitaires et d'intégration.
+
+### 📦 Release & Versioning
+
+- [**13_RELEASE_PROCESS.md**](./13_RELEASE_PROCESS.md) : Processus de release multi-OS complet.
+- [**14_COMMIT_PROMPT.md**](./14_COMMIT_PROMPT.md) : Prompt LLM pour commits conventionnels.
+- [**COMMITIZEN.md**](./COMMITIZEN.md) : Guide Commitizen et Conventional Commits.
 
 ### 🔮 Futur & Archives
 

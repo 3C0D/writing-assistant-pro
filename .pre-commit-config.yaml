@@ -22,3 +22,10 @@ repos:
         args: ["--maxkb=1000"]
       - id: check-merge-conflict
       - id: check-toml
+
+  # Commitizen - Validate commit message format (Conventional Commits)
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: v4.1.0
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]

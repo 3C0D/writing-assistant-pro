@@ -117,6 +117,60 @@
                 "focus": true,
                 "panel": "shared"
             }
+        },
+        {
+            "label": "Commitizen: Create Commit",
+            "type": "shell",
+            "command": "uv",
+            "args": [
+                "run",
+                "cz",
+                "commit"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Commitizen: Bump Version",
+            "type": "shell",
+            "command": "uv",
+            "args": [
+                "run",
+                "cz",
+                "bump",
+                "--changelog",
+                "--push"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            }
+        },
+        {
+            "label": "Commitizen: Bump Pre-release (Beta)",
+            "type": "shell",
+            "command": "uv",
+            "args": [
+                "run",
+                "cz",
+                "bump",
+                "--prerelease",
+                "beta",
+                "--changelog",
+                "--push"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared"
+            }
         }
     ]
 }
