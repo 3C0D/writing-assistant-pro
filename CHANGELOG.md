@@ -1,3 +1,13 @@
+## v2.0.0 (2025-12-09)
+
+### BREAKING CHANGE
+
+- Default hotkey changed from ctrl+. to ctrl+space
+
+### Feat
+
+- **hotkey**: implement advanced hotkey capture system with modal dialog
+
 ## v1.2.0 (2025-12-03)
 
 ### Feat
