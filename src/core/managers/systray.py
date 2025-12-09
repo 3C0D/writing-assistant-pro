@@ -161,6 +161,7 @@ class SystrayManager:
         """
         return Menu(
             MenuItem("About", self._on_about_click),
+            MenuItem("Settings", self._on_settings_click),
             Menu.SEPARATOR,
             MenuItem(
                 "Run on Startup",
@@ -178,6 +179,26 @@ class SystrayManager:
         logger.debug("About menu item clicked")
         if self.on_about:
             self.on_about()
+
+    def _on_settings_click(self, icon: Any, item: Any) -> None:
+        """
+        Handle Settings menu item click.
+        Opens the main window with settings view visible.
+        """
+        logger.debug("Settings menu item clicked")
+        try:
+            # Show the window
+            if self.page and self.page.window:
+                self.page.window.visible = True
+                self.page.update()
+
+            # Open settings view if app is available
+            if self.app and hasattr(self.app, "toggle_settings_view"):
+                # Ensure settings are visible
+                if not getattr(self.app, "settings_visible", False):
+                    self.app.toggle_settings_view()
+        except Exception as e:
+            logger.error(f"Error opening settings: {e}")
 
     def _on_autostart_click(self, icon: Any, item: Any) -> None:
         """

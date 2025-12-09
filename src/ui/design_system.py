@@ -35,6 +35,17 @@ class AppColors:
     LIGHT_TEXT_SECONDARY = "#707070"
     LIGHT_ICON_COLOR = "#505050"
 
+    # Semantic Colors (mode-independent)
+    ACCENT = "#2196F3"  # Blue accent for highlights
+    SUCCESS = "#4CAF50"  # Green for success actions
+    ERROR = "#F44336"  # Red for danger/delete actions
+    WARNING = "#FF9800"  # Orange for warnings
+    INFO = "#2196F3"  # Blue for info
+
+    # Text colors for colored backgrounds
+    TEXT_PRIMARY_DARK = "#FFFFFF"  # White text on dark/colored backgrounds
+    TEXT_PRIMARY_LIGHT = "#000000"  # Black text on light backgrounds
+
     @staticmethod
     def _get_color(dark_value: str, light_value: str, dark_mode: bool) -> str:
         """Generic color getter based on mode"""

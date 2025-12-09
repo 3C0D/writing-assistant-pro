@@ -18,12 +18,14 @@ from src.core import (
     init_translation,
 )
 from src.core.managers.systray import SystrayManager
+from src.core.services.hotkey_capture import format_hotkey_for_display
 from src.ui.components import (
     create_navigation_rail,
     create_sidebar,
     icon_button,
 )
 from src.ui.design_system import AppColors
+from src.ui.dialogs import HotkeyDialogResult, show_hotkey_capture_dialog
 
 
 class WritingAssistantFletApp:
@@ -291,14 +293,8 @@ class WritingAssistantFletApp:
             width=300,
         )
 
-        # Hotkey input
-        hotkey_input = ft.TextField(
-            label=_("Shortcut Key"),
-            value=self.config.HOTKEY_COMBINATION,
-            hint_text="e.g., ctrl space, ctrl shift a",
-            on_blur=self.on_hotkey_blur,
-            width=300,
-        )
+        # Hotkey display (clickable to edit)
+        hotkey_display = self._create_hotkey_display()
 
         # Floating buttons at top right
         theme_btn = icon_button(
@@ -343,7 +339,7 @@ class WritingAssistantFletApp:
                     ft.Divider(),
                     language_dropdown,
                     ft.Container(height=20),
-                    hotkey_input,
+                    hotkey_display,
                     ft.Container(height=20),
                     # Check for updates button
                     ft.ElevatedButton(
@@ -361,31 +357,90 @@ class WritingAssistantFletApp:
             bgcolor=AppColors.get_bg_primary(self.config.DARK_MODE),
         )
 
-    def on_hotkey_blur(self, e):
-        """Handle hotkey input blur event with automatic validation"""
-        if not self.page or not e.control:
+    def _create_hotkey_display(self) -> ft.Container:
+        """Create clickable hotkey display that opens capture dialog."""
+        current_hotkey = self.config.HOTKEY_COMBINATION
+        display_text = format_hotkey_for_display(current_hotkey)
+
+        return ft.Container(
+            content=ft.Column(
+                [
+                    ft.Text(
+                        _("Shortcut Key"),
+                        size=12,
+                        color=AppColors.get_text_secondary(self.config.DARK_MODE),
+                    ),
+                    ft.Container(
+                        content=ft.Text(
+                            display_text,
+                            size=16,
+                            weight=ft.FontWeight.BOLD,
+                            color=AppColors.get_text_primary(self.config.DARK_MODE),
+                        ),
+                        padding=ft.padding.symmetric(horizontal=15, vertical=10),
+                        border_radius=8,
+                        bgcolor=AppColors.get_bg_secondary(self.config.DARK_MODE),
+                        border=ft.border.all(
+                            1, AppColors.get_text_secondary(self.config.DARK_MODE)
+                        ),
+                    ),
+                ],
+                spacing=5,
+            ),
+            on_click=self._on_hotkey_click,
+            width=300,
+        )
+
+    def _on_hotkey_click(self, e) -> None:
+        """Handle click on hotkey display to open capture dialog."""
+        if not self.page:
             return
 
-        new_hotkey = e.control.value.strip()
+        show_hotkey_capture_dialog(
+            page=self.page,
+            current_hotkey=self.config.HOTKEY_COMBINATION,
+            dark_mode=self.config.DARK_MODE,
+            on_result=self._on_hotkey_dialog_result,
+            hotkey_manager=self.hotkey_manager,
+        )
 
-        # Check if value has changed
-        if new_hotkey != self.hotkey_initial_value:
-            # Validate and normalize the hotkey
-            normalized_hotkey = " ".join(new_hotkey.split()) or "ctrl space"
+    def _on_hotkey_dialog_result(self, result: HotkeyDialogResult) -> None:
+        """Handle result from hotkey capture dialog."""
+        if result.action == "cancel":
+            # Re-register the original hotkey (was unregistered when dialog opened)
+            if self.config.HOTKEY_COMBINATION and self.window_manager:
+                self.log.info("Cancel: re-registering original hotkey")
+                self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
+            return
 
-            # Update config
-            self.config.HOTKEY_COMBINATION = normalized_hotkey
+        if result.action == "save":
+            new_hotkey = result.hotkey
+        else:
+            # Unknown action, just re-register original
+            if self.config.HOTKEY_COMBINATION and self.window_manager:
+                self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
+            return
 
-            # Re-register the hotkey
-            self.log.info(f"Hotkey changed to: {normalized_hotkey}")
+        # Update config
+        old_hotkey = self.config.HOTKEY_COMBINATION
+        self.config.HOTKEY_COMBINATION = new_hotkey or ""
+
+        # Re-register the hotkey (or unregister if None)
+        if new_hotkey:
+            self.log.info(f"Hotkey changed: {old_hotkey} -> {new_hotkey}")
             if self.window_manager:
                 self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
+        else:
+            self.log.info(f"Hotkey disabled (was: {old_hotkey})")
+            # Already unregistered when dialog opened, no need to unregister again
 
-            # Update the initial value
-            self.hotkey_initial_value = normalized_hotkey
+        # Refresh UI to show new hotkey
+        self._create_ui()
 
-            # Show confirmation
-            snack_bar = ft.SnackBar(ft.Text(f"Hotkey updated to: {normalized_hotkey}"))
+        # Show confirmation
+        if self.page:
+            display = format_hotkey_for_display(new_hotkey) if new_hotkey else "None"
+            snack_bar = ft.SnackBar(ft.Text(f"Hotkey: {display}"))
             self.page.open(snack_bar)
             self.page.update()
 

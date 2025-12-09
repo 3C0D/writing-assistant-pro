@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-30 20:43+0100\n"
+"POT-Creation-Date: 2025-12-09 02:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: it\n"
@@ -16,41 +16,66 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:179
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:181
 msgid "Hello, this is a real desktop app!"
 msgstr "Ciao, questa è una vera applicazione desktop!"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:185
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:187
 msgid "Click me"
 msgstr "Cliccami"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:238
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:240
 msgid "Clicked!!!"
 msgstr "Cliccato!!!"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:284
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:286
 msgid "Language"
 msgstr "Lingua"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:296
-msgid "Shortcut Key"
-msgstr "Tasto di scelta rapida"
-
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:331
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:327
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:338
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:334
 msgid "General"
 msgstr "Generale"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:350
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:346
 msgid "Check for Updates"
 msgstr "Controlla aggiornamenti"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:400
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:369
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:163
+msgid "Shortcut Key"
+msgstr "Tasto di scelta rapida"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:455
 msgid "About window - Coming soon!"
 msgstr "Finestra Informazioni - Prossimamente!"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:94
+msgid "Press the key combination you want to use."
+msgstr "Premi la combinazione di tasti che desideri utilizzare."
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:100
+msgid "Tip: With Shift, press the main key FIRST, then add modifiers."
+msgstr "Suggerimento: Con Shift, premi PRIMA il tasto principale, poi aggiungi i modificatori."
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:189
+msgid "Save"
+msgstr "Salva"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:196
+msgid "Reset"
+msgstr "Ripristina"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:203
+msgid "Delete"
+msgstr "Elimina"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:210
+msgid "Cancel"
+msgstr "Annulla"
 
 #: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:32
 msgid "No release notes available"

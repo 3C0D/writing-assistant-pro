@@ -43,6 +43,14 @@ class HotkeyManager:
         Returns:
             bool: True if successful, False otherwise
         """
+        hotkey = self.config.HOTKEY_COMBINATION
+
+        # Check if hotkey is disabled (None or empty)
+        if not hotkey:
+            self.log.info("Hotkey is disabled (None or empty), skipping registration")
+            self.cleanup()
+            return False
+
         try:
             # Clear all existing hotkeys first to prevent duplicates
             self.log.debug("Clearing all existing keyboard hooks...")
@@ -51,13 +59,11 @@ class HotkeyManager:
 
             # Register new hotkey
             self._toggle_callback = toggle_callback
-            self.log.debug(f"Adding hotkey: {self.config.HOTKEY_COMBINATION} (suppress=False)")
-            keyboard.add_hotkey(self.config.HOTKEY_COMBINATION, toggle_callback, suppress=False)
+            self.log.debug(f"Adding hotkey: {hotkey} (suppress=False)")
+            keyboard.add_hotkey(hotkey, toggle_callback, suppress=False)
 
-            self._hotkey_hook = self.config.HOTKEY_COMBINATION
-            self.log.info(
-                f"Global hotkey registered: {self.config.HOTKEY_COMBINATION} (toggle window)"
-            )
+            self._hotkey_hook = hotkey
+            self.log.info(f"Global hotkey registered: {hotkey} (toggle window)")
             return True
 
         except Exception as e:

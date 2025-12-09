@@ -92,7 +92,7 @@ class WindowManager:
                 self.page.update()
 
                 self.window_visible = False
-                self.log.info("Window hidden - ctrl+. to show")
+                self.log.info("Window hidden - ctrl+space to show")
             else:
                 self.log.warning("No Flet page found during hide_window")
 

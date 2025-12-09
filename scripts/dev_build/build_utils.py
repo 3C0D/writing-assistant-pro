@@ -107,6 +107,12 @@ def copy_required_files(build_type: str, target_dir: str) -> bool:
                 print(f"Warning: File/directory not found: {src}")
                 continue
 
+            # Skip config.json if it already exists in destination
+            # to preserve user modifications (hotkey, language, etc.)
+            if src.name == "config.json" and dst.exists():
+                print(f"Skipping: {dst} (already exists, preserving user settings)")
+                continue
+
             if src.is_dir():
                 if dst.exists():
                     shutil.rmtree(dst)

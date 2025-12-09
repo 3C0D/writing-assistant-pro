@@ -251,4 +251,4 @@ uv run python scripts/dev_build/build_final.py
 
 - `language` : Langue de l'interface
 - `dark_mode` : Thème sombre/clair
-- `hotkey_combination` : Hotkey global (ex: "ctrl space")
+- `hotkey_combination` : Hotkey global (ex: "ctrl+space")

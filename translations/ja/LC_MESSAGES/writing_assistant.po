@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-11-30 20:43+0100\n"
+"POT-Creation-Date: 2025-12-09 02:23+0100\n"
 "PO-Revision-Date: 2025-11-30 20:40+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ja\n"
@@ -18,41 +18,66 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:179
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:181
 msgid "Hello, this is a real desktop app!"
 msgstr "こんにちは、これは本物のデスクトップアプリです！"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:185
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:187
 msgid "Click me"
 msgstr "クリックして"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:238
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:240
 msgid "Clicked!!!"
 msgstr "クリックされました！！！"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:284
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:286
 msgid "Language"
 msgstr "言語"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:296
-msgid "Shortcut Key"
-msgstr "ショートカットキー"
-
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:331
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:327
 msgid "Settings"
 msgstr "設定"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:338
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:334
 msgid "General"
 msgstr "一般"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:350
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:346
 msgid "Check for Updates"
 msgstr "更新を確認"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:400
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:369
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:163
+msgid "Shortcut Key"
+msgstr "ショートカットキー"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:455
 msgid "About window - Coming soon!"
 msgstr "バージョン情報 - 近日公開！"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:94
+msgid "Press the key combination you want to use."
+msgstr "使用したいキーの組み合わせを押してください。"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:100
+msgid "Tip: With Shift, press the main key FIRST, then add modifiers."
+msgstr "ヒント：Shift を使う場合、先にメインキーを押し、次に修飾キーを追加します。"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:189
+msgid "Save"
+msgstr "保存"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:196
+msgid "Reset"
+msgstr "リセット"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:203
+msgid "Delete"
+msgstr "削除"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:210
+msgid "Cancel"
+msgstr "キャンセル"
 
 #: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:32
 msgid "No release notes available"
