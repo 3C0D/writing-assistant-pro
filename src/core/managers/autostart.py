@@ -360,15 +360,107 @@ Hidden=false
             return False
 
     @staticmethod
+    def _needs_windows_migration() -> bool:
+        """
+        Check if Windows autostart entries need migration due to mode change.
+
+        Returns:
+            bool: True if migration is needed
+        """
+        try:
+            compiled = AutostartManager.is_compiled()
+            if not AutostartManager._ensure_windows_registry_available():
+                return False
+
+            assert winreg is not None
+
+            # Check if the wrong key exists
+            wrong_key = (
+                AutostartManager.REGISTRY_KEY_DEV
+                if compiled
+                else AutostartManager.REGISTRY_KEY_COMPILED
+            )
+            try:
+                with winreg.OpenKey(
+                    winreg.HKEY_CURRENT_USER,
+                    AutostartManager.REGISTRY_PATH,
+                    0,
+                    winreg.KEY_READ,
+                ) as key:
+                    winreg.QueryValueEx(key, wrong_key)
+                    return True  # Wrong key exists, migration needed
+            except OSError:
+                return False  # Wrong key doesn't exist, no migration needed
+
+        except Exception as e:
+            logger.exception(f"Error checking Windows autostart migration need: {e}")
+            return False
+
+    @staticmethod
+    def _needs_linux_migration() -> bool:
+        """
+        Check if Linux autostart entries need migration due to mode change.
+
+        Returns:
+            bool: True if migration is needed
+        """
+        try:
+            compiled = AutostartManager.is_compiled()
+            desktop_file_path = AutostartManager.get_linux_desktop_file_path()
+            if not desktop_file_path.exists():
+                return False
+
+            content = desktop_file_path.read_text()
+            if compiled:
+                # In compiled mode, should not have python dev_script
+                return "dev_script.py" in content or "main.py" in content
+            else:
+                # In dev mode, should not have exe path
+                startup_path = AutostartManager.get_startup_path()
+                if startup_path:
+                    return f"Exec={startup_path}" in content
+                return False
+
+        except Exception as e:
+            logger.exception(f"Error checking Linux autostart migration need: {e}")
+            return False
+
+    @staticmethod
+    def _needs_autostart_migration() -> bool:
+        """
+        Check if autostart entries need migration due to mode change.
+
+        Returns:
+            bool: True if migration is needed
+        """
+        if sys.platform.startswith("win32"):
+            return AutostartManager._needs_windows_migration()
+        elif sys.platform.startswith("linux"):
+            return AutostartManager._needs_linux_migration()
+        else:
+            return False
+
+    @staticmethod
     def sync_with_settings(config_manager: "ConfigManager") -> bool:
         """
         Synchronize autostart state between system and settings.
         Updates settings to match system state if they differ.
+        Also handles mode changes (dev <-> compiled) by migrating autostart entries.
         """
         try:
             system_state = AutostartManager.check_autostart()
             # Use .get() to avoid AttributeError if key doesn't exist
             settings_state = config_manager.get("start_on_boot", False)
+
+            # Check if we need to migrate due to mode change
+            if settings_state and AutostartManager._needs_autostart_migration():
+                logger.info("Autostart mode migration needed, updating system entries")
+                # Remove any conflicting entries and set the correct one for current mode
+                success = AutostartManager.set_autostart(True)
+                if success:
+                    system_state = True  # Now it should be enabled
+                else:
+                    logger.warning("Failed to migrate autostart entry")
 
             if system_state != settings_state:
                 # Update settings to match system state
