@@ -98,10 +98,13 @@ def setup_root_logger(debug: bool, log_filename: str | None = None) -> None:
             pass  # Silent mode for production windowed builds
 
 
-def setup_exception_handler() -> None:
+def setup_exception_handler(debug: bool = False) -> None:
     """
     Configure exception handlers to log crashes to dedicated crash files.
     Call this ONCE after setup_root_logger() at application startup.
+
+    Args:
+        debug: True if running in debug mode. If True, crashes will also be printed to stderr.
 
     Creates separate crash log files:
     - Mode run_dev: logs/crash_run_dev.log
@@ -131,6 +134,7 @@ def setup_exception_handler() -> None:
         """Handle uncaught exceptions by logging them to crash file."""
         if issubclass(exc_type, KeyboardInterrupt):
             # Don't log keyboard interrupts
+            # Use default exception handler to display the interrupt in the console
             sys.__excepthook__(exc_type, exc_value, exc_traceback)
             return
 
@@ -153,9 +157,16 @@ def setup_exception_handler() -> None:
 
             # Also log to normal logger if available
             logger.critical(f"Application crashed!\n{tb_text}")
+
+            # In debug mode, ensure the crash is visible in the console (stderr)
+            # This is critical for development in VS Code or terminal
+            if debug and sys.stderr is not None:
+                sys.__excepthook__(exc_type, exc_value, exc_traceback)
+
         except Exception as e:
             # Fallback if logging fails
-            print(f"Failed to log crash: {e}", file=sys.stderr)
+            if sys.stderr is not None:
+                print(f"Failed to log crash: {e}", file=sys.stderr)
             sys.__excepthook__(exc_type, exc_value, exc_traceback)
 
     def thread_exception_handler(args: threading.ExceptHookArgs) -> None:
@@ -165,7 +176,7 @@ def setup_exception_handler() -> None:
             return
         exception_handler(args.exc_type, args.exc_value, args.exc_traceback)
 
-    # Install exception handlers
+    # Install exception handlers in main thread and secondary threads
     sys.excepthook = exception_handler
     threading.excepthook = thread_exception_handler
 

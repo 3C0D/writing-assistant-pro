@@ -19,11 +19,14 @@ from src.core import (
 )
 from src.core.managers.systray import SystrayManager
 from src.core.services.hotkey_capture import format_hotkey_for_display
+from src.core.services.input_source import InputSourceService
 from src.ui.components import (
     create_navigation_rail,
     create_sidebar,
     icon_button,
 )
+from src.ui.components.input.attachment_zone import Attachment
+from src.ui.components.input.prompt_bar import PromptBar
 from src.ui.design_system import AppColors
 from src.ui.dialogs import HotkeyDialogResult, show_hotkey_capture_dialog
 
@@ -59,9 +62,12 @@ class WritingAssistantFletApp:
         )
 
         self.hotkey_manager = HotkeyManager(self.config)
+        self.input_source_service: InputSourceService | None = None
         self.window_manager: WindowManager | None = None
         self.page: ft.Page | None = None
         self.systray_manager: SystrayManager | None = None
+        self.file_picker: ft.FilePicker | None = None
+        self.prompt_bar: PromptBar | None = None
 
         # UI Elements references for updates
         self.ui_elements = {}
@@ -76,8 +82,8 @@ class WritingAssistantFletApp:
         self.page = page
         self.log.info("Flet application starting...")
 
-        # Initialize WindowManager with page
-        self.window_manager = WindowManager(self.config, page)
+        # Initialize WindowManager with page and on_show callback for refreshing inputs
+        self.window_manager = WindowManager(self.config, page, on_show=self._on_window_show)
 
         # Page configuration
         page.title = (
@@ -118,6 +124,19 @@ class WritingAssistantFletApp:
         """Handle window events"""
         if e.data == "close" and self.window_manager:
             self.window_manager.hide_window()
+
+    def _on_window_show(self) -> None:
+        """
+        Called when window is shown.
+        Refreshes input sources to get fresh clipboard/selection data.
+        """
+        self.log.debug("Window shown - refreshing input sources")
+        if self.prompt_bar:
+            # Reinitialize input sources and refresh the prompt bar
+            self.input_source_service = InputSourceService()
+            self.prompt_bar.input_service = self.input_source_service
+            self.prompt_bar.attachments = []  # Clear old attachments
+            self.prompt_bar._refresh_sources()
 
     def _create_ui(self):
         """Create the user interface"""
@@ -176,16 +195,59 @@ class WritingAssistantFletApp:
 
     def _create_main_content(self):
         """Create the main content area"""
-        # Main content
-        self.ui_elements["label_main"] = ft.Text(
-            _("Hello, this is a real desktop app!"),
-            size=18,
-            color=AppColors.get_text_primary(self.config.DARK_MODE),
-        )
 
-        self.ui_elements["button_main"] = ft.ElevatedButton(
-            _("Click me"),
-            on_click=self.on_button_click,
+        # Reinitialize input source service every time main content is created,when window is opened
+        # This ensures fresh data from clipboard and other sources
+        self.input_source_service = InputSourceService()
+        self.log.info("Input source service reinitialized for fresh data")
+
+        # We need a function to handle submission from the PromptBar
+        def handle_submit(text, attachments, sources):
+            self.log.info(f"Submit: {text} | Attachments: {len(attachments)} | Sources: {sources}")
+            # Here we would send to AI core...
+            # For now, just show a snackbar confirmation
+            if self.page:
+                self.page.open(ft.SnackBar(content=ft.Text(f"Sent: {text}"), action="Undo"))
+
+        # Initialize File Picker first (before prompt_bar)
+        def handle_file_result(e: ft.FilePickerResultEvent):
+            if e.files and self.prompt_bar:
+                new_attachments = []
+                for f in e.files:
+                    # Convert flet FilePickerResultEvent file to Attachment
+                    import uuid
+
+                    att = Attachment(
+                        id=str(uuid.uuid4()),
+                        type="file",
+                        content=f.path,
+                        name=f.name,
+                        size=str(f.size),
+                    )
+                    new_attachments.append(att)
+
+                if new_attachments:
+                    self.prompt_bar.add_attachments(new_attachments)
+
+        # Create file_picker only once to avoid duplicates in overlay
+        if not self.file_picker:
+            self.file_picker = ft.FilePicker(on_result=handle_file_result)
+            if self.page:
+                self.page.overlay.append(self.file_picker)
+                self.page.update()
+
+        # Function to trigger file picker
+        def trigger_file_picker():
+            if self.file_picker:
+                self.file_picker.pick_files(
+                    allow_multiple=True, dialog_title="Sélectionner des fichiers"
+                )
+
+        # Create PromptBar
+        self.prompt_bar = PromptBar(
+            input_service=self.input_source_service,
+            on_submit=handle_submit,
+            on_attach_click=trigger_file_picker,
         )
 
         # Floating buttons at top right
@@ -203,7 +265,7 @@ class WritingAssistantFletApp:
             on_click=lambda _: (self.window_manager.hide_window() if self.window_manager else None),
         )
 
-        # Main container with buttons at top
+        # Main container
         return ft.Container(
             content=ft.Column(
                 [
@@ -216,29 +278,24 @@ class WritingAssistantFletApp:
                         ],
                         spacing=5,
                     ),
-                    # Main content
-                    ft.Column(
-                        [
-                            self.ui_elements["label_main"],
-                            self.ui_elements["button_main"],
-                        ],
-                        spacing=10,
+                    # Spacer to push prompt to center (vertically)
+                    ft.Container(expand=True),
+                    # Prompt Bar Area
+                    ft.Container(
+                        content=self.prompt_bar,
+                        width=700,  # Constrain width for aesthetic centering
                     ),
+                    # Bottom spacer (smaller than top one usually, or equal for true center)
+                    ft.Container(expand=True),
                 ],
                 spacing=20,
+                alignment=ft.MainAxisAlignment.CENTER,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
             ),
             padding=20,
             expand=True,
             bgcolor=AppColors.get_bg_primary(self.config.DARK_MODE),
         )
-
-    def on_button_click(self, e):
-        """Button click handler"""
-        if not self.page:
-            return
-
-        snack_bar = ft.SnackBar(ft.Text(_("Clicked!!!")))
-        self.page.open(snack_bar)
 
     def on_language_change(self, e):
         """Language change handler"""

@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import flet as ft
+from loguru import logger
 
 from src.core import _
 from src.ui.design_system import AppColors
+
+logger = logger.bind(name="WritingAssistant.UI.Dialogs.Update")
 
 
 def show_update_dialog(page: ft.Page, update_info: dict, dark_mode: bool = True) -> None:
@@ -17,7 +20,6 @@ def show_update_dialog(page: ft.Page, update_info: dict, dark_mode: bool = True)
         update_info: Update information dictionary from updater
         dark_mode: Whether dark mode is active
     """
-    from loguru import logger
 
     try:
 
@@ -66,7 +68,6 @@ def show_no_update_dialog(page: ft.Page, dark_mode: bool = True) -> None:
         page: Flet page instance
         dark_mode: Whether dark mode is active
     """
-    from loguru import logger
 
     try:
 
@@ -104,7 +105,6 @@ def show_update_error_dialog(page: ft.Page, error: str, dark_mode: bool = True) 
         error: Error message
         dark_mode: Whether dark mode is active
     """
-    from loguru import logger
 
     try:
 

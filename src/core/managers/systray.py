@@ -7,7 +7,6 @@ Provides integration with the Flet application.
 
 from __future__ import annotations
 
-import logging
 import os
 import threading
 import time
@@ -15,6 +14,7 @@ from collections.abc import Callable
 from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
+from loguru import logger
 from PIL import Image
 from pystray import Icon, Menu, MenuItem
 
@@ -23,8 +23,6 @@ from .autostart import AutostartManager
 
 if TYPE_CHECKING:
     import flet as ft
-
-logger = logging.getLogger(__name__)
 
 
 class SystrayManager:
@@ -51,6 +49,7 @@ class SystrayManager:
         self.app = app
         self.icon: Any | None = None
         self._icon_thread: threading.Thread | None = None
+        self.log = logger.bind(name="WritingAssistant.SystrayManager")
 
     def create_icon(self) -> None:
         """
@@ -60,7 +59,7 @@ class SystrayManager:
             # Load icon image
             icon_path = self._get_icon_path()
             if not icon_path.exists():
-                logger.warning(f"Icon not found at {icon_path}, using default")
+                self.log.warning(f"Icon not found at {icon_path}, using default")
                 image = self._create_default_icon()
             else:
                 image = Image.open(icon_path)
@@ -71,10 +70,10 @@ class SystrayManager:
             # Create icon
             self.icon = Icon("WritingAssistantPro", image, "Writing Assistant Pro", menu)
 
-            logger.info("Systray icon created successfully")
+            self.log.info("Systray icon created successfully")
 
         except Exception as e:
-            logger.exception(f"Error creating systray icon: {e}")
+            self.log.exception(f"Error creating systray icon: {e}")
 
     def run(self) -> None:
         """
@@ -85,7 +84,7 @@ class SystrayManager:
             self.create_icon()
 
         if self.icon:
-            logger.info("Starting systray icon...")
+            self.log.info("Starting systray icon...")
             self.icon.run()
 
     def run_async(self) -> None:
@@ -93,19 +92,19 @@ class SystrayManager:
         Run the systray icon in a separate thread (non-blocking).
         """
         if self._icon_thread and self._icon_thread.is_alive():
-            logger.warning("Systray icon thread already running")
+            self.log.warning("Systray icon thread already running")
             return
 
         self._icon_thread = threading.Thread(target=self.run, daemon=True)
         self._icon_thread.start()
-        logger.info("Systray icon thread started")
+        self.log.info("Systray icon thread started")
 
     def stop(self) -> None:
         """
         Stop the systray icon.
         """
         if self.icon:
-            logger.info("Stopping systray icon...")
+            self.log.info("Stopping systray icon...")
             self.icon.stop()
             self.icon = None
 
@@ -176,7 +175,7 @@ class SystrayManager:
         """
         Handle About menu item click.
         """
-        logger.debug("About menu item clicked")
+        self.log.debug("About menu item clicked")
         if self.on_about:
             self.on_about()
 
@@ -185,7 +184,7 @@ class SystrayManager:
         Handle Settings menu item click.
         Opens the main window with settings view visible.
         """
-        logger.debug("Settings menu item clicked")
+        self.log.debug("Settings menu item clicked")
         try:
             # Show the window
             if self.page and self.page.window:
@@ -198,23 +197,23 @@ class SystrayManager:
                 if not getattr(self.app, "settings_visible", False):
                     self.app.toggle_settings_view()
         except Exception as e:
-            logger.error(f"Error opening settings: {e}")
+            self.log.error(f"Error opening settings: {e}")
 
     def _on_autostart_click(self, icon: Any, item: Any) -> None:
         """
         Handle Run on Startup menu item click.
         """
         new_state = not item.checked
-        logger.info(f"Toggling autostart to {new_state}")
+        self.log.info(f"Toggling autostart to {new_state}")
 
         if self.app and hasattr(self.app, "config"):
             success = AutostartManager.set_autostart_with_sync(new_state, self.app.config)
             if success:
-                logger.info("Autostart setting updated successfully")
+                self.log.info("Autostart setting updated successfully")
             else:
-                logger.error("Failed to update autostart setting")
+                self.log.error("Failed to update autostart setting")
         else:
-            logger.warning("App config not available, setting system autostart only")
+            self.log.warning("App config not available, setting system autostart only")
             AutostartManager.set_autostart(new_state)
 
     def _on_quit_click(self, icon: Any, item: Any) -> None:
@@ -222,26 +221,26 @@ class SystrayManager:
         Handle Quit menu item click.
         Properly cleanup all resources before exiting.
         """
-        logger.debug("Quit menu item clicked")
+        self.log.debug("Quit menu item clicked")
 
         # Cleanup hotkey manager if app is available
         if self.app and hasattr(self.app, "hotkey_manager"):
-            logger.info("Cleaning up hotkey manager...")
+            self.log.info("Cleaning up hotkey manager...")
             self.app.hotkey_manager.cleanup()
 
         # Hide Flet window if it exists to avoid orphaned process
         try:
             if self.page and self.page.window:
-                logger.info("Hiding Flet window...")
+                self.log.info("Hiding Flet window...")
                 self.page.window.visible = False
                 self.page.update()
         except Exception as e:
-            logger.warning(f"Error hiding window: {e}")
+            self.log.warning(f"Error hiding window: {e}")
 
         # Stop systray icon
         self.stop()
 
         # Force exit - os._exit avoids SystemExit exception in pystray thread
-        logger.info("Application terminated")
+        self.log.info("Application terminated")
         time.sleep(0.1)  # Give time for logs to flush
         os._exit(0)

@@ -42,6 +42,7 @@ dist/
 legacy_project
 
 # Output and Logs
+logs/
 *.log
 debug_output.txt
 error.txt

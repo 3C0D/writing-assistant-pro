@@ -23,13 +23,13 @@ def main():
     # Parse arguments (useful for debug flags)
     args = parse_arguments()
 
-    # Setup logging BEFORE creating the app (important for PyInstaller)
+    # Setup logger BEFORE creating the app (important for PyInstaller)
     debug_mode = args.debug if hasattr(args, "debug") else False
     log_file = args.log_file if hasattr(args, "log_file") else None
     setup_root_logger(debug=debug_mode, log_filename=log_file)
 
     # Setup exception handler to log crashes to dedicated files
-    setup_exception_handler()
+    setup_exception_handler(debug=debug_mode)
 
     # Create app instance, passing debug mode and version
     app = WritingAssistantFletApp(debug=debug_mode, version=__version__)

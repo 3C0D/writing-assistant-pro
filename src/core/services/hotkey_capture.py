@@ -7,23 +7,10 @@ across different keyboard layouts (AZERTY, QWERTY, etc.)
 
 from __future__ import annotations
 
-import os
-import subprocess
-import sys
 from collections.abc import Callable
 
 import keyboard
 from loguru import logger
-
-# Fix for Windows console encoding (emojis)
-os.environ["PYTHONIOENCODING"] = "utf-8"
-if os.name == "nt":
-    subprocess.run(["chcp", "65001"], shell=True, capture_output=True)
-try:
-    sys.stdout.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
-    sys.stderr.reconfigure(encoding="utf-8")  # type: ignore[attr-defined]
-except AttributeError:
-    pass
 
 # Modifier keys that should be handled specially
 # Includes English names and French AZERTY names (maj = shift)
@@ -162,7 +149,7 @@ class HotkeyCapture:
         self._is_capturing = True
 
         # Hook all keyboard events
-        self._hook = keyboard.hook(self._on_key_event, suppress=False)
+        self._hook = keyboard.hook(self._on_key_event, suppress=True)
         self.log.debug("Started keyboard capture")
 
     def stop_capture(self) -> str:
@@ -352,6 +339,7 @@ def format_hotkey_for_display(hotkey: str | None) -> str:
     return " + ".join(display_parts)
 
 
+# not used
 def format_hotkey_for_storage(display_hotkey: str) -> str:
     """
     Convert display format hotkey to storage format.
@@ -367,4 +355,4 @@ def format_hotkey_for_storage(display_hotkey: str) -> str:
 
     # Split by " + " and lowercase everything
     parts = [p.strip().lower() for p in display_hotkey.split(" + ")]
-    return "+".join(parts)
+    return "+ ".join(parts)

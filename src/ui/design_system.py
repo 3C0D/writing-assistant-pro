@@ -41,6 +41,7 @@ class AppColors:
     ERROR = "#F44336"  # Red for danger/delete actions
     WARNING = "#FF9800"  # Orange for warnings
     INFO = "#2196F3"  # Blue for info
+    PRIMARY = "#2196F3"  # Primary action color (same as ACCENT)
 
     # Text colors for colored backgrounds
     TEXT_PRIMARY_DARK = "#FFFFFF"  # White text on dark/colored backgrounds

@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import threading
 import time
+from collections.abc import Callable
 
 from loguru import logger
 
@@ -16,9 +17,10 @@ class WindowManager:
     Manages window visibility and hotkey handling
     """
 
-    def __init__(self, config, page=None):
+    def __init__(self, config, page=None, on_show: Callable[[], None] | None = None):
         self.config = config
         self.page = page  # Flet page reference
+        self.on_show = on_show  # Callback when window is shown
         self.log = logger.bind(name="WritingAssistant.WindowManager")
         self.last_trigger_time = 0.0
         self.trigger_lock = threading.Lock()  # Prevent overlapping triggers
@@ -30,23 +32,26 @@ class WindowManager:
 
     def toggle_window(self) -> None:
         """Toggle window visibility on hotkey press"""
-        # Try to acquire lock without blocking
+
+        # Check if lock is already acquired (another hotkey trigger is processing)
         if not self.trigger_lock.acquire(blocking=False):
             self.log.debug("Hotkey already processing, ignoring")
             return
 
         try:
-            current_time = time.time()
+            # Use monotonic clock to avoid system time shift issues
+            current_time = time.monotonic()
 
-            # Debounce check
+            # Debounce check - prevent rapid successive triggers
             time_since_last = current_time - self.last_trigger_time
+
             if time_since_last < self.config.MIN_TRIGGER_INTERVAL:
                 self.log.debug(f"Ignoring hotkey - too soon ({time_since_last:.2f}s)")
                 return
 
             self.last_trigger_time = current_time
 
-            # Simple toggle based on current state
+            # Toggle window visibility based on current state
             self.log.info(f"Toggle window - current state: visible={self.window_visible}")
 
             if self.window_visible:
@@ -57,6 +62,7 @@ class WindowManager:
         except Exception as e:
             self.log.error(f"Error in toggle_window: {e}")
         finally:
+            # Always release the lock to allow future hotkey triggers
             self.trigger_lock.release()
 
     def show_window(self) -> None:
@@ -64,6 +70,14 @@ class WindowManager:
         try:
             if self.page:
                 self.log.info("Showing window...")
+
+                # Call on_show callback BEFORE showing window
+                # This allows capturing selection from the app that currently has focus
+                if self.on_show:
+                    try:
+                        self.on_show()
+                    except Exception as e:
+                        self.log.error(f"Error in on_show callback: {e}")
 
                 # Flet specific window management
                 self.page.window.visible = True

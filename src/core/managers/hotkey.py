@@ -59,8 +59,8 @@ class HotkeyManager:
 
             # Register new hotkey
             self._toggle_callback = toggle_callback
-            self.log.debug(f"Adding hotkey: {hotkey} (suppress=False)")
-            keyboard.add_hotkey(hotkey, toggle_callback, suppress=False)
+            self.log.debug(f"Adding hotkey: {hotkey} (suppress=True)")
+            keyboard.add_hotkey(hotkey, toggle_callback, suppress=True)
 
             self._hotkey_hook = hotkey
             self.log.info(f"Global hotkey registered: {hotkey} (toggle window)")

@@ -1,16 +1,20 @@
 """
 Autostart Manager for Writing Assistant Pro
 
-Manages the autostart functionality for Writing Tools.
+Manages the autostart functionality for Writing Assistant Pro.
 Handles setting/removing autostart entries on Windows and Linux.
 Synchronizes autostart state with application settings.
 """
 
-import logging
 import os
 import sys
 from pathlib import Path
 from typing import TYPE_CHECKING
+
+from loguru import logger
+
+# Bind logger for this module/static manager
+logger = logger.bind(name="WritingAssistant.AutostartManager")
 
 if TYPE_CHECKING:
     from ..config.manager import ConfigManager
@@ -23,28 +27,26 @@ try:
 except ImportError:
     winreg = None
 
-logger = logging.getLogger(__name__)
-
 
 class AutostartManager:
     """
-    Manages the autostart functionality for Writing Tools.
+    Manages the autostart functionality for Writing Assistant Pro.
     Handles setting/removing autostart entries on Windows and Linux.
     Synchronizes autostart state with application settings.
     """
 
     # Constants
     REGISTRY_PATH = r"Software\Microsoft\Windows\CurrentVersion\Run"
-    REGISTRY_KEY_COMPILED = "WritingTools"
-    REGISTRY_KEY_DEV = "WritingToolsDevStartup"
-    DESKTOP_FILE_NAME = "writing-tools.desktop"
+    REGISTRY_KEY_COMPILED = "WritingAssistantPro"
+    REGISTRY_KEY_DEV = "WritingAssistantProDevStartup"
+    DESKTOP_FILE_NAME = "writing-assistant-pro.desktop"
 
     DESKTOP_ENTRY_TEMPLATE = """[Desktop Entry]
 Type=Application
-Name=Writing Tools
-Comment=Writing Tools Application
+Name=Writing Assistant Pro
+Comment=Writing Assistant Pro Application
 Exec={exec_path}
-Icon=writing-tools
+Icon=writing-assistant-pro
 Terminal=false
 StartupNotify=false
 X-GNOME-Autostart-enabled=true
@@ -276,7 +278,7 @@ Hidden=false
     @staticmethod
     def set_autostart(enable: bool) -> bool:
         """
-        Enable or disable autostart for Writing Tools.
+        Enable or disable autostart for Writing Assistant Pro.
         """
         if sys.platform.startswith("win32"):
             return AutostartManager.set_autostart_windows(enable)
@@ -289,7 +291,7 @@ Hidden=false
     @staticmethod
     def check_autostart_windows() -> bool:
         """
-        Check if Writing Tools is set to start automatically on Windows.
+        Check if Writing Assistant Pro is set to start automatically on Windows.
         """
         if not AutostartManager._ensure_windows_registry_available():
             return False
@@ -329,7 +331,7 @@ Hidden=false
     @staticmethod
     def check_autostart_linux() -> bool:
         """
-        Check if Writing Tools is set to start automatically on Linux.
+        Check if Writing Assistant Pro is set to start automatically on Linux.
         """
         try:
             desktop_file_path = AutostartManager.get_linux_desktop_file_path()
@@ -350,7 +352,7 @@ Hidden=false
     @staticmethod
     def check_autostart() -> bool:
         """
-        Check if Writing Tools is set to start automatically.
+        Check if Writing Assistant Pro is set to start automatically.
         """
         if sys.platform.startswith("win32"):
             return AutostartManager.check_autostart_windows()
@@ -440,6 +442,7 @@ Hidden=false
         else:
             return False
 
+    # Not used
     @staticmethod
     def sync_with_settings(config_manager: "ConfigManager") -> bool:
         """

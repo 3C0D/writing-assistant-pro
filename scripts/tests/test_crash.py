@@ -25,7 +25,7 @@ except AttributeError:
 
 
 # Setup logger and exception handler
-setup_root_logger(debug=True, log_filename="logs/crash_test.log")
+setup_root_logger(debug=True, log_filename="test_logs/crash_test.log")
 setup_exception_handler()
 
 print("🧪 Testing crash logging functionality...")

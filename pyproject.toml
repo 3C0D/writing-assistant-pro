@@ -18,6 +18,8 @@ dependencies = [
     "pillow>=12.0.0",
     "requests>=2.32.0", # For GitHub API calls (update checking)
     "packaging>=24.0", # For version comparison (update checking)
+    "pyperclip>=1.9.0", # For clipboard text handling
+    "pynput>=1.7.6", # For keyboard simulation (Ctrl+C to capture selection)
 ]
 
 [dependency-groups]
