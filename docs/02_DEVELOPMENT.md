@@ -123,6 +123,18 @@ Une configuration de lancement est incluse dans `.vscode/launch.json`.
 - **Console** : Niveau DEBUG en mode dev.
 - **Fichier** : `logs/run_dev.log` (rotation non implémentée pour l'instant).
 
+### ⚠️ Note Importante : Focus Terminal et Ctrl+C
+
+L'application utilise une simulation de la touche `Ctrl+C` pour récupérer le texte
+sélectionné lors de l'activation du raccourci global.
+
+**Problème :** Si le terminal VS Code (ou PowerShell) a le focus au moment où vous appuyez sur
+le raccourci global, il recevra le signal `Ctrl+C` simulé et interprétera cela comme une
+demande d'arrêt du script `run_dev.py`.
+
+**Solution :** Assurez-vous que le focus est sur une autre fenêtre (éditeur de code ou
+autre application) avant d'utiliser le raccourci global pendant le développement.
+
 ## 📦 Ajouter une Dépendance
 
 Avec UV :

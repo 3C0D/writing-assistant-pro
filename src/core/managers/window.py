@@ -17,10 +17,17 @@ class WindowManager:
     Manages window visibility and hotkey handling
     """
 
-    def __init__(self, config, page=None, on_show: Callable[[], None] | None = None):
+    def __init__(
+        self,
+        config,
+        page=None,
+        on_show: Callable[[], None] | None = None,
+        on_hide: Callable[[], None] | None = None,
+    ):
         self.config = config
         self.page = page  # Flet page reference
         self.on_show = on_show  # Callback when window is shown
+        self.on_hide = on_hide  # Callback when window is hidden
         self.log = logger.bind(name="WritingAssistant.WindowManager")
         self.last_trigger_time = 0.0
         self.trigger_lock = threading.Lock()  # Prevent overlapping triggers
@@ -106,6 +113,13 @@ class WindowManager:
                 self.page.update()
 
                 self.window_visible = False
+
+                if self.on_hide:
+                    try:
+                        self.on_hide()
+                    except Exception as e:
+                        self.log.error(f"Error in on_hide callback: {e}")
+
                 self.log.info("Window hidden - ctrl+space to show")
             else:
                 self.log.warning("No Flet page found during hide_window")

@@ -100,6 +100,7 @@ Le raccourci peut être défini sur `None` (désactivé). Dans ce cas :
 1. **Permissions** : Sur certains systèmes, des droits administrateur peuvent être nécessaires.
 2. **Conflits** : Une autre application utilise peut-être déjà ce raccourci.
 3. **Logs** : Vérifiez `logs/run_dev.log` pour "Global hotkey registered".
+4. **Focus Terminal (Dev)** : Si vous lancez l'app via le terminal VS Code, ne laissez pas le focus sur celui-ci en activant le raccourci. La simulation de `Ctrl+C` (pour la capture de sélection) stopperait l'exécution du script.
 
 ### Shift modifie le caractère capturé
 

@@ -82,8 +82,13 @@ class WritingAssistantFletApp:
         self.page = page
         self.log.info("Flet application starting...")
 
-        # Initialize WindowManager with page and on_show callback for refreshing inputs
-        self.window_manager = WindowManager(self.config, page, on_show=self._on_window_show)
+        # Initialize WindowManager with page and callbacks
+        self.window_manager = WindowManager(
+            self.config,
+            page,
+            on_show=self._on_window_show,
+            on_hide=self._on_window_hide,
+        )
 
         # Page configuration
         page.title = (
@@ -137,6 +142,16 @@ class WritingAssistantFletApp:
             self.prompt_bar.input_service = self.input_source_service
             self.prompt_bar.attachments = []  # Clear old attachments
             self.prompt_bar._refresh_sources()
+
+    def _on_window_hide(self) -> None:
+        """
+        Called when window is hidden.
+        Resets UI to main view if settings are open.
+        """
+        if self.settings_visible:
+            self.log.debug("Window hidden - resetting to main view")
+            self.settings_visible = False
+            self._create_ui()
 
     def _create_ui(self):
         """Create the user interface"""
