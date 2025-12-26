@@ -486,7 +486,7 @@ class WritingAssistantFletApp:
         if new_hotkey:
             self.log.info(f"Hotkey changed: {old_hotkey} -> {new_hotkey}")
             if self.window_manager:
-                self.hotkey_manager.register_delayed(self.window_manager.toggle_window)
+                self.hotkey_manager.reregister(self.window_manager.toggle_window)
         else:
             self.log.info(f"Hotkey disabled (was: {old_hotkey})")
             # Already unregistered when dialog opened, no need to unregister again

@@ -73,6 +73,21 @@ class HotkeyManager:
             self.log.error(f"Traceback: {traceback.format_exc()}")
             return False
 
+    def reregister(self, toggle_callback):
+        """
+        Re-register the hotkey with the current configuration.
+        This allows dynamic hotkey changes without restarting the application.
+
+        Args:
+            toggle_callback: Function to call when hotkey is pressed
+
+        Returns:
+            bool: True if successful, False otherwise
+        """
+        self.log.info("Re-registering hotkey with new configuration...")
+        self.unregister()
+        return self.register(toggle_callback)
+
     def register_delayed(self, toggle_callback):
         """
         Register global hotkey with delay to avoid startup conflicts
