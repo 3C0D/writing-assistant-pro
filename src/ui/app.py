@@ -19,6 +19,7 @@ from src.core import (
     change_language,
     get_current_language,
     get_event_bus,
+    get_icon_path,
     get_language_manager,
     init_translation,
 )
@@ -127,12 +128,18 @@ class WritingAssistantFletApp:
 
         # Page configuration
         page.title = (
-            f"🔥 Writing Assistant Pro v{self.version} (DEV MODE)"
+            f"Writing Assistant Pro v{self.version} (DEV MODE)"
             if self.state.config.DEBUG
             else f"Writing Assistant Pro v{self.version}"
         )
         page.window.width = 800
         page.window.height = 600
+        # Set both for compatibility: page.window.icon is the new way,
+        # but windowIcon is the internal attribute Flet uses
+        icon_path = str(get_icon_path())
+        self.log.info(f"Setting window icon: {icon_path}")
+        page.window.icon = icon_path
+        page._set_attr("windowIcon", icon_path)
         page.theme_mode = ft.ThemeMode.DARK if self.state.config.DARK_MODE else ft.ThemeMode.LIGHT
         page.padding = 0
 

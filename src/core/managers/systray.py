@@ -11,7 +11,6 @@ import os
 import threading
 import time
 from collections.abc import Callable
-from pathlib import Path
 from typing import TYPE_CHECKING, Any
 
 from loguru import logger
@@ -22,7 +21,7 @@ from ..enums import EventType
 from ..error_handler import UIError, handle_error
 from ..event_bus import get_event_bus
 from ..services.translation import _
-from ..utils.paths import get_app_root
+from ..utils.paths import get_icon_path
 from .autostart import AutostartManager
 
 if TYPE_CHECKING:
@@ -64,7 +63,7 @@ class SystrayManager:
         """
         try:
             # Load icon image
-            icon_path = self._get_icon_path()
+            icon_path = get_icon_path()
             if not icon_path.exists():
                 self.log.warning(f"Icon not found at {icon_path}, using default")
                 image = self._create_default_icon()
@@ -116,38 +115,6 @@ class SystrayManager:
             self.log.info("Stopping systray icon...")
             self.icon.stop()
             self.icon = None
-
-    def _get_icon_path(self) -> Path:
-        """
-        Get the path to the application icon.
-
-        Returns:
-            Path to the icon file
-        """
-        # Use get_app_root() to find the correct root directory in both
-        # dev and frozen modes
-        app_root = get_app_root()
-
-        # In frozen mode (PyInstaller), assets are usually in the root
-        # or _internal
-        # In dev mode, they are in src/core/config/icons/
-
-        # Check common locations
-        possible_paths = [
-            # Dev structure (Source)
-            app_root / "src" / "core" / "config" / "icons" / "app_icon.png",
-            # Production/Build structure
-            app_root / "icons" / "app_icon.png",
-        ]
-
-        for path in possible_paths:
-            if path.exists():
-                return path
-
-        # Fallback to dev path relative to this file if get_app_root
-        # fails or structure is weird
-        project_root = Path(__file__).parent.parent.parent.parent
-        return project_root / "src" / "core" / "config" / "icons" / "app_icon.png"
 
     def _on_language_changed(self, data: dict) -> None:
         """

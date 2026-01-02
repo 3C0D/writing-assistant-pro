@@ -61,6 +61,7 @@ from .services.translation import (
     register_ui_update,
 )
 from .state import AppState, UIState
+from .utils.paths import get_app_root, get_icon_path
 
 __all__ = [
     # Translation system
@@ -114,4 +115,6 @@ __all__ = [
     "safe_json_write",
     "temp_working_directory",
     "ResourceTracker",
+    "get_icon_path",
+    "get_app_root",
 ]
