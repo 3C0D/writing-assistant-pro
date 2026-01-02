@@ -20,6 +20,7 @@ class UIState:
 
     sidebar_visible: bool = False
     settings_visible: bool = False
+    about_visible: bool = False
     dark_mode: bool = True
     language: str = "fr"
 

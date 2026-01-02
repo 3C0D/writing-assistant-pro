@@ -181,9 +181,10 @@ class WritingAssistantFletApp:
 
     def _handle_window_hide_event(self, data: dict | None = None) -> None:
         """Called when window is hidden via Event Bus"""
-        if self.state.ui_state.settings_visible:
+        if self.state.ui_state.settings_visible or self.state.ui_state.about_visible:
             self.log.debug("Event: Window hidden - resetting to main view")
             self.state.ui_state.settings_visible = False
+            self.state.ui_state.about_visible = False
             self._create_ui()
 
     def _handle_language_change_event(self, data: dict) -> None:
@@ -223,7 +224,11 @@ class WritingAssistantFletApp:
         if self.page.controls:
             self.page.controls.clear()
 
-        if self.state.ui_state.settings_visible:
+        if self.state.ui_state.about_visible:
+            # Show about view (full screen, no rail)
+            about_content = self._create_about_view()
+            self.page.add(about_content)
+        elif self.state.ui_state.settings_visible:
             # Show settings view with rail
             # Settings view is usually recreated as it depends on current config values
             # but we can also optimize it if needed. For now just recreate content.
@@ -473,6 +478,13 @@ class WritingAssistantFletApp:
     def toggle_settings_view(self):
         """Toggle between main view and settings view"""
         self.state.ui_state.settings_visible = not self.state.ui_state.settings_visible
+        self.state.ui_state.about_visible = False
+        self._create_ui()
+
+    def toggle_about_view(self):
+        """Toggle between main view and about view"""
+        self.state.ui_state.about_visible = not self.state.ui_state.about_visible
+        self.state.ui_state.settings_visible = False
         self._create_ui()
 
     def _create_settings_view(self):
@@ -546,6 +558,89 @@ class WritingAssistantFletApp:
                         icon=ft.Icons.SYSTEM_UPDATE,
                         on_click=self.on_check_updates,
                         width=300,
+                    ),
+                ],
+                spacing=10,
+                scroll=ft.ScrollMode.AUTO,
+            ),
+            padding=20,
+            expand=True,
+            bgcolor=AppColors.get_bg_primary(self.state.config.DARK_MODE),
+        )
+
+    def _create_about_view(self):
+        """Create the about view (full screen)"""
+        # Floating buttons at top right
+        theme_btn = icon_button(
+            icon=(ft.Icons.DARK_MODE if not self.state.config.DARK_MODE else ft.Icons.LIGHT_MODE),
+            tooltip=_("Toggle Dark/Light Mode"),
+            dark_mode=self.state.config.DARK_MODE,
+            on_click=self.toggle_theme,
+        )
+
+        hide_btn = icon_button(
+            icon=ft.Icons.VISIBILITY_OFF,
+            tooltip=f"{_('Hide')} ({self.state.config.HOTKEY_COMBINATION})",
+            dark_mode=self.state.config.DARK_MODE,
+            on_click=lambda _: (self.window_manager.hide_window() if self.window_manager else None),
+        )
+
+        close_btn = icon_button(
+            icon=ft.Icons.CLOSE,
+            tooltip=_("Close"),
+            dark_mode=self.state.config.DARK_MODE,
+            on_click=lambda _: self.toggle_about_view(),
+        )
+
+        about_text = _(
+            "Free & lightweight AI writing assistant, similar to Apple's Apple Intelligence. "
+            "Works with many AI models, online and local."
+        )
+        contrib_text = _(
+            "Any help and contributions are welcome! This is an open source project and "
+            "we appreciate any feedback or code contributions."
+        )
+
+        markdown_content = f"""
+# Writing Assistant Pro
+
+{_("Inspired by **Writing Tool APP** by author **3C0D**.")}
+
+{about_text}
+
+---
+
+### ⭐ {_("Contributions")}
+
+{contrib_text}
+
+[Check out the project on GitHub](https://github.com/dd200/writing-assistant-pro)
+
+---
+
+**Version:** {self.version}
+"""
+
+        return ft.Container(
+            content=ft.Column(
+                [
+                    # Buttons row at top right
+                    ft.Row(
+                        [
+                            ft.Container(expand=True),  # Spacer
+                            theme_btn,
+                            hide_btn,
+                            close_btn,
+                        ],
+                        spacing=5,
+                    ),
+                    ft.Markdown(
+                        markdown_content,
+                        selectable=True,
+                        extension_set=ft.MarkdownExtensionSet.GITHUB_WEB,
+                        on_tap_link=lambda e: self.page.launch_url(e.data)
+                        if self.page and e.data
+                        else None,
                     ),
                 ],
                 spacing=10,
@@ -642,16 +737,16 @@ class WritingAssistantFletApp:
             self.show_snack_bar(_("Hotkey: {display}").format(display=display))
             self.page.update()
 
-    def show_about(self):
-        """Show about window (placeholder for now)"""
+    def show_about(self, e=None):
+        """Show about window"""
         if not self.page:
             return
 
-        self.log.info("About window requested (not implemented yet)")
-        # Show window and display a simple message
+        self.log.info("About window requested")
+        self.state.ui_state.about_visible = True
+        self.state.ui_state.settings_visible = False
         self.page.window.visible = True
-        self.show_snack_bar(_("About window - Coming soon!"))
-        self.page.update()
+        self._create_ui()
 
     def on_check_updates(self, e):
         """Handle check for updates button click"""

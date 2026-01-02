@@ -182,8 +182,12 @@ class SystrayManager:
 
             # Open settings view if app is available
             if self.app and hasattr(self.app, "toggle_settings_view"):
-                # Ensure settings are visible
-                if not getattr(self.app, "settings_visible", False):
+                # Check if settings are already visible in UI state
+                settings_visible = False
+                if hasattr(self.app, "state") and hasattr(self.app.state, "ui_state"):
+                    settings_visible = self.app.state.ui_state.settings_visible
+
+                if not settings_visible:
                     self.app.toggle_settings_view()
         except Exception as e:
             handle_error(
