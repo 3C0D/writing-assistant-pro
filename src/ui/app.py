@@ -78,9 +78,13 @@ class WritingAssistantFletApp:
         self.input_source_service = InputSourceService(self.state.input_state)
         self.window_manager: WindowManager | None = None
         self.page: ft.Page | None = None
-        self.systray_manager: SystrayManager | None = None
         self.file_picker: ft.FilePicker | None = None
         self.prompt_bar: PromptBar | None = None
+
+        # Persistent view contents
+        self.main_content_container: ft.Container | None = None
+        self.settings_content_container: ft.Container | None = None
+        self.navigation_rail: ft.Container | None = None
 
         # UI Elements references for updates
         self.ui_elements = {}
@@ -202,37 +206,50 @@ class WritingAssistantFletApp:
             self.window_manager.hide_window()
 
     def _create_ui(self):
-        """Create the user interface"""
+        """Create or update the user interface"""
         if not self.page:
             return
 
-        # Clear existing content
+        # Initialize File Picker once if not exists
+        if not self.file_picker:
+            self._setup_file_picker()
+
+        # Update Navigation Rail (depends on theme)
+        self.navigation_rail = self._create_navigation_rail()
+
+        # Clear existing content if any
         if self.page.controls:
             self.page.controls.clear()
 
         if self.state.ui_state.settings_visible:
             # Show settings view with rail
-            rail = self._create_navigation_rail()
+            # Settings view is usually recreated as it depends on current config values
+            # but we can also optimize it if needed. For now just recreate content.
             settings_content = self._create_settings_view()
             self.page.add(
                 ft.Row(
-                    [rail, ft.VerticalDivider(width=1), settings_content],
+                    [self.navigation_rail, ft.VerticalDivider(width=1), settings_content],
                     spacing=0,
                     expand=True,
                 )
             )
         else:
             # Show main view with rail and optional sidebar
-            rail = self._create_navigation_rail()
-            main_content = self._create_main_content()
+            # Reuse main_content_container if it exists to preserve state
+            if not self.main_content_container:
+                self.main_content_container = self._create_main_content()
+
+            # Ensure prompt_bar inner state is correct for current theme
+            # (colors might need updating if they are not using dynamic system)
+            # Most components use AppColors which should react if we trigger update
 
             # Create layout: rail + optional sidebar + main content
-            components = [rail, ft.VerticalDivider(width=1)]
+            components = [self.navigation_rail, ft.VerticalDivider(width=1)]
             if self.state.ui_state.sidebar_visible:
                 sidebar = self._create_sidebar()
                 components.append(sidebar)
                 components.append(ft.VerticalDivider(width=1))
-            components.append(main_content)
+            components.append(self.main_content_container)
 
             self.page.add(
                 ft.Row(
@@ -244,34 +261,9 @@ class WritingAssistantFletApp:
 
         self.page.update()
 
-    def _create_navigation_rail(self):
-        """Create the permanent navigation rail on the left"""
-        return create_navigation_rail(
-            dark_mode=self.state.config.DARK_MODE,
-            on_menu_click=self.toggle_sidebar,
-            on_settings_click=lambda _: self.toggle_settings_view(),
-        )
+    def _setup_file_picker(self):
+        """Initialize and setup the file picker"""
 
-    def _create_sidebar(self):
-        """Create the collapsible sidebar"""
-        return create_sidebar(dark_mode=self.state.config.DARK_MODE)
-
-    def _create_main_content(self):
-        """Create the main content area"""
-
-        # Input source service is already initialized in __init__
-        # It will be refreshed when window is shown via _on_window_show()
-        self.log.info("Using existing input source service")
-
-        # We need a function to handle submission from the PromptBar
-        def handle_submit(text, attachments, sources):
-            self.log.info(f"Submit: {text} | Attachments: {len(attachments)} | Sources: {sources}")
-            # Here we would send to AI core...
-            # For now, just show a snackbar confirmation
-            if self.page:
-                self.show_snack_bar(f"Sent: {text}", action="Undo")
-
-        # Initialize File Picker first (before prompt_bar)
         def handle_file_result(e: ft.FilePickerResultEvent):
             if e.files and self.prompt_bar:
                 new_attachments = []
@@ -303,7 +295,6 @@ class WritingAssistantFletApp:
                     if not f.path:
                         continue
 
-                    # Skip unsupported binary files (like .exe, .zip)
                     if not PromptBar.is_file_supported(f.name):
                         self.log.warning(f"Skipping unsupported file: {f.name}")
                         continue
@@ -312,17 +303,14 @@ class WritingAssistantFletApp:
 
                     try:
                         if ext in IMAGE_EXT:
-                            # Load image for thumbnail
                             img = Image.open(f.path)
                             att_type = AttachmentType.IMAGE
                             content = img
                         elif ext in TEXT_EXT:
-                            # Read text content for preview
                             with open(f.path, encoding="utf-8", errors="ignore") as file:
                                 content = file.read()
                             att_type = AttachmentType.TEXT
                         else:
-                            # Fallback as generic file
                             att_type = AttachmentType.FILE
                             content = f.path
 
@@ -340,26 +328,48 @@ class WritingAssistantFletApp:
                 if new_attachments:
                     self.prompt_bar.add_attachments(new_attachments)
 
-        # Create file_picker only once to avoid duplicates in overlay
-        if not self.file_picker:
-            self.file_picker = ft.FilePicker(on_result=handle_file_result)
-            if self.page:
-                self.page.overlay.append(self.file_picker)
-                self.page.update()
+        self.file_picker = ft.FilePicker(on_result=handle_file_result)
+        if self.page:
+            self.page.overlay.append(self.file_picker)
+            self.page.update()
 
-        # Function to trigger file picker
-        def trigger_file_picker():
-            if self.file_picker:
-                self.file_picker.pick_files(
-                    allow_multiple=True, dialog_title="Sélectionner des fichiers"
-                )
+    def _trigger_file_picker(self, e=None):
+        """Trigger the file picker dialog"""
+        if self.file_picker:
+            self.file_picker.pick_files(
+                allow_multiple=True, dialog_title="Sélectionner des fichiers"
+            )
 
-        # Create PromptBar
-        self.prompt_bar = PromptBar(
-            input_service=self.input_source_service,
-            on_submit=handle_submit,
-            on_attach_click=trigger_file_picker,
+    def _create_navigation_rail(self):
+        """Create the permanent navigation rail on the left"""
+        return create_navigation_rail(
+            dark_mode=self.state.config.DARK_MODE,
+            on_menu_click=self.toggle_sidebar,
+            on_settings_click=lambda _: self.toggle_settings_view(),
         )
+
+    def _create_sidebar(self):
+        """Create the collapsible sidebar"""
+        return create_sidebar(dark_mode=self.state.config.DARK_MODE)
+
+    def _create_main_content(self):
+        """Create the main content area"""
+
+        # We need a function to handle submission from the PromptBar
+        def handle_submit(text, attachments, sources):
+            self.log.info(f"Submit: {text} | Attachments: {len(attachments)} | Sources: {sources}")
+            # Here we would send to AI core...
+            # For now, just show a snackbar confirmation
+            if self.page:
+                self.show_snack_bar(f"Sent: {text}", action="Undo")
+
+        # Create PromptBar if it doesn't exist
+        if not self.prompt_bar:
+            self.prompt_bar = PromptBar(
+                input_service=self.input_source_service,
+                on_submit=handle_submit,
+                on_attach_click=self._trigger_file_picker,
+            )
 
         # Floating buttons at top right
         theme_btn = icon_button(

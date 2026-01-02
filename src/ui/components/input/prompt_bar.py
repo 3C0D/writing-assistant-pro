@@ -76,6 +76,11 @@ class PromptBar(ft.Container):
         # Initialize
         self._is_mounted = False
         self.did_mount = self._on_mount
+        self.will_unmount = self._on_unmount
+
+    def _on_unmount(self) -> None:
+        """Handle unmount - reset mounting state."""
+        self._is_mounted = False
 
     def _on_mount(self) -> None:
         """Initialize on mount - just set up page reference, don't detect sources yet."""
