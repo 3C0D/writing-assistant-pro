@@ -360,6 +360,7 @@ class WritingAssistantFletApp:
             dark_mode=self.state.config.DARK_MODE,
             on_menu_click=self.toggle_sidebar,
             on_settings_click=lambda _: self.toggle_settings_view(),
+            show_menu=not self.state.ui_state.settings_visible,
         )
 
     def _create_sidebar(self):
