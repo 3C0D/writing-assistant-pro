@@ -7,9 +7,12 @@ from __future__ import annotations
 
 import threading
 import time
-from collections.abc import Callable
 
 from loguru import logger
+
+from ..enums import EventType
+from ..error_handler import UIError, handle_error
+from ..event_bus import emit_event
 
 
 class WindowManager:
@@ -21,13 +24,9 @@ class WindowManager:
         self,
         config,
         page=None,
-        on_show: Callable[[], None] | None = None,
-        on_hide: Callable[[], None] | None = None,
     ):
         self.config = config
         self.page = page  # Flet page reference
-        self.on_show = on_show  # Callback when window is shown
-        self.on_hide = on_hide  # Callback when window is hidden
         self.log = logger.bind(name="WritingAssistant.WindowManager")
         self.last_trigger_time = 0.0
         self.trigger_lock = threading.Lock()  # Prevent overlapping triggers
@@ -67,7 +66,7 @@ class WindowManager:
                 self.show_window()
 
         except Exception as e:
-            self.log.error(f"Error in toggle_window: {e}")
+            handle_error(e, error_type=UIError, context="toggle_window", logger_instance=self.log)
         finally:
             # Always release the lock to allow future hotkey triggers
             self.trigger_lock.release()
@@ -78,13 +77,8 @@ class WindowManager:
             if self.page:
                 self.log.info("Showing window...")
 
-                # Call on_show callback BEFORE showing window
-                # This allows capturing selection from the app that currently has focus
-                if self.on_show:
-                    try:
-                        self.on_show()
-                    except Exception as e:
-                        self.log.error(f"Error in on_show callback: {e}")
+                # Emit PRE_SHOW event BEFORE taking focus - allows selection capture
+                emit_event(EventType.WINDOW_PRE_SHOW)
 
                 # Flet specific window management
                 self.page.window.visible = True
@@ -93,14 +87,14 @@ class WindowManager:
 
                 self.window_visible = True
                 self.log.info("Window shown")
+
+                # Emit event for window shown (AFTER focus)
+                emit_event(EventType.WINDOW_SHOWN)
             else:
                 self.log.warning("No Flet page found during show_window")
 
         except Exception as e:
-            self.log.error(f"Error showing window: {e}")
-            import traceback
-
-            self.log.debug(f"Full traceback: {traceback.format_exc()}")
+            handle_error(e, error_type=UIError, context="show_window", logger_instance=self.log)
 
     def hide_window(self) -> None:
         """Hide the native window"""
@@ -114,15 +108,12 @@ class WindowManager:
 
                 self.window_visible = False
 
-                if self.on_hide:
-                    try:
-                        self.on_hide()
-                    except Exception as e:
-                        self.log.error(f"Error in on_hide callback: {e}")
-
                 self.log.info("Window hidden - ctrl+space to show")
+
+                # Emit event for window hidden
+                emit_event(EventType.WINDOW_HIDDEN)
             else:
-                self.log.warning("No Flet page found during hide_window")
+                self.log.warning(" No Flet page found during hide_window")
 
         except Exception as e:
-            self.log.error(f"Error hiding window: {e}")
+            handle_error(e, error_type=UIError, context="hide_window", logger_instance=self.log)

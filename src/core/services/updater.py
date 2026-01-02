@@ -6,7 +6,10 @@ import requests
 from loguru import logger
 from packaging import version
 
-from src.version import __version__
+from ...version import __version__
+from ..enums import EventType
+from ..error_handler import ConfigError, handle_error
+from ..event_bus import emit_event
 
 logger = logger.bind(name="WritingAssistant.Services.Updater")
 
@@ -28,6 +31,7 @@ def check_for_updates() -> dict[str, str | bool]:
         - "error": str - Error message (if error occurred)
     """
     try:
+        emit_event(EventType.UPDATE_CHECK_STARTED)
         logger.info(f"Checking for updates (current: {__version__})...")
         response = requests.get(GITHUB_API, timeout=5)
         response.raise_for_status()
@@ -39,19 +43,34 @@ def check_for_updates() -> dict[str, str | bool]:
 
         if version.parse(latest_version) > version.parse(__version__):
             logger.info(f"Update available: {latest_version} > {__version__}")
-            return {
+            result = {
                 "available": True,
                 "version": latest_version,
                 "url": latest["html_url"],
                 "notes": latest.get("body", "")[:300],  # Truncate
             }
+            emit_event(EventType.UPDATE_AVAILABLE, result)
+            return result
 
         logger.info("Already up to date")
+        emit_event(EventType.UPDATE_NOT_AVAILABLE)
         return {"available": False}
 
     except requests.exceptions.RequestException as e:
-        logger.error(f"Failed to check for updates: {e}")
+        handle_error(
+            e,
+            error_type=ConfigError,
+            context="updater_check_failed_request",
+            logger_instance=logger,
+        )
+        emit_event(EventType.UPDATE_ERROR, {"error": str(e)})
         return {"error": str(e)}
     except Exception as e:
-        logger.error(f"Unexpected error checking updates: {e}")
+        handle_error(
+            e,
+            error_type=ConfigError,
+            context="updater_check_failed_unexpected",
+            logger_instance=logger,
+        )
+        emit_event(EventType.UPDATE_ERROR, {"error": str(e)})
         return {"error": str(e)}

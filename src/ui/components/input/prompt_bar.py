@@ -5,6 +5,11 @@ from typing import TYPE_CHECKING
 
 import flet as ft
 
+from src.core import (
+    AttachmentID,
+    EventType,
+    get_event_bus,
+)
 from src.core.services.input_source import InputSourceService, InputState
 from src.ui.components.input.attachment_zone import Attachment, AttachmentZone
 from src.ui.components.input.source_indicator import SourceIndicator
@@ -26,10 +31,10 @@ class PromptBar(ft.Container):
     - Source buttons only appear if content exists
     """
 
-    # Attachment IDs for source-based attachments
-    ID_SELECTION_TEXT = "selection_text"
-    ID_CLIPBOARD_TEXT = "clipboard_text"
-    ID_CLIPBOARD_IMAGE = "clipboard_image"
+    # Use enums instead of magic strings
+    ID_SELECTION_TEXT = AttachmentID.SELECTION_TEXT.value
+    ID_CLIPBOARD_TEXT = AttachmentID.CLIPBOARD_TEXT.value
+    ID_CLIPBOARD_IMAGE = AttachmentID.CLIPBOARD_IMAGE.value
 
     def __init__(
         self,
@@ -69,6 +74,7 @@ class PromptBar(ft.Container):
         self.border_radius = 12
 
         # Initialize
+        self._is_mounted = False
         self.did_mount = self._on_mount
 
     def _on_mount(self) -> None:
@@ -76,8 +82,17 @@ class PromptBar(ft.Container):
         if self.page:
             self._page = self.page
             self.attachment_zone.set_page(self.page)
-        # Note: Don't call _refresh_sources here - it will be called by on_show callback
-        # when the window becomes visible via hotkey
+            self._is_mounted = True
+
+        # Listen to PRE_SHOW event (BEFORE window takes focus) for selection capture
+        get_event_bus().on(EventType.WINDOW_PRE_SHOW, self._on_window_pre_show)
+
+    def _on_window_pre_show(self, data: dict | None = None) -> None:
+        """Handle window pre-show event - capture selection BEFORE window gets focus."""
+        # Guard: only refresh if mounted to page
+        if not self._is_mounted or not self._page:
+            return
+        self.refresh()
 
     # =========================================================================
     # Source Detection & UI Update
@@ -132,10 +147,12 @@ class PromptBar(ft.Container):
             # Activating a source - deactivate the other
             if source_id == "selection":
                 self.clipboard_btn.deactivate()
+                self.clipboard_btn.update()  # Force UI update
                 self._remove_clipboard_attachments()
                 self._add_selection_attachment()
             elif source_id == "clipboard":
                 self.selection_btn.deactivate()
+                self.selection_btn.update()  # Force UI update
                 self._remove_selection_attachment()
                 self._add_clipboard_attachment()
         else:
@@ -146,6 +163,7 @@ class PromptBar(ft.Container):
                 self._remove_clipboard_attachments()
 
         self._update_attachment_zone()
+        self.update()  # Force PromptBar UI update
 
     # =========================================================================
     # Attachment Management
@@ -210,6 +228,20 @@ class PromptBar(ft.Container):
             if a.id not in (self.ID_CLIPBOARD_TEXT, self.ID_CLIPBOARD_IMAGE)
         ]
 
+    def _reorder_attachments(self) -> None:
+        """Ensure selection/clipboard are always first, followed by fixed order files."""
+        # Source-based attachments (Selection and Clipboard)
+        sources = [a for a in self.attachments if a.source in ("selection", "clipboard")]
+
+        # Other attachments (Files) - maintain their original relative order
+        other = [
+            a
+            for a in self.attachments
+            if not a.source or a.source not in ("selection", "clipboard")
+        ]
+
+        self.attachments = sources + other
+
     def _handle_remove_attachment(self, att_id: str) -> None:
         """Handle removal of an attachment - also deactivates source if applicable."""
         # Find the attachment to get its source
@@ -240,13 +272,47 @@ class PromptBar(ft.Container):
         if self.on_attach_click:
             self.on_attach_click()
 
+    # Unsupported file extensions (binary/archive files)
+    UNSUPPORTED_EXTENSIONS = {
+        "exe",
+        "dll",
+        "so",
+        "bin",
+        "dat",
+        "iso",
+        "msi",
+        "zip",
+        "rar",
+        "7z",
+        "tar",
+        "gz",
+        "bz2",
+        "dmg",
+        "pkg",
+        "deb",
+        "rpm",
+    }
+
+    @classmethod
+    def is_file_supported(cls, file_path: str) -> bool:
+        """Check if file type is supported for attachment."""
+        ext = file_path.split(".")[-1].lower() if "." in file_path else ""
+        return ext not in cls.UNSUPPORTED_EXTENSIONS
+
     def add_attachments(self, new_attachments: list[Attachment]) -> None:
         """External method to add attachments (e.g., from FilePicker)."""
-        self.attachments.extend(new_attachments)
+        # Filter out unsupported file types
+        valid_attachments = [
+            att
+            for att in new_attachments
+            if att.type != "file" or self.is_file_supported(str(att.content))
+        ]
+        self.attachments.extend(valid_attachments)
         self._update_attachment_zone()
 
     def _update_attachment_zone(self) -> None:
         """Update the attachment zone display."""
+        self._reorder_attachments()
         self.attachment_zone.attachments = self.attachments
         self.attachment_zone.refresh()
 

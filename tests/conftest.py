@@ -1,4 +1,3 @@
-import os
 import sys
 from pathlib import Path
 
@@ -19,7 +18,3 @@ def temp_config_file(tmp_path):
 
     # Yield the path to the test (this is where the test runs)
     yield config_path
-
-    # Cleanup (optional, tmp_path is cleaned up by pytest anyway)
-    if config_path.exists():
-        os.remove(config_path)

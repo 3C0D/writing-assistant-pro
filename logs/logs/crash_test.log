@@ -1,0 +1,8 @@
+2025-11-23 03:28:30 | DEBUG    | src.core.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\logs\crash_test.log)
+2025-11-23 03:28:30 | DEBUG    | src.core.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2025-11-23 03:28:30 | CRITICAL | src.core.logger:exception_handler - Application crashed!
+Traceback (most recent call last):
+  File "C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\scripts\test_crash.py", line 35, in <module>
+    raise RuntimeError("This is an intentional crash for testing!")
+RuntimeError: This is an intentional crash for testing!
+

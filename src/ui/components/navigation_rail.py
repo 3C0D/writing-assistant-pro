@@ -12,6 +12,9 @@ import flet as ft
 
 from src.ui.design_system import AppColors
 
+# Standard width for the navigation rail
+RAIL_WIDTH = 50
+
 
 def create_navigation_rail(
     dark_mode: bool,
@@ -30,7 +33,7 @@ def create_navigation_rail(
         Container representing the navigation rail
     """
     return ft.Container(
-        width=50,
+        width=RAIL_WIDTH,
         bgcolor=AppColors.get_bg_rail(dark_mode),
         content=ft.Column(
             [

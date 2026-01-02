@@ -9,6 +9,11 @@ import gettext
 from collections.abc import Callable
 from pathlib import Path
 
+from loguru import logger
+
+from ..enums import EventType
+from ..error_handler import ConfigError, handle_error
+from ..event_bus import emit_event
 from ..utils.paths import get_app_root
 
 
@@ -47,6 +52,8 @@ class LanguageManager:
 
         # UI update callbacks
         self._update_callbacks: list[Callable] = []
+
+        self.log = logger.bind(name="WritingAssistant.Services.Translation")
 
         # Initialize the current language
         self.set_language(default_language)
@@ -87,8 +94,16 @@ class LanguageManager:
             # Trigger UI updates
             self._trigger_ui_updates()
 
+            # Emit event for language change
+            emit_event(EventType.LANGUAGE_CHANGED, {"language": language})
+
         except Exception as e:
-            print(f"Warning: Could not load language '{language}': {e}")
+            handle_error(
+                e,
+                error_type=ConfigError,
+                context=f"load_language_{language}",
+                logger_instance=self.log,
+            )
             # Fallback to null translation
             self._translations[language] = gettext.NullTranslations()
             self._translations[language].install()
@@ -150,7 +165,7 @@ class LanguageManager:
             try:
                 callback()
             except Exception as e:
-                print(f"Error in UI update callback: {e}")
+                handle_error(e, context="translation_ui_update_callback", logger_instance=self.log)
 
     def get_current_language(self) -> str:
         """Get the current language code."""

@@ -1,0 +1,205 @@
+2025-11-22 22:11:39 | DEBUG    | src.core.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-22 22:11:39 | INFO     | src.core.config:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-22 22:11:39 | INFO     | src.core.config:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-22 22:11:40 | INFO     | src.ui.app_flet:main - Flet application starting...
+2025-11-22 22:11:40 | INFO     | src.ui.app_flet:main - Registering hotkey: ctrl+.
+2025-11-22 22:11:40 | INFO     | src.core.hotkey_manager:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-22 22:11:40 | DEBUG    | src.core.hotkey_manager:register_delayed - Hotkey registration thread started
+2025-11-22 22:11:40 | INFO     | src.ui.app_flet:main - Systray manager started
+2025-11-22 22:11:40 | INFO     | src.ui.app_flet:main - Flet application started
+2025-11-22 22:11:40 | INFO     | src.core.hotkey_manager:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-22 22:11:40 | DEBUG    | src.core.hotkey_manager:register - Clearing all existing keyboard hooks...
+2025-11-22 22:11:40 | DEBUG    | src.core.hotkey_manager:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-22 22:11:40 | INFO     | src.core.hotkey_manager:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-22 22:11:40 | INFO     | src.core.hotkey_manager:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-22 22:12:06 | INFO     | src.ui.app_flet:show_about - About window requested (not implemented yet)
+2025-11-22 22:25:29 | DEBUG    | src.core.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-22 22:25:29 | INFO     | src.core.config:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-22 22:25:29 | INFO     | src.core.config:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-22 22:25:29 | INFO     | src.ui.app_flet:main - Flet application starting...
+2025-11-22 22:25:29 | INFO     | src.ui.app_flet:main - Registering hotkey: ctrl+.
+2025-11-22 22:25:29 | INFO     | src.core.hotkey_manager:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-22 22:25:29 | DEBUG    | src.core.hotkey_manager:register_delayed - Hotkey registration thread started
+2025-11-22 22:25:29 | INFO     | src.ui.app_flet:main - Systray manager started
+2025-11-22 22:25:29 | INFO     | src.ui.app_flet:main - Flet application started
+2025-11-22 22:25:30 | INFO     | src.core.hotkey_manager:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-22 22:25:30 | DEBUG    | src.core.hotkey_manager:register - Clearing all existing keyboard hooks...
+2025-11-22 22:25:30 | DEBUG    | src.core.hotkey_manager:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-22 22:25:30 | INFO     | src.core.hotkey_manager:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-22 22:25:30 | INFO     | src.core.hotkey_manager:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-22 22:25:41 | INFO     | src.core.window_manager:toggle_window - Toggle window - current state: visible=False
+2025-11-22 22:25:41 | INFO     | src.core.window_manager:show_window - Showing window...
+2025-11-22 22:25:41 | INFO     | src.core.window_manager:show_window - Window shown
+2025-11-22 22:25:42 | INFO     | src.core.window_manager:toggle_window - Toggle window - current state: visible=True
+2025-11-22 22:25:42 | INFO     | src.core.window_manager:hide_window - Hiding window...
+2025-11-22 22:25:42 | INFO     | src.core.window_manager:hide_window - Window hidden - ctrl+. to show
+2025-11-22 22:41:30 | DEBUG    | src.core.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-22 22:41:30 | INFO     | src.core.config:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-22 22:41:30 | INFO     | src.core.config:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-22 22:41:30 | INFO     | src.ui.app_flet:main - Flet application starting...
+2025-11-22 22:41:30 | INFO     | src.ui.app_flet:main - Registering hotkey: ctrl+.
+2025-11-22 22:41:30 | INFO     | src.core.hotkey_manager:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-22 22:41:30 | DEBUG    | src.core.hotkey_manager:register_delayed - Hotkey registration thread started
+2025-11-22 22:41:30 | INFO     | src.ui.app_flet:main - Systray manager started
+2025-11-22 22:41:30 | INFO     | src.ui.app_flet:main - Flet application started
+2025-11-22 22:41:31 | INFO     | src.core.hotkey_manager:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-22 22:41:31 | DEBUG    | src.core.hotkey_manager:register - Clearing all existing keyboard hooks...
+2025-11-22 22:41:31 | DEBUG    | src.core.hotkey_manager:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-22 22:41:31 | INFO     | src.core.hotkey_manager:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-22 22:41:31 | INFO     | src.core.hotkey_manager:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-22 22:51:37 | DEBUG    | src.core.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-22 22:51:37 | INFO     | src.core.config:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-22 22:51:37 | INFO     | src.core.config:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-22 22:51:37 | INFO     | src.ui.app_flet:main - Flet application starting...
+2025-11-22 22:51:37 | INFO     | src.ui.app_flet:main - Registering hotkey: ctrl+.
+2025-11-22 22:51:37 | INFO     | src.core.hotkey_manager:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-22 22:51:37 | DEBUG    | src.core.hotkey_manager:register_delayed - Hotkey registration thread started
+2025-11-22 22:51:37 | INFO     | src.ui.app_flet:main - Systray manager started
+2025-11-22 22:51:37 | INFO     | src.ui.app_flet:main - Flet application started
+2025-11-22 22:51:38 | INFO     | src.core.hotkey_manager:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-22 22:51:38 | DEBUG    | src.core.hotkey_manager:register - Clearing all existing keyboard hooks...
+2025-11-22 22:51:38 | DEBUG    | src.core.hotkey_manager:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-22 22:51:38 | INFO     | src.core.hotkey_manager:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-22 22:51:38 | INFO     | src.core.hotkey_manager:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-22 22:51:53 | INFO     | src.ui.app_flet:show_about - About window requested (not implemented yet)
+2025-11-22 22:51:57 | INFO     | src.core.window_manager:hide_window - Hiding window...
+2025-11-22 22:51:57 | INFO     | src.core.window_manager:hide_window - Window hidden - ctrl+. to show
+2025-11-23 19:03:14 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-23 19:03:14 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\crash_build_dev.log
+2025-11-23 19:03:14 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-23 19:03:14 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-23 19:03:15 | INFO     | src.ui.app:main - Flet application starting...
+2025-11-23 19:03:15 | INFO     | src.ui.app:main - Registering hotkey: ctrl+.
+2025-11-23 19:03:15 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-23 19:03:15 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2025-11-23 19:03:15 | INFO     | src.ui.app:main - Systray manager started
+2025-11-23 19:03:15 | INFO     | src.ui.app:main - Flet application started
+2025-11-23 19:03:15 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-23 19:03:15 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2025-11-23 19:03:15 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-23 19:03:15 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-23 19:03:15 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-23 19:03:31 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2025-11-23 19:03:31 | INFO     | src.core.managers.window:show_window - Showing window...
+2025-11-23 19:03:31 | INFO     | src.core.managers.window:show_window - Window shown
+2025-11-23 19:03:33 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2025-11-23 19:03:33 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2025-11-23 19:03:33 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+. to show
+2025-11-23 20:44:07 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-23 20:44:07 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\crash_build_dev.log
+2025-11-23 20:44:07 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-23 20:44:07 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-23 20:44:07 | INFO     | src.ui.app:main - Flet application starting...
+2025-11-23 20:44:07 | INFO     | src.ui.app:main - Registering hotkey: ctrl+.
+2025-11-23 20:44:07 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-23 20:44:07 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2025-11-23 20:44:07 | INFO     | src.ui.app:main - Systray manager started
+2025-11-23 20:44:07 | INFO     | src.ui.app:main - Flet application started
+2025-11-23 20:44:08 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-23 20:44:08 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2025-11-23 20:44:08 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-23 20:44:08 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-23 20:44:08 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-30 11:49:21 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-30 11:49:21 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\crash_build_dev.log
+2025-11-30 11:49:21 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-30 11:49:21 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-30 11:49:22 | INFO     | src.ui.app:main - Flet application starting...
+2025-11-30 11:49:22 | INFO     | src.ui.app:main - Registering hotkey: ctrl+.
+2025-11-30 11:49:22 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-30 11:49:22 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2025-11-30 11:49:22 | INFO     | src.ui.app:main - Systray manager started
+2025-11-30 11:49:22 | INFO     | src.ui.app:main - Flet application started
+2025-11-30 11:49:23 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-30 11:49:23 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2025-11-30 11:49:23 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-30 11:49:23 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-30 11:49:23 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-30 11:50:06 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2025-11-30 11:50:06 | INFO     | src.core.managers.window:show_window - Showing window...
+2025-11-30 11:50:06 | INFO     | src.core.managers.window:show_window - Window shown
+2025-11-30 11:50:21 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2025-11-30 11:50:21 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+. to show
+2025-11-30 12:10:28 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-30 12:10:28 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\crash_build_dev.log
+2025-11-30 12:10:28 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-30 12:10:28 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-30 12:10:28 | INFO     | src.ui.app:main - Flet application starting...
+2025-11-30 12:10:28 | INFO     | src.ui.app:main - Registering hotkey: ctrl+.
+2025-11-30 12:10:28 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-30 12:10:28 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2025-11-30 12:10:28 | INFO     | src.ui.app:main - Systray manager started
+2025-11-30 12:10:28 | INFO     | src.ui.app:main - Flet application started
+2025-11-30 12:10:29 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-30 12:10:29 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2025-11-30 12:10:29 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-30 12:10:29 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-30 12:10:29 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-30 12:43:02 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-30 12:43:02 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\crash_build_dev.log
+2025-11-30 12:43:02 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-30 12:43:02 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-30 12:43:02 | INFO     | src.ui.app:main - Flet application starting...
+2025-11-30 12:43:02 | INFO     | src.ui.app:main - Registering hotkey: ctrl+.
+2025-11-30 12:43:02 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-30 12:43:02 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2025-11-30 12:43:02 | INFO     | src.ui.app:main - Systray manager started
+2025-11-30 12:43:02 | INFO     | src.ui.app:main - Flet application started
+2025-11-30 12:43:03 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-30 12:43:03 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2025-11-30 12:43:03 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-30 12:43:03 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-30 12:43:03 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-30 12:47:28 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2025-11-30 12:47:28 | INFO     | src.core.managers.window:show_window - Showing window...
+2025-11-30 12:47:28 | INFO     | src.core.managers.window:show_window - Window shown
+2025-11-30 12:47:29 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2025-11-30 12:47:29 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2025-11-30 12:47:29 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+. to show
+2025-11-30 12:53:08 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-30 12:53:08 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\crash_build_dev.log
+2025-11-30 12:53:08 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-30 12:53:08 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-30 12:53:08 | INFO     | src.ui.app:main - Flet application starting...
+2025-11-30 12:53:08 | INFO     | src.ui.app:main - Registering hotkey: ctrl+.
+2025-11-30 12:53:08 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-30 12:53:08 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2025-11-30 12:53:08 | INFO     | src.ui.app:main - Systray manager started
+2025-11-30 12:53:08 | INFO     | src.ui.app:main - Flet application started
+2025-11-30 12:53:09 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-30 12:53:09 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2025-11-30 12:53:09 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-30 12:53:09 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-30 12:53:09 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-30 13:19:57 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2025-11-30 13:19:57 | INFO     | src.core.managers.window:show_window - Showing window...
+2025-11-30 13:19:57 | INFO     | src.core.managers.window:show_window - Window shown
+2025-11-30 13:19:57 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2025-11-30 13:19:57 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2025-11-30 13:19:57 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+. to show
+2025-11-30 13:20:33 | DEBUG    | src.core.managers.hotkey:cleanup - HotkeyManager cleaned up
+2025-11-30 13:22:46 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\logs\build_dev.log)
+2025-11-30 13:22:46 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\crash_build_dev.log
+2025-11-30 13:22:46 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: build-dev)
+2025-11-30 13:22:46 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2025-11-30 13:22:47 | INFO     | src.ui.app:main - Flet application starting...
+2025-11-30 13:22:47 | INFO     | src.ui.app:main - Registering hotkey: ctrl+.
+2025-11-30 13:22:47 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2025-11-30 13:22:47 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2025-11-30 13:22:47 | INFO     | src.ui.app:main - Systray manager started
+2025-11-30 13:22:47 | INFO     | src.ui.app:main - Flet application started
+2025-11-30 13:22:47 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+.
+2025-11-30 13:22:47 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2025-11-30 13:22:47 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+. (suppress=False)
+2025-11-30 13:22:47 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+. (toggle window)
+2025-11-30 13:22:47 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+. to toggle window
+2025-11-30 13:22:53 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2025-11-30 13:22:53 | INFO     | src.core.managers.window:show_window - Showing window...
+2025-11-30 13:22:53 | INFO     | src.core.managers.window:show_window - Window shown
+2025-11-30 13:22:55 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2025-11-30 13:22:55 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2025-11-30 13:22:55 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+. to show
+2025-11-30 13:22:57 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2025-11-30 13:22:57 | INFO     | src.core.managers.window:show_window - Showing window...
+2025-11-30 13:22:57 | INFO     | src.core.managers.window:show_window - Window shown
+2025-11-30 13:23:03 | DEBUG    | src.core.managers.hotkey:cleanup - HotkeyManager cleaned up

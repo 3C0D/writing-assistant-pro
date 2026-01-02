@@ -11,6 +11,10 @@ import time
 import keyboard
 from loguru import logger
 
+from ..enums import EventType
+from ..error_handler import HotkeyError, handle_error
+from ..event_bus import emit_event
+
 
 class HotkeyManager:
     """
@@ -33,12 +37,13 @@ class HotkeyManager:
         self._setup_thread = None
         self._toggle_callback = None
 
-    def register(self, toggle_callback):
+    def register(self, toggle_callback, is_reregistration=False):
         """
         Register global hotkey immediately
 
         Args:
             toggle_callback: Function to call when hotkey is pressed
+            is_reregistration: Whether this is a re-registration (to avoid duplicate events)
 
         Returns:
             bool: True if successful, False otherwise
@@ -64,13 +69,17 @@ class HotkeyManager:
 
             self._hotkey_hook = hotkey
             self.log.info(f"Global hotkey registered: {hotkey} (toggle window)")
+
+            # Emit event for successful registration if not a re-registration
+            if not is_reregistration:
+                emit_event(EventType.HOTKEY_REGISTERED, {"hotkey": hotkey})
+
             return True
 
         except Exception as e:
-            self.log.error(f"Failed to register hotkey: {e}")
-            import traceback
-
-            self.log.error(f"Traceback: {traceback.format_exc()}")
+            handle_error(
+                e, error_type=HotkeyError, context="register_hotkey", logger_instance=self.log
+            )
             return False
 
     def reregister(self, toggle_callback):
@@ -86,7 +95,12 @@ class HotkeyManager:
         """
         self.log.info("Re-registering hotkey with new configuration...")
         self.unregister()
-        return self.register(toggle_callback)
+        success = self.register(toggle_callback, is_reregistration=True)
+
+        if success:
+            emit_event(EventType.HOTKEY_CHANGED, {"hotkey": self.config.HOTKEY_COMBINATION})
+
+        return success
 
     def register_delayed(self, toggle_callback):
         """
@@ -128,7 +142,9 @@ class HotkeyManager:
                 return True
             return False
         except Exception as e:
-            self.log.error(f"Failed to unregister hotkey: {e}")
+            handle_error(
+                e, error_type=HotkeyError, context="unregister_hotkey", logger_instance=self.log
+            )
             return False
 
     def cleanup(self):

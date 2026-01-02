@@ -13,6 +13,8 @@ from typing import TYPE_CHECKING
 
 from loguru import logger
 
+from ..error_handler import ConfigError, handle_error
+
 # Bind logger for this module/static manager
 logger = logger.bind(name="WritingAssistant.AutostartManager")
 
@@ -471,9 +473,10 @@ Hidden=false
                 logger.debug(f"Synchronized start_on_boot setting: {system_state}")
 
             return True
-
         except Exception as e:
-            logger.exception(f"Error synchronizing autostart settings: {e}")
+            handle_error(
+                e, error_type=ConfigError, context="sync_with_settings", logger_instance=logger
+            )
             return False
 
     @staticmethod
@@ -491,7 +494,8 @@ Hidden=false
                 logger.debug(f"Set autostart to {enable} and updated settings")
 
             return success
-
         except Exception as e:
-            logger.exception(f"Error setting autostart with sync: {e}")
+            handle_error(
+                e, error_type=ConfigError, context="set_autostart_with_sync", logger_instance=logger
+            )
             return False

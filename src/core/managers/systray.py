@@ -18,6 +18,10 @@ from loguru import logger
 from PIL import Image
 from pystray import Icon, Menu, MenuItem
 
+from ..enums import EventType
+from ..error_handler import UIError, handle_error
+from ..event_bus import get_event_bus
+from ..services.translation import _
 from ..utils.paths import get_app_root
 from .autostart import AutostartManager
 
@@ -51,6 +55,9 @@ class SystrayManager:
         self._icon_thread: threading.Thread | None = None
         self.log = logger.bind(name="WritingAssistant.SystrayManager")
 
+        # Subscribe to language changes to refresh menu labels
+        get_event_bus().on(EventType.LANGUAGE_CHANGED, self._on_language_changed)
+
     def create_icon(self) -> None:
         """
         Create and display the system tray icon.
@@ -73,7 +80,9 @@ class SystrayManager:
             self.log.info("Systray icon created successfully")
 
         except Exception as e:
-            self.log.exception(f"Error creating systray icon: {e}")
+            handle_error(
+                e, error_type=UIError, context="systray_create_icon", logger_instance=self.log
+            )
 
     def run(self) -> None:
         """
@@ -140,6 +149,19 @@ class SystrayManager:
         project_root = Path(__file__).parent.parent.parent.parent
         return project_root / "src" / "core" / "config" / "icons" / "app_icon.png"
 
+    def _on_language_changed(self, data: dict) -> None:
+        """
+        Handle language change event.
+        Updates the menu labels with the new language.
+        """
+        self.log.info("Language changed event detected, refreshing systray menu")
+        if self.icon:
+            # Re-create menu to apply new translations
+            self.icon.menu = self._create_menu()
+            # Update info text (tooltip) if pystray supports it dynamically
+            # For pystray, we often just update the menu
+            self.log.debug("Systray menu labels updated")
+
     def _create_default_icon(self) -> Image.Image:
         """
         Create a simple default icon if the icon file is not found.
@@ -159,16 +181,16 @@ class SystrayManager:
             pystray.Menu object
         """
         return Menu(
-            MenuItem("About", self._on_about_click),
-            MenuItem("Settings", self._on_settings_click),
+            MenuItem(_("About"), self._on_about_click),
+            MenuItem(_("Settings"), self._on_settings_click),
             Menu.SEPARATOR,
             MenuItem(
-                "Run on Startup",
+                _("Run on Startup"),
                 self._on_autostart_click,
                 checked=lambda item: AutostartManager.check_autostart(),
             ),
             Menu.SEPARATOR,
-            MenuItem("Quit", self._on_quit_click),
+            MenuItem(_("Quit"), self._on_quit_click),
         )
 
     def _on_about_click(self, icon: Any, item: Any) -> None:
@@ -197,7 +219,9 @@ class SystrayManager:
                 if not getattr(self.app, "settings_visible", False):
                     self.app.toggle_settings_view()
         except Exception as e:
-            self.log.error(f"Error opening settings: {e}")
+            handle_error(
+                e, error_type=UIError, context="systray_on_settings_click", logger_instance=self.log
+            )
 
     def _on_autostart_click(self, icon: Any, item: Any) -> None:
         """
@@ -235,7 +259,7 @@ class SystrayManager:
                 self.page.window.visible = False
                 self.page.update()
         except Exception as e:
-            self.log.warning(f"Error hiding window: {e}")
+            handle_error(e, context="systray_hide_window_on_quit", logger_instance=self.log)
 
         # Stop systray icon
         self.stop()

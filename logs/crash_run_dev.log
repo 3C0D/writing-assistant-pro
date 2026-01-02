@@ -1,0 +1,49 @@
+
+================================================================================
+CRASH DETECTED - 2025-11-23 03:28:30
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\scripts\test_crash.py", line 35, in <module>
+    raise RuntimeError("This is an intentional crash for testing!")
+RuntimeError: This is an intentional crash for testing!
+================================================================================
+
+
+================================================================================
+CRASH DETECTED - 2025-11-30 20:02:51
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\main.py", line 43, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\main.py", line 35, in main
+    app = WritingAssistantFletApp(debug=debug_mode, version=__version__)
+TypeError: WritingAssistantFletApp.__init__() got an unexpected keyword argument 'version'
+================================================================================
+
+
+================================================================================
+CRASH DETECTED - 2025-11-30 20:04:43
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\main.py", line 43, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\main.py", line 35, in main
+    app = WritingAssistantFletApp(debug=debug_mode, version=__version__)
+TypeError: WritingAssistantFletApp.__init__() got an unexpected keyword argument 'version'
+================================================================================
+
+
+================================================================================
+CRASH DETECTED - 2025-11-30 20:05:29
+================================================================================
+Traceback (most recent call last):
+  File "C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\main.py", line 43, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\main.py", line 35, in main
+    app = WritingAssistantFletApp(debug=debug_mode, version=__version__)
+TypeError: WritingAssistantFletApp.__init__() got an unexpected keyword argument 'version'
+================================================================================
+

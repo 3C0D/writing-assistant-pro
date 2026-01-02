@@ -10,6 +10,10 @@ from loguru import logger
 from PIL import Image, ImageGrab
 from pynput import keyboard
 
+from ..enums import EventType
+from ..error_handler import InputError, handle_error
+from ..event_bus import emit_event
+
 if TYPE_CHECKING:
     from PIL.Image import Image as PILImage
 
@@ -42,8 +46,8 @@ class InputState:
 class InputSourceService:
     """Service for detecting and managing input sources (clipboard, selection)."""
 
-    def __init__(self):
-        self._last_state = InputState()
+    def __init__(self, shared_input_state: InputState):
+        self._shared_state = shared_input_state
         self.log = logger.bind(name="WritingAssistant.Services.InputSource")
         self._keyboard = keyboard.Controller()
 
@@ -57,7 +61,9 @@ class InputSourceService:
             text = pyperclip.paste()
             return text.strip() if text and text.strip() else None
         except Exception as e:
-            self.log.error(f"Failed to get clipboard text: {e}")
+            handle_error(
+                e, error_type=InputError, context="get_clipboard_text", logger_instance=self.log
+            )
             return None
 
     def get_clipboard_image(self) -> PILImage | None:
@@ -72,7 +78,9 @@ class InputSourceService:
             return None
 
         except Exception as e:
-            self.log.error(f"Failed to get clipboard image: {e}")
+            handle_error(
+                e, error_type=InputError, context="get_clipboard_image", logger_instance=self.log
+            )
             return None
 
     def backup_clipboard(self) -> str | None:
@@ -111,7 +119,9 @@ class InputSourceService:
                 self._keyboard.release("c")
                 time.sleep(0.05)  # Wait before releasing Ctrl
         except Exception as e:
-            self.log.error(f"Failed to simulate Ctrl+C: {e}")
+            handle_error(
+                e, error_type=InputError, context="simulate_ctrl_c", logger_instance=self.log
+            )
 
     def _is_file_path(self, text: str) -> bool:
         """Check if text looks like a file path (from file/icon selection)."""
@@ -229,17 +239,18 @@ class InputSourceService:
         clipboard_text = self.get_clipboard_text()
         clipboard_image = self.get_clipboard_image()
 
-        state = InputState(
-            clipboard_text=clipboard_text,
-            clipboard_image=clipboard_image,
-            selection_text=selection_text,
-        )
+        # Update the shared state instead of creating a new one
+        self._shared_state.clipboard_text = clipboard_text
+        self._shared_state.clipboard_image = clipboard_image
+        self._shared_state.selection_text = selection_text
 
-        self._last_state = state
+        # Emit event with detected sources
+        emit_event(EventType.INPUT_SOURCE_DETECTED, self._shared_state)
+
         self.log.debug(
             f"Detected sources - Selection: {bool(selection_text)}, "
             f"Clipboard text: {bool(clipboard_text)}, "
             f"Clipboard image: {bool(clipboard_image)}"
         )
 
-        return state
+        return self._shared_state

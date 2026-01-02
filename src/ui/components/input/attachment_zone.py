@@ -7,8 +7,10 @@ from dataclasses import dataclass
 from typing import Any
 
 import flet as ft
+from PIL import Image as PILModule
 from PIL.Image import Image as PILImage
 
+from src.core.enums import AttachmentType
 from src.ui.design_system import AppColors
 
 
@@ -17,7 +19,7 @@ class Attachment:
     """Represents an attached item (file, image, or text from source)."""
 
     id: str  # Unique ID (e.g., "clipboard_image", "selection_text", "file_xxx")
-    type: str  # 'image', 'file', or 'text'
+    type: AttachmentType | str  # 'image', 'file', or 'text'
     content: Any  # File path (str), PIL Image, or text content (str)
     name: str
     source: str | None = None  # Optional: 'clipboard', 'selection', or None for files
@@ -26,22 +28,25 @@ class Attachment:
 
 def pil_image_to_base64(image: PILImage, max_size: int = 200) -> str:
     """Convert PIL Image to base64 string for Flet display."""
+    # Work on a copy to avoid resizing the original image in attachment.content
+    img_copy = image.copy()
+
     # Resize for thumbnail if needed
-    image.thumbnail((max_size, max_size))
+    img_copy.thumbnail((max_size, max_size))
 
     # Convert to RGB if necessary (e.g., RGBA images)
-    if image.mode in ("RGBA", "P"):
-        background = PILImage.new("RGB", image.size, (255, 255, 255))  # type: ignore
-        if image.mode == "P":
-            image = image.convert("RGBA")
-        background.paste(image, mask=image.split()[3] if len(image.split()) > 3 else None)
-        image = background
-    elif image.mode != "RGB":
-        image = image.convert("RGB")
+    if img_copy.mode in ("RGBA", "P"):
+        background = PILModule.new("RGB", img_copy.size, (255, 255, 255))
+        if img_copy.mode == "P":
+            img_copy = img_copy.convert("RGBA")
+        background.paste(img_copy, mask=img_copy.split()[3] if len(img_copy.split()) > 3 else None)
+        img_copy = background
+    elif img_copy.mode != "RGB":
+        img_copy = img_copy.convert("RGB")
 
     # Save to bytes
     buffer = io.BytesIO()
-    image.save(buffer, format="JPEG", quality=85)
+    img_copy.save(buffer, format="JPEG", quality=85)
     buffer.seek(0)
 
     return base64.b64encode(buffer.read()).decode("utf-8")
@@ -93,11 +98,11 @@ class AttachmentThumbnail(ft.Container):
             top=4,
         )
 
-        # Source badge (bottom left) - shows clipboard/selection icon
-        source_badge = None
+        # Badge (bottom left) - Source icon OR Extension text
+        badge = None
         if self.attachment.source:
             icon = ft.Icons.PASTE if self.attachment.source == "clipboard" else ft.Icons.TEXT_FIELDS
-            source_badge = ft.Container(
+            badge = ft.Container(
                 content=ft.Icon(icon, size=10, color=ft.Colors.WHITE),
                 bgcolor=ft.Colors.with_opacity(0.7, AppColors.ACCENT),
                 border_radius=8,
@@ -105,6 +110,22 @@ class AttachmentThumbnail(ft.Container):
                 left=4,
                 bottom=4,
             )
+        else:
+            # Extension badge for files
+            name = self.attachment.name or ""
+            ext = name.split(".")[-1].upper() if "." in name else ""
+            if ext:
+                badge = ft.Container(
+                    content=ft.Text(
+                        ext[:3], size=7, weight=ft.FontWeight.W_900, color=ft.Colors.WHITE
+                    ),
+                    bgcolor=ft.Colors.with_opacity(0.3, ft.Colors.GREY_400),
+                    border=ft.border.all(1, ft.Colors.with_opacity(0.2, ft.Colors.WHITE)),
+                    border_radius=3,
+                    padding=ft.padding.only(left=3, right=3, top=1, bottom=1),
+                    left=6,
+                    bottom=6,
+                )
 
         # Clickable wrapper
         clickable_content = ft.Container(
@@ -114,8 +135,8 @@ class AttachmentThumbnail(ft.Container):
         )
 
         stack_controls = [clickable_content, remove_btn]
-        if source_badge:
-            stack_controls.append(source_badge)
+        if badge:
+            stack_controls.append(badge)
 
         return ft.Stack(
             controls=stack_controls,
@@ -125,40 +146,119 @@ class AttachmentThumbnail(ft.Container):
 
     def _create_main_content(self) -> ft.Control:
         """Create the main visual content based on attachment type."""
-        if self.attachment.type == "image" and isinstance(self.attachment.content, PILImage):
+        if self.attachment.type == AttachmentType.IMAGE:
             # Image thumbnail
             try:
-                base64_str = pil_image_to_base64(self.attachment.content, self.THUMBNAIL_SIZE)
-                return ft.Image(
-                    src_base64=base64_str,
-                    fit=ft.ImageFit.COVER,
-                    width=self.THUMBNAIL_SIZE,
-                    height=self.THUMBNAIL_SIZE,
-                )
+                img = self.attachment.content
+                if isinstance(img, str):
+                    from PIL import Image
+
+                    img = Image.open(img)
+
+                if isinstance(img, PILImage):
+                    base64_str = pil_image_to_base64(img, self.THUMBNAIL_SIZE)
+                    return ft.Image(
+                        src_base64=base64_str,
+                        fit=ft.ImageFit.COVER,
+                        width=self.THUMBNAIL_SIZE,
+                        height=self.THUMBNAIL_SIZE,
+                    )
             except Exception:
-                # Fallback to icon if image conversion fails
-                return self._create_icon_fallback(ft.Icons.IMAGE, AppColors.ACCENT)
+                pass
+            return self._create_icon_fallback(ft.Icons.IMAGE, AppColors.ACCENT)
 
-        elif self.attachment.type == "text":
-            # Text preview
-            text_content = str(self.attachment.content) if self.attachment.content else ""
-            preview = text_content[:100] + "..." if len(text_content) > 100 else text_content
+        elif self.attachment.type == AttachmentType.TEXT:
+            if self.attachment.source:
+                # Text preview for sources (Selection/Clipboard)
+                text_content = str(self.attachment.content) if self.attachment.content else ""
+                preview = text_content[:100] + "..." if len(text_content) > 100 else text_content
 
-            return ft.Container(
-                content=ft.Text(
-                    value=preview,
-                    size=9,
-                    color=ft.Colors.GREY_400,
-                    max_lines=4,
-                    overflow=ft.TextOverflow.ELLIPSIS,
-                ),
-                padding=6,
-                bgcolor=ft.Colors.with_opacity(0.05, ft.Colors.WHITE),
-            )
+                return ft.Container(
+                    content=ft.Text(
+                        value=preview,
+                        size=9,
+                        color=ft.Colors.GREY_400,
+                        max_lines=4,
+                        overflow=ft.TextOverflow.ELLIPSIS,
+                    ),
+                    padding=6,
+                    bgcolor=ft.Colors.with_opacity(0.05, ft.Colors.WHITE),
+                )
+            else:
+                # File info for text files
+                return self._create_text_file_preview()
 
         else:
-            # File - show icon
-            return self._create_icon_fallback(ft.Icons.INSERT_DRIVE_FILE, ft.Colors.GREY_500)
+            # Binary/Generic File - show icon with filename
+            return self._create_file_preview()
+
+    def _create_text_file_preview(self) -> ft.Container:
+        """Create preview for text files showing name and line count."""
+        text_content = str(self.attachment.content) if self.attachment.content else ""
+        line_count = text_content.count("\n") + (1 if text_content.strip() else 0)
+
+        return ft.Container(
+            content=ft.Column(
+                controls=[
+                    ft.Text(
+                        value=self.attachment.name,
+                        size=9,
+                        weight=ft.FontWeight.W_500,
+                        max_lines=2,
+                        overflow=ft.TextOverflow.ELLIPSIS,
+                        color=ft.Colors.GREY_200,
+                    ),
+                    ft.Text(
+                        value=f"{line_count} lines",
+                        size=8,
+                        color=ft.Colors.GREY_500,
+                    ),
+                ],
+                spacing=2,
+                alignment=ft.MainAxisAlignment.START,
+            ),
+            padding=8,
+            alignment=ft.alignment.top_left,
+        )
+
+    def _create_file_preview(self) -> ft.Container:
+        """Create preview for file attachments with filename display."""
+        # Get file extension for icon selection
+        name = self.attachment.name or "file"
+        ext = name.split(".")[-1].lower() if "." in name else ""
+
+        # Choose icon based on extension
+        icon_map: dict[str, str] = {
+            "pdf": ft.Icons.PICTURE_AS_PDF,
+            "doc": ft.Icons.DESCRIPTION,
+            "docx": ft.Icons.DESCRIPTION,
+            "xls": ft.Icons.TABLE_CHART,
+            "xlsx": ft.Icons.TABLE_CHART,
+            "txt": ft.Icons.TEXT_SNIPPET,
+            "py": ft.Icons.CODE,
+            "js": ft.Icons.CODE,
+            "html": ft.Icons.CODE,
+            "css": ft.Icons.CODE,
+            "json": ft.Icons.DATA_OBJECT,
+            "md": ft.Icons.ARTICLE,
+        }
+        icon = icon_map.get(ext, ft.Icons.INSERT_DRIVE_FILE)
+
+        # Truncate name to display
+        display_name = name if len(name) <= 12 else name[:9] + "..." + name[-3:]
+
+        return ft.Container(
+            content=ft.Column(
+                controls=[
+                    ft.Icon(icon, size=28, color=AppColors.ACCENT),
+                    ft.Text(display_name, size=8, color=ft.Colors.GREY_400),
+                ],
+                alignment=ft.MainAxisAlignment.CENTER,
+                horizontal_alignment=ft.CrossAxisAlignment.CENTER,
+                spacing=2,
+            ),
+            alignment=ft.alignment.center,
+        )
 
     def _create_icon_fallback(self, icon: str, color: str) -> ft.Container:
         """Create an icon-based fallback display."""
@@ -192,22 +292,30 @@ class AttachmentPreviewDialog(ft.AlertDialog):
 
     def _build_content(self) -> ft.Control:
         """Build the dialog content based on attachment type."""
-        if self.attachment.type == "image" and isinstance(self.attachment.content, PILImage):
+        if self.attachment.type == AttachmentType.IMAGE:
             try:
-                # Larger preview for dialog
-                base64_str = pil_image_to_base64(self.attachment.content, 600)
-                return ft.Container(
-                    content=ft.Image(
-                        src_base64=base64_str,
-                        fit=ft.ImageFit.CONTAIN,
-                    ),
-                    width=500,
-                    height=400,
-                )
-            except Exception:
-                return ft.Text("Impossible d'afficher l'image")
+                img = self.attachment.content
+                if isinstance(img, str):
+                    from PIL import Image
 
-        elif self.attachment.type == "text":
+                    img = Image.open(img)
+
+                if isinstance(img, PILImage):
+                    # Larger preview for dialog
+                    base64_str = pil_image_to_base64(img, 600)
+                    return ft.Container(
+                        content=ft.Image(
+                            src_base64=base64_str,
+                            fit=ft.ImageFit.CONTAIN,
+                        ),
+                        width=500,
+                        height=400,
+                    )
+            except Exception:
+                pass
+            return ft.Text("Impossible d'afficher l'image")
+
+        elif self.attachment.type == AttachmentType.TEXT:
             text_content = str(self.attachment.content) if self.attachment.content else ""
             return ft.Container(
                 content=ft.Column(

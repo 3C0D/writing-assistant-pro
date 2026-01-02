@@ -42,8 +42,8 @@ dist/
 legacy_project
 
 # Output and Logs
-logs/
-*.log
+# logs/
+# *.log
 debug_output.txt
 error.txt
 pyright_output.txt

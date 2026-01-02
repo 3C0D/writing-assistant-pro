@@ -68,5 +68,10 @@
       "tooltip": "Build production executable",
       "alignment": "right"
     }
-  ]
+  ],
+  "python.testing.pytestArgs": [
+    "tests"
+  ],
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestEnabled": true
 }

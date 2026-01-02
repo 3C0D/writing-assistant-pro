@@ -176,7 +176,12 @@ def setup_exception_handler(debug: bool = False) -> None:
             return
         exception_handler(args.exc_type, args.exc_value, args.exc_traceback)
 
-    # Install exception handlers in main thread and secondary threads
+    # Install exception handlers for both main thread and secondary threads
+    # sys.excepthook: Catches uncaught exceptions in the main thread
+    # threading.excepthook: Catches uncaught exceptions in any thread
+    # created with threading.Thread()
+    # Without threading.excepthook, exceptions in threads would not be
+    # logged to our crash files
     sys.excepthook = exception_handler
     threading.excepthook = thread_exception_handler
 
