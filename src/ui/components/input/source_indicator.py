@@ -42,7 +42,7 @@ class SourceIndicator(ft.Container):
         """
         super().__init__()
         self.icon_name = icon
-        self.label_text = label
+        self._label_text = label
         self.source_id = source_id
         self._is_active = is_active
         self.on_toggle = on_toggle
@@ -58,6 +58,7 @@ class SourceIndicator(ft.Container):
         # Build UI
         self.icon_control: ft.Icon | None = None
         self.text_control: ft.Text | None = None
+        self._dark_mode = True  # Default to dark, will be updated
         self.content = self._build_content()
         self._update_style()
 
@@ -101,6 +102,7 @@ class SourceIndicator(ft.Container):
 
     def _update_style(self) -> None:
         """Update visual style based on active state."""
+        base_color = ft.Colors.WHITE if self._dark_mode else ft.Colors.BLACK
         if self._is_active:
             self.bgcolor = ft.Colors.with_opacity(0.15, AppColors.ACCENT)
             self.border = ft.border.all(1.5, AppColors.ACCENT)
@@ -109,8 +111,10 @@ class SourceIndicator(ft.Container):
             if self.text_control:
                 self.text_control.color = AppColors.ACCENT
         else:
-            self.bgcolor = ft.Colors.with_opacity(0.05, ft.Colors.WHITE)
-            self.border = ft.border.all(1, ft.Colors.GREY_700)
+            self.bgcolor = ft.Colors.with_opacity(0.05, base_color)
+            self.border = ft.border.all(
+                1, (ft.Colors.GREY_700 if self._dark_mode else ft.Colors.GREY_300)
+            )
             if self.icon_control:
                 self.icon_control.color = ft.Colors.GREY_500
             if self.text_control:
@@ -119,6 +123,24 @@ class SourceIndicator(ft.Container):
     # =========================================================================
     # Public API
     # =========================================================================
+
+    def update_theme(self, dark_mode: bool) -> None:
+        """Update indicator for the current theme."""
+        self._dark_mode = dark_mode
+        self._update_style()
+        if self.page:
+            self.update()
+
+    @property
+    def label_text(self) -> str:
+        return self._label_text
+
+    @label_text.setter
+    def label_text(self, value: str) -> None:
+        """Update label text and refresh display."""
+        self._label_text = value
+        if self.text_control:
+            self.text_control.value = self._get_display_text()
 
     @property
     def is_active(self) -> bool:

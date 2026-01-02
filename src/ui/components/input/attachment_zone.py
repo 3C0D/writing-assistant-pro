@@ -10,6 +10,7 @@ import flet as ft
 from PIL import Image as PILModule
 from PIL.Image import Image as PILImage
 
+from src.core import _
 from src.core.enums import AttachmentType
 from src.ui.design_system import AppColors
 
@@ -209,7 +210,7 @@ class AttachmentThumbnail(ft.Container):
                         color=ft.Colors.GREY_200,
                     ),
                     ft.Text(
-                        value=f"{line_count} lines",
+                        value=f"{line_count} {_('lines')}",
                         size=8,
                         color=ft.Colors.GREY_500,
                     ),
@@ -285,7 +286,7 @@ class AttachmentPreviewDialog(ft.AlertDialog):
             title=ft.Text(attachment.name, size=16, weight=ft.FontWeight.W_500),
             content=self._build_content(),
             actions=[
-                ft.TextButton("Fermer", on_click=lambda _: self._on_close()),
+                ft.TextButton(_("Close"), on_click=lambda _: self._on_close()),
             ],
             actions_alignment=ft.MainAxisAlignment.END,
         )
@@ -313,7 +314,7 @@ class AttachmentPreviewDialog(ft.AlertDialog):
                     )
             except Exception:
                 pass
-            return ft.Text("Impossible d'afficher l'image")
+            return ft.Text(_("Impossible to display the image"))
 
         elif self.attachment.type == AttachmentType.TEXT:
             text_content = str(self.attachment.content) if self.attachment.content else ""
@@ -412,4 +413,5 @@ class AttachmentZone(ft.Row):
     def refresh(self) -> None:
         """Rebuild controls and update display."""
         self._build_controls()
-        self.update()
+        if self.page:
+            self.update()

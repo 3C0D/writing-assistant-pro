@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2025-12-09 02:23+0100\n"
+"POT-Creation-Date: 2026-01-02 05:30+0100\n"
 "PO-Revision-Date: 2025-11-30 20:40+0100\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: ru\n"
@@ -19,42 +19,149 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.17.0\n"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:181
-msgid "Hello, this is a real desktop app!"
-msgstr "Привет, это настоящее настольное приложение!"
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/core/managers/systray.py⁩:151
+msgid "About"
+msgstr "О программе"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:187
-msgid "Click me"
-msgstr "Нажми меня"
-
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:240
-msgid "Clicked!!!"
-msgstr "Нажато!!!"
-
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:286
-msgid "Language"
-msgstr "Язык"
-
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:327
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/core/managers/systray.py⁩:152
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:525
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/navigation_rail.py⁩:54
 msgid "Settings"
 msgstr "Настройки"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:334
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/core/managers/systray.py⁩:155
+msgid "Run on Startup"
+msgstr "Запускать при старте"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/core/managers/systray.py⁩:160
+msgid "Quit"
+msgstr "Выход"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:273
+msgid "DEV MODE"
+msgstr "РЕЖИМ РАЗРАБОТКИ"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:355
+msgid "Select files"
+msgstr "Выбрать файлы"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:378
+#, python-brace-format
+msgid "Sent: {text}"
+msgstr "Отправлено: {text}"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:378
+msgid "Undo"
+msgstr "Отменить"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:391
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:500
+msgid "Toggle Dark/Light Mode"
+msgstr "Переключить темную/светлую тему"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:398
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:507
+msgid "Hide"
+msgstr "Скрыть"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:446
+#, python-brace-format
+msgid "Language changed to {language}"
+msgstr "Язык изменен на {language}"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:484
+msgid "Language"
+msgstr "Язык"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:532
 msgid "General"
 msgstr "Общие"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:346
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:544
 msgid "Check for Updates"
 msgstr "Проверить обновления"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:369
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:567
 #: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:163
 msgid "Shortcut Key"
 msgstr "Горячая клавиша"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:455
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:640
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:83
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:144
+msgid "None"
+msgstr "Нет"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:641
+#, python-brace-format
+msgid "Hotkey: {display}"
+msgstr "Горячая клавиша: {display}"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/app.py⁩:652
 msgid "About window - Coming soon!"
 msgstr "Окно \"О программе\" - Скоро!"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/navigation_rail.py⁩:45
+msgid "Toggle Menu"
+msgstr "Переключить меню"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/sidebar.py⁩:32
+msgid "Menu"
+msgstr "Меню"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/sidebar.py⁩:41
+msgid "Home"
+msgstr "Главная"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/attachment_zone.py⁩:213
+msgid "lines"
+msgstr "строк"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/attachment_zone.py⁩:289
+msgid "Close"
+msgstr "Закрыть"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/attachment_zone.py⁩:317
+msgid "Impossible to display the image"
+msgstr "Невозможно отобразить изображение"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:107
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:392
+msgid "How can I help you?"
+msgstr "Чем я могу помочь?"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:112
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:407
+msgid "Send"
+msgstr "Отправить"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:118
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:432
+msgid "Add files"
+msgstr "Добавить файлы"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:123
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:140
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:246
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:413
+msgid "Selection"
+msgstr "Выделение"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:130
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:142
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:269
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:422
+msgid "Clipboard"
+msgstr "Буфер обмена"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:142
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:280
+msgid "Clipboard Image"
+msgstr "Изображение из буфера"
+
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/components/input/prompt_bar.py⁩:175
+msgid "Image"
+msgstr "Изображение"
 
 #: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:94
 msgid "Press the key combination you want to use."
@@ -62,7 +169,9 @@ msgstr "Нажмите нужную комбинацию клавиш."
 
 #: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:100
 msgid "Tip: With Shift, press the main key FIRST, then add modifiers."
-msgstr "Совет: С Shift, нажмите СНАЧАЛА основную клавишу, затем добавьте модификаторы."
+msgstr ""
+"Совет: С Shift, нажмите СНАЧАЛА основную клавишу, затем добавьте "
+"модификаторы."
 
 #: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/hotkey_dialog.py⁩:189
 msgid "Save"
@@ -80,32 +189,32 @@ msgstr "Удалить"
 msgid "Cancel"
 msgstr "Отмена"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:32
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:34
 msgid "No release notes available"
 msgstr "Нет примечаний к выпуску"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:41
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:43
 #, python-brace-format
 msgid "New version {version} available!"
 msgstr "Доступна новая версия {version}!"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:49
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:51
 msgid "Download"
 msgstr "Скачать"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:50
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:52
 msgid "Later"
 msgstr "Позже"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:79
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:80
 msgid "Already up to date"
 msgstr "Уже обновлено"
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:83
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:84
 msgid "You are using the latest version."
 msgstr "Вы используете последнюю версию."
 
-#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:87
+#: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:88
 #: ⁨C:/Users/dd200/Documents/Mes_projets/WritingTools Related/writing-assistant-pro/src/ui/dialogs/update_dialog.py⁩:125
 msgid "OK"
 msgstr "ОК"
@@ -118,4 +227,13 @@ msgstr "Ошибка проверки обновлений"
 #, python-brace-format
 msgid "Could not check for updates: {error}"
 msgstr "Не удалось проверить обновления: {error}"
+
+#~ msgid "Hello, this is a real desktop app!"
+#~ msgstr "Привет, это настоящее настольное приложение!"
+
+#~ msgid "Click me"
+#~ msgstr "Нажми меня"
+
+#~ msgid "Clicked!!!"
+#~ msgstr "Нажато!!!"
 

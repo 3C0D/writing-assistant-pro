@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import flet as ft
 
+from src.core import _
 from src.ui.design_system import AppColors
 
 
@@ -28,7 +29,7 @@ def create_sidebar(dark_mode: bool) -> ft.Container:
         content=ft.Column(
             [
                 ft.Text(
-                    "Menu",
+                    _("Menu"),
                     size=20,
                     weight=ft.FontWeight.BOLD,
                     color=AppColors.get_text_primary(dark_mode),
@@ -37,7 +38,7 @@ def create_sidebar(dark_mode: bool) -> ft.Container:
                 # Placeholder for future menu items
                 ft.ListTile(
                     leading=ft.Icon(ft.Icons.HOME),
-                    title=ft.Text("Home"),
+                    title=ft.Text(_("Home")),
                     on_click=lambda _: None,
                 ),
             ],

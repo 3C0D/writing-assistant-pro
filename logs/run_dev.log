@@ -6519,3 +6519,889 @@ def icon(se...
 2026-01-02 04:39:03 | INFO     | src.core.managers.window:show_window - Window shown
 2026-01-02 04:39:03 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
 2026-01-02 04:39:03 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:41:40 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:41:40 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:41:40 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:41:46 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:41:46 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:41:46 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:41:46 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:41:46 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:41:46 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:41:46 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 04:41:46 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 2/3
+2026-01-02 04:41:47 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 04:41:47 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 3/3
+2026-01-02 04:41:47 | DEBUG    | src.core.services.input_source:get_selection_text - No selection detected after all attempts
+2026-01-02 04:41:47 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: False, Clipboard text: False, Clipboard image: False
+2026-01-02 04:41:47 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:41:47 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:41:47 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:42:11 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:42:11 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:42:11 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:42:12 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:42:12 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:42:12 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:42:12 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:42:12 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:42:13 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:42:13 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 04:42:13 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 2/3
+2026-01-02 04:42:14 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 04:42:14 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 3/3
+2026-01-02 04:42:14 | DEBUG    | src.core.services.input_source:get_selection_text - No selection detected after all attempts
+2026-01-02 04:42:14 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: False, Clipboard text: False, Clipboard image: False
+2026-01-02 04:42:14 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:42:14 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:42:14 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:42:19 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2026-01-02 04:42:19 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:42:19 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:42:19 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:42:20 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:42:20 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:42:20 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:42:20 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:42:20 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:42:20 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:42:20 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 04:42:20 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 2/3
+2026-01-02 04:42:21 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 04:42:21 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 3/3
+2026-01-02 04:42:21 | DEBUG    | src.core.services.input_source:get_selection_text - No selection detected after all attempts
+2026-01-02 04:42:21 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: False, Clipboard text: False, Clipboard image: False
+2026-01-02 04:42:21 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:42:21 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:42:21 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:42:27 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:42:27 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:42:27 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:43:35 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:43:35 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:43:35 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:43:35 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:43:35 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:43:35 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:43:35 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: icon_path...
+2026-01-02 04:43:35 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 04:43:35 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:43:35 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:43:35 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:45:13 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:45:13 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:45:13 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:45:57 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:45:57 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:45:57 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:45:57 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:45:57 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:45:58 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:45:58 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 04:45:58 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 2/3
+2026-01-02 04:45:59 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 04:45:59 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 3/3
+2026-01-02 04:45:59 | DEBUG    | src.core.services.input_source:get_selection_text - No selection detected after all attempts
+2026-01-02 04:45:59 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: False, Clipboard text: False, Clipboard image: False
+2026-01-02 04:45:59 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:45:59 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:45:59 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:51:27 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 04:51:27 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 04:51:27 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 04:51:27 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:51:27 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 04:51:27 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 04:51:27 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 04:51:27 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 04:51:27 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 04:51:27 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 04:51:27 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 04:51:27 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 04:51:27 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 04:51:27 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 04:51:27 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 04:51:27 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 04:51:27 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 04:51:27 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 04:51:27 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 04:51:27 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 04:51:27 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 04:51:27 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 04:51:27 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 04:51:28 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 04:51:28 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 04:51:28 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 04:51:28 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 04:51:28 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 04:51:30 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:51:30 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:51:30 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:51:30 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:51:30 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:51:30 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:51:43 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 04:51:43 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 04:51:43 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 04:51:43 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:51:43 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 04:51:43 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 04:51:43 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 04:51:43 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 04:51:43 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 04:51:43 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 04:51:43 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 04:51:43 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 04:51:44 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 04:51:44 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 04:51:44 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 04:51:44 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 04:51:44 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 04:51:44 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 04:51:44 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 04:51:44 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 04:51:44 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 04:51:44 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 04:51:44 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 04:51:44 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 04:51:44 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 04:51:44 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 04:51:44 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 04:51:44 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 04:51:46 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:51:46 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:51:46 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:51:46 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:51:46 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:51:46 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:51:47 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: tooltip=f"{_('Hide')} ({self.s...
+2026-01-02 04:51:47 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 04:51:47 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:51:47 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:51:47 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:51:53 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:51:55 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:51:57 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:51:58 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:52:18 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 04:52:18 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 04:52:18 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 04:52:18 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:52:18 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 04:52:18 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 04:52:18 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 04:52:18 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 04:52:18 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 04:52:18 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 04:52:18 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 04:52:18 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 04:52:18 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 04:52:18 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 04:52:18 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 04:52:18 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 04:52:18 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 04:52:18 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 04:52:18 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 04:52:18 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 04:52:18 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 04:52:18 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 04:52:18 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 04:52:18 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 04:52:19 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 04:52:19 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 04:52:19 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 04:52:24 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:52:24 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:52:24 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:52:24 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:52:24 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:52:24 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:52:25 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: theme_btn,...
+2026-01-02 04:52:25 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 04:52:25 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:52:25 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:52:25 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:52:28 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:52:29 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:52:43 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2026-01-02 04:52:43 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:52:43 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:52:43 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:52:48 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:52:48 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:52:48 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:52:48 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:52:48 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:52:48 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:52:54 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:52:55 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:52:56 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:53:01 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:53:03 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:53:03 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:53:03 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:53:03 | DEBUG    | src.ui.app:_handle_window_hide_event - Event: Window hidden - resetting to main view
+2026-01-02 04:53:41 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:53:41 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:53:41 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:53:41 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:53:41 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:53:41 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:53:41 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: theme_btn,...
+2026-01-02 04:53:41 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 04:53:41 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:53:41 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:53:41 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:53:43 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:53:52 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2026-01-02 04:53:52 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:53:52 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:53:52 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:53:57 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:53:57 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:53:57 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:53:57 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:53:57 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:53:57 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:54:02 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2026-01-02 04:54:02 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:54:02 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:54:02 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:54:03 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:54:03 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:54:03 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:54:03 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:54:03 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:54:03 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:57:12 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 04:57:12 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 04:57:12 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 04:57:12 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:57:12 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 04:57:12 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 04:57:12 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 04:57:12 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 04:57:12 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 04:57:12 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 04:57:13 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 04:57:13 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 04:57:13 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 04:57:13 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 04:57:13 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 04:57:13 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 04:57:13 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 04:57:13 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 04:57:13 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 04:57:13 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 04:57:13 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 04:57:13 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 04:57:13 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 04:57:13 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 04:57:13 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 04:57:13 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 04:57:13 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 04:57:13 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 04:57:15 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:57:15 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:57:15 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:57:15 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:57:15 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:57:16 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:57:16 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: available...
+2026-01-02 04:57:16 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 04:57:16 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:57:16 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:57:16 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:57:19 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:57:20 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:57:22 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:57:23 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:57:24 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:57:37 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:57:40 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:57:40 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:57:40 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 04:57:40 | DEBUG    | src.ui.app:_handle_window_hide_event - Event: Window hidden - resetting to main view
+2026-01-02 04:59:01 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 04:59:01 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 04:59:01 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 04:59:01 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:59:01 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 04:59:01 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 04:59:01 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 04:59:01 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 04:59:01 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 04:59:01 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 04:59:01 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 04:59:01 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 04:59:01 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 04:59:01 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 04:59:01 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 04:59:01 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 04:59:01 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 04:59:01 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 04:59:01 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 04:59:01 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 04:59:01 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 04:59:01 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 04:59:01 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 04:59:02 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 04:59:02 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 04:59:02 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 04:59:02 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 04:59:02 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 04:59:10 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 04:59:10 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 04:59:10 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 04:59:10 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 04:59:10 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 04:59:10 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 04:59:10 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: main_content_container...
+2026-01-02 04:59:10 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 04:59:10 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 04:59:10 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 04:59:10 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 04:59:16 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:59:18 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 04:59:21 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 04:59:21 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 04:59:21 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:02:46 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 05:02:46 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 05:02:46 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 05:02:46 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:02:46 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 05:02:46 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 05:02:46 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 05:02:46 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 05:02:46 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 05:02:46 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 05:02:47 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 05:02:47 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 05:02:47 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 05:02:47 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:02:47 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 05:02:47 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 05:02:47 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 05:02:47 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:02:47 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 05:02:47 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 05:02:47 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 05:02:47 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 05:02:47 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 05:02:47 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 05:02:47 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 05:02:47 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 05:02:47 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 05:02:47 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 05:02:51 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:02:51 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:02:51 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:02:51 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:02:51 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: _bus:emit - Emitting EventType...
+2026-01-02 05:02:52 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:02:52 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: from src.ui.components.input.a...
+2026-01-02 05:02:52 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard restored
+2026-01-02 05:02:52 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: True, Clipboard image: False
+2026-01-02 05:02:52 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:02:52 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:02:52 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:02:55 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:02:57 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:02:58 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:03:00 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:03:00 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:03:00 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:03:21 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 05:03:21 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 05:03:21 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 05:03:21 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:03:21 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 05:03:21 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 05:03:21 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 05:03:21 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 05:03:21 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 05:03:21 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 05:03:21 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 05:03:21 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 05:03:21 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 05:03:21 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:03:21 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 05:03:21 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 05:03:21 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 05:03:21 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:03:21 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 05:03:21 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 05:03:21 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 05:03:21 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 05:03:21 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 05:03:21 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 05:03:21 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 05:03:22 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 05:03:22 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 05:03:22 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 05:03:35 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:03:35 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:03:35 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:03:35 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:03:35 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: _bus:emit - Emitting EventType...
+2026-01-02 05:03:35 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:03:35 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: )...
+2026-01-02 05:03:35 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard restored
+2026-01-02 05:03:35 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: True, Clipboard image: False
+2026-01-02 05:03:35 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:03:35 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:03:35 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:04:01 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:04:02 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:04:08 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:04:14 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:05:09 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2026-01-02 05:05:09 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:05:09 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:05:09 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:05:14 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:05:14 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:05:14 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:05:14 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:05:14 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:05:14 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:05:23 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:05:23 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:05:23 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:05:50 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 05:05:50 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 05:05:50 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 05:05:50 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:05:50 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 05:05:50 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 05:05:50 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 05:05:50 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 05:05:50 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 05:05:50 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 05:05:51 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 05:05:51 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 05:05:51 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 05:05:51 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:05:51 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 05:05:51 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 05:05:51 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 05:05:51 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:05:51 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 05:05:51 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 05:05:51 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 05:05:51 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 05:05:51 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 05:05:51 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 05:05:51 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 05:05:51 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 05:05:51 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 05:05:51 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 05:05:56 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:05:56 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:05:56 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:05:56 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:05:56 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: 2026-01-02 05:03:22 | INFO    ...
+2026-01-02 05:05:57 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:05:57 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: AttachmentID,...
+2026-01-02 05:05:57 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard restored
+2026-01-02 05:05:57 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: True, Clipboard image: False
+2026-01-02 05:05:57 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:05:57 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:05:57 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:06:08 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:06:08 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:06:08 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:06:16 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:06:16 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:06:16 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:06:16 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:06:16 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: 2026-01-02 05:03:22 | INFO    ...
+2026-01-02 05:06:16 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:06:16 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 05:06:16 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 2/3
+2026-01-02 05:06:17 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 05:06:17 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 3/3
+2026-01-02 05:06:17 | DEBUG    | src.core.services.input_source:get_selection_text - No selection detected after all attempts
+2026-01-02 05:06:17 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard restored
+2026-01-02 05:06:17 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: False, Clipboard text: True, Clipboard image: False
+2026-01-02 05:06:17 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:06:17 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:06:17 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:06:34 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:06:34 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:06:34 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:06:36 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:06:36 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:06:36 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:06:36 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:06:36 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: 2026-01-02 05:03:22 | INFO    ...
+2026-01-02 05:06:36 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:06:37 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 05:06:37 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 2/3
+2026-01-02 05:06:37 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 05:06:37 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 3/3
+2026-01-02 05:06:38 | DEBUG    | src.core.services.input_source:get_selection_text - No selection detected after all attempts
+2026-01-02 05:06:38 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard restored
+2026-01-02 05:06:38 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: False, Clipboard text: True, Clipboard image: False
+2026-01-02 05:06:38 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:06:38 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:06:38 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:07:26 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:07:26 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to fr
+2026-01-02 05:07:26 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:07:26 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:07:32 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:07:32 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:07:32 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:07:32 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:07:48 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:07:48 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to fr
+2026-01-02 05:07:48 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:07:48 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:08:15 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:08:15 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:08:15 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:09:08 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:09:08 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:09:08 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:09:08 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:09:08 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 05:09:08 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:09:08 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: show_snack_bar...
+2026-01-02 05:09:08 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 05:09:08 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:09:08 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:09:08 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:09:18 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:09:18 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to it
+2026-01-02 05:09:18 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:09:18 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:09:25 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:09:25 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to fr
+2026-01-02 05:09:25 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:09:25 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:13:33 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 05:13:33 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 05:13:33 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 05:13:33 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:13:33 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 05:13:33 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 05:13:33 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 05:13:33 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 05:13:33 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 05:13:33 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 05:13:33 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 05:13:33 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 05:13:33 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 05:13:33 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:13:33 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 05:13:33 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 05:13:33 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 05:13:33 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:13:33 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 05:13:33 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 05:13:33 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 05:13:33 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 05:13:33 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 05:13:33 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 05:13:33 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 05:13:34 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 05:13:34 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 05:13:34 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 05:13:35 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:13:35 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:13:35 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:13:35 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:13:35 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 05:13:35 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:13:36 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 05:13:36 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 2/3
+2026-01-02 05:13:36 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 05:13:36 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 3/3
+2026-01-02 05:13:37 | DEBUG    | src.core.services.input_source:get_selection_text - No selection detected after all attempts
+2026-01-02 05:13:37 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: False, Clipboard text: False, Clipboard image: False
+2026-01-02 05:13:37 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:13:37 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:13:37 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:13:58 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:13:58 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to es
+2026-01-02 05:13:58 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:13:58 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:14:10 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:14:10 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:14:10 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:14:10 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:14:53 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:14:53 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:14:53 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:14:53 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:14:58 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:14:58 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to fr
+2026-01-02 05:14:58 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:14:58 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:15:02 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:15:02 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:15:02 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:15:02 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:15:20 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:15:20 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to es
+2026-01-02 05:15:20 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:15:20 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:15:33 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:15:33 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:15:33 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:15:33 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:15:38 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:15:38 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to es
+2026-01-02 05:15:38 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:15:38 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:15:43 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:15:43 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:15:43 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:15:43 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:16:14 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2026-01-02 05:16:14 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:16:14 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:16:14 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:16:14 | DEBUG    | src.ui.app:_handle_window_hide_event - Event: Window hidden - resetting to main view
+2026-01-02 05:16:17 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:16:17 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:16:17 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:16:17 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:16:17 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 05:16:18 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:16:18 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: self.text_field.update()...
+2026-01-02 05:16:18 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 05:16:18 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:16:18 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:16:18 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:17:09 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:17:09 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to fr
+2026-01-02 05:17:09 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:17:09 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:17:19 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:17:19 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:17:19 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:17:19 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:17:30 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:17:30 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:17:30 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:17:30 | DEBUG    | src.ui.app:_handle_window_hide_event - Event: Window hidden - resetting to main view
+2026-01-02 05:23:41 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 05:23:41 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 05:23:41 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 05:23:41 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:23:41 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 05:23:41 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 05:23:41 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 05:23:41 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 05:23:41 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 05:23:41 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 05:23:41 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 05:23:41 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 05:23:41 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 05:23:41 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:23:41 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:23:41 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 05:23:41 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 05:23:41 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 05:23:41 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:23:41 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 05:23:41 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 05:23:41 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 05:23:41 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 05:23:41 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 05:23:42 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 05:23:42 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 05:23:42 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 05:23:42 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 05:23:42 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 05:23:57 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:23:57 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:23:57 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:23:57 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:23:57 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 05:23:57 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:23:57 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: from loguru import logger...
+2026-01-02 05:23:57 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 05:23:57 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:23:57 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:23:57 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:24:03 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:06 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:24:06 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:24:06 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:06 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:24:06 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:24:06 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:24:10 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:18 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:21 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:24:21 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to es
+2026-01-02 05:24:21 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:21 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:24:21 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:24:21 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:24:31 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:32 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:35 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:39 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:40 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:43 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:48 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:24:48 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to fr
+2026-01-02 05:24:48 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:48 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:24:48 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:24:48 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:24:50 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:52 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:54 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:24:54 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:24:54 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:54 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:24:54 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:24:54 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:24:57 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:24:59 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:25:53 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2026-01-02 05:25:53 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:25:53 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:25:53 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:25:53 | DEBUG    | src.ui.app:_handle_window_hide_event - Event: Window hidden - resetting to main view
+2026-01-02 05:25:53 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:25:57 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:25:57 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:25:57 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:25:57 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:25:57 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 05:25:57 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:25:58 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: from src.core.services.input_s...
+2026-01-02 05:25:58 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: False, Clipboard image: False
+2026-01-02 05:25:58 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:25:58 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:25:58 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:26:00 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:26:03 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:26:03 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to fr
+2026-01-02 05:26:03 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:26:03 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:26:03 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:26:03 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:26:33 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:26:33 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:26:33 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:26:33 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:26:33 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:26:33 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:27:08 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=True
+2026-01-02 05:27:08 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:27:08 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:27:08 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners
+2026-01-02 05:27:08 | DEBUG    | src.ui.app:_handle_window_hide_event - Event: Window hidden - resetting to main view
+2026-01-02 05:27:08 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:27:09 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:27:09 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:27:09 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:27:09 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:27:09 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Empty...
+2026-01-02 05:27:10 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:27:10 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 05:27:10 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 2/3
+2026-01-02 05:27:11 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C failed, retrying in 0.15s...
+2026-01-02 05:27:11 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 3/3
+2026-01-02 05:27:11 | DEBUG    | src.core.services.input_source:get_selection_text - No selection detected after all attempts
+2026-01-02 05:27:11 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: False, Clipboard text: False, Clipboard image: False
+2026-01-02 05:27:11 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:27:11 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:27:11 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:27:14 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:27:16 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:27:16 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to es
+2026-01-02 05:27:16 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:27:16 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:27:16 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:27:16 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:30:54 | DEBUG    | src.core.services.logger:setup_root_logger - Root logger configured - Debug mode enabled (console + file: logs\run_dev.log)
+2026-01-02 05:30:54 | DEBUG    | src.core.services.logger:setup_exception_handler - Exception handler configured - Crash log: logs\crash_run_dev.log
+2026-01-02 05:30:54 | INFO     | src.core.config.manager:load - Configuration loaded from C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json (Mode: dev)
+2026-01-02 05:30:54 | INFO     | src.core.config.manager:save - Configuration saved to C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\dist\dev\config.json
+2026-01-02 05:30:54 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _handle_language_change_event
+2026-01-02 05:30:54 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_AVAILABLE: _handle_update_available_event
+2026-01-02 05:30:54 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.UPDATE_ERROR: _handle_update_error_event
+2026-01-02 05:30:54 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_SHOWN: _handle_window_show_event
+2026-01-02 05:30:54 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_HIDDEN: _handle_window_hide_event
+2026-01-02 05:30:54 | DEBUG    | src.ui.app:_setup_event_listeners - Event bus subscribers initialized
+2026-01-02 05:30:54 | INFO     | src.ui.app:main - Flet application starting...
+2026-01-02 05:30:54 | INFO     | src.ui.app:main - Setting window icon: C:\Users\dd200\Documents\Mes_projets\WritingTools Related\writing-assistant-pro\src\core\config\icons\app_icon.ico
+2026-01-02 05:30:54 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.WINDOW_PRE_SHOW: _on_window_pre_show
+2026-01-02 05:30:54 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:30:54 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:30:54 | INFO     | src.ui.app:main - Registering hotkey: ctrl+decimal
+2026-01-02 05:30:54 | INFO     | src.core.managers.hotkey:delayed_setup - Waiting 0.5s before registering hotkey...
+2026-01-02 05:30:54 | DEBUG    | src.core.managers.hotkey:register_delayed - Hotkey registration thread started
+2026-01-02 05:30:54 | DEBUG    | src.core.event_bus:on - Subscribed to EventType.LANGUAGE_CHANGED: _on_language_changed
+2026-01-02 05:30:54 | INFO     | src.core.managers.systray:run_async - Systray icon thread started
+2026-01-02 05:30:54 | INFO     | src.ui.app:main - Systray manager started
+2026-01-02 05:30:54 | INFO     | src.ui.app:main - Flet application started
+2026-01-02 05:30:54 | INFO     | src.core.managers.systray:create_icon - Systray icon created successfully
+2026-01-02 05:30:54 | INFO     | src.core.managers.systray:run - Starting systray icon...
+2026-01-02 05:30:55 | INFO     | src.core.managers.hotkey:delayed_setup - Attempting to register hotkey: ctrl+decimal
+2026-01-02 05:30:55 | DEBUG    | src.core.managers.hotkey:register - Clearing all existing keyboard hooks...
+2026-01-02 05:30:55 | DEBUG    | src.core.managers.hotkey:register - Adding hotkey: ctrl+decimal (suppress=True)
+2026-01-02 05:30:55 | INFO     | src.core.managers.hotkey:register - Global hotkey registered: ctrl+decimal (toggle window)
+2026-01-02 05:30:55 | INFO     | src.core.managers.hotkey:delayed_setup - ✓ Hotkey ready! Press ctrl+decimal to toggle window
+2026-01-02 05:31:03 | INFO     | src.core.managers.window:toggle_window - Toggle window - current state: visible=False
+2026-01-02 05:31:03 | INFO     | src.core.managers.window:show_window - Showing window...
+2026-01-02 05:31:03 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_PRE_SHOW to 1 listeners
+2026-01-02 05:31:03 | DEBUG    | src.core.services.input_source:get_selection_text - Getting selected text via Ctrl+C simulation
+2026-01-02 05:31:03 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard backed up: Language changed to english...
+2026-01-02 05:31:03 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C attempt 1/3
+2026-01-02 05:31:04 | DEBUG    | src.core.services.input_source:get_selection_text - Ctrl+C successful: page.window.height = 600...
+2026-01-02 05:31:04 | DEBUG    | src.core.services.input_source:get_selection_text - Clipboard restored
+2026-01-02 05:31:04 | DEBUG    | src.core.services.input_source:detect_sources - Detected sources - Selection: True, Clipboard text: True, Clipboard image: False
+2026-01-02 05:31:04 | INFO     | src.core.managers.window:show_window - Window shown
+2026-01-02 05:31:04 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_SHOWN to 1 listeners
+2026-01-02 05:31:04 | DEBUG    | src.ui.app:_handle_window_show_event - Event: Window shown - refreshing input sources
+2026-01-02 05:31:19 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:23 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:24 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:27 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:31:27 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to en
+2026-01-02 05:31:27 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:27 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:31:27 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:31:27 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:31:29 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:35 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:39 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:31:39 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to es
+2026-01-02 05:31:39 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:39 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:31:39 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:31:39 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:31:41 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:46 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:47 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:53 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:31:54 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:32:00 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:32:03 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:32:03 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to it
+2026-01-02 05:32:03 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:32:03 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:32:03 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:32:03 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:32:05 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:32:08 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:32:13 | DEBUG    | src.core.event_bus:emit - Emitting EventType.LANGUAGE_CHANGED to 3 listeners
+2026-01-02 05:32:13 | INFO     | src.ui.app:_handle_language_change_event - Event: Language changed to fr
+2026-01-02 05:32:13 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:32:13 | INFO     | src.ui.components.input.prompt_bar:_on_language_changed - PromptBar: updating translations
+2026-01-02 05:32:13 | INFO     | src.core.managers.systray:_on_language_changed - Language changed event detected, refreshing systray menu
+2026-01-02 05:32:13 | DEBUG    | src.core.managers.systray:_on_language_changed - Systray menu labels updated
+2026-01-02 05:32:15 | DEBUG    | src.ui.app:_create_ui - UI updated/recreated
+2026-01-02 05:32:22 | INFO     | src.core.managers.window:hide_window - Hiding window...
+2026-01-02 05:32:22 | INFO     | src.core.managers.window:hide_window - Window hidden - ctrl+space to show
+2026-01-02 05:32:22 | DEBUG    | src.core.event_bus:emit - Emitting EventType.WINDOW_HIDDEN to 1 listeners

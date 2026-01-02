@@ -127,11 +127,7 @@ class WritingAssistantFletApp:
         )
 
         # Page configuration
-        page.title = (
-            f"Writing Assistant Pro v{self.version} (DEV MODE)"
-            if self.state.config.DEBUG
-            else f"Writing Assistant Pro v{self.version}"
-        )
+        self._update_window_title()
         page.window.width = 800
         page.window.height = 600
         # Set both for compatibility: page.window.icon is the new way,
@@ -194,6 +190,8 @@ class WritingAssistantFletApp:
         """Handle language change event from any source"""
         language = data.get("language", "en")
         self.log.info(f"Event: Language changed to {language}")
+        # Reset cached container to force recreation with new translations
+        self.main_content_container = None
         # Recreate UI to apply new language everywhere
         self._create_ui()
 
@@ -217,11 +215,8 @@ class WritingAssistantFletApp:
         if not self.page:
             return
 
-        # Initialize File Picker once if not exists
-        if not self.file_picker:
-            self._setup_file_picker()
-
-        # Update Navigation Rail (depends on theme)
+        # Update Window title and Navigation Rail (depends on theme/language)
+        self._update_window_title()
         self.navigation_rail = self._create_navigation_rail()
 
         # Clear existing content if any
@@ -266,6 +261,20 @@ class WritingAssistantFletApp:
                 )
             )
 
+        self.page.update()
+        self.log.debug("UI updated/recreated")
+
+    def _update_window_title(self) -> None:
+        """Update the window title with current language/mode."""
+        if not self.page:
+            return
+
+        title = (
+            f"Writing Assistant Pro v{self.version} ({_('DEV MODE')})"
+            if self.state.config.DEBUG
+            else f"Writing Assistant Pro v{self.version}"
+        )
+        self.page.title = title
         self.page.update()
 
     def _setup_file_picker(self):
@@ -343,9 +352,7 @@ class WritingAssistantFletApp:
     def _trigger_file_picker(self, e=None):
         """Trigger the file picker dialog"""
         if self.file_picker:
-            self.file_picker.pick_files(
-                allow_multiple=True, dialog_title="Sélectionner des fichiers"
-            )
+            self.file_picker.pick_files(allow_multiple=True, dialog_title=_("Select files"))
 
     def _create_navigation_rail(self):
         """Create the permanent navigation rail on the left"""
@@ -368,7 +375,7 @@ class WritingAssistantFletApp:
             # Here we would send to AI core...
             # For now, just show a snackbar confirmation
             if self.page:
-                self.show_snack_bar(f"Sent: {text}", action="Undo")
+                self.show_snack_bar(_("Sent: {text}").format(text=text), action=_("Undo"))
 
         # Create PromptBar if it doesn't exist
         if not self.prompt_bar:
@@ -381,14 +388,14 @@ class WritingAssistantFletApp:
         # Floating buttons at top right
         theme_btn = icon_button(
             icon=(ft.Icons.DARK_MODE if not self.state.config.DARK_MODE else ft.Icons.LIGHT_MODE),
-            tooltip="Toggle Dark/Light Mode",
+            tooltip=_("Toggle Dark/Light Mode"),
             dark_mode=self.state.config.DARK_MODE,
             on_click=self.toggle_theme,
         )
 
         hide_btn = icon_button(
             icon=ft.Icons.VISIBILITY_OFF,
-            tooltip=f"Hide ({self.state.config.HOTKEY_COMBINATION})",
+            tooltip=f"{_('Hide')} ({self.state.config.HOTKEY_COMBINATION})",
             dark_mode=self.state.config.DARK_MODE,
             on_click=lambda _: (self.window_manager.hide_window() if self.window_manager else None),
         )
@@ -435,7 +442,8 @@ class WritingAssistantFletApp:
 
         # UI recreation is now handled by the event listener for EventType.LANGUAGE_CHANGED
 
-        self.show_snack_bar(f"Language changed to {new_lang}")
+        lang_name = get_language_manager().get_language_name(new_lang)
+        self.show_snack_bar(_("Language changed to {language}").format(language=lang_name))
 
     def toggle_theme(self, e):
         """Toggle dark/light theme"""
@@ -445,6 +453,13 @@ class WritingAssistantFletApp:
         new_dark_mode = not self.state.config.DARK_MODE
         self.state.config.DARK_MODE = new_dark_mode
         self.page.theme_mode = ft.ThemeMode.DARK if new_dark_mode else ft.ThemeMode.LIGHT
+
+        # Reset cached container to force recreation with new theme colors
+        self.main_content_container = None
+
+        # Update prompt bar theme if it exists (to preserve text state)
+        if self.prompt_bar:
+            self.prompt_bar.update_theme(new_dark_mode)
 
         # Recreate UI to apply new colors
         self._create_ui()
@@ -482,14 +497,14 @@ class WritingAssistantFletApp:
         # Floating buttons at top right
         theme_btn = icon_button(
             icon=(ft.Icons.DARK_MODE if not self.state.config.DARK_MODE else ft.Icons.LIGHT_MODE),
-            tooltip="Toggle Dark/Light Mode",
+            tooltip=_("Toggle Dark/Light Mode"),
             dark_mode=self.state.config.DARK_MODE,
             on_click=self.toggle_theme,
         )
 
         hide_btn = icon_button(
             icon=ft.Icons.VISIBILITY_OFF,
-            tooltip=f"Hide ({self.state.config.HOTKEY_COMBINATION})",
+            tooltip=f"{_('Hide')} ({self.state.config.HOTKEY_COMBINATION})",
             dark_mode=self.state.config.DARK_MODE,
             on_click=lambda _: (self.window_manager.hide_window() if self.window_manager else None),
         )
@@ -622,8 +637,8 @@ class WritingAssistantFletApp:
 
         # Show confirmation
         if self.page:
-            display = format_hotkey_for_display(new_hotkey) if new_hotkey else "None"
-            self.show_snack_bar(f"Hotkey: {display}")
+            display = format_hotkey_for_display(new_hotkey) if new_hotkey else _("None")
+            self.show_snack_bar(_("Hotkey: {display}").format(display=display))
             self.page.update()
 
     def show_about(self):

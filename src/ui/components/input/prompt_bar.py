@@ -4,10 +4,12 @@ from collections.abc import Callable
 from typing import TYPE_CHECKING
 
 import flet as ft
+from loguru import logger
 
 from src.core import (
     AttachmentID,
     EventType,
+    _,
     get_event_bus,
 )
 from src.core.services.input_source import InputSourceService, InputState
@@ -48,6 +50,7 @@ class PromptBar(ft.Container):
         self.on_submit = on_submit
         self.on_attach_click = on_attach_click
         self.on_height_change = on_height_change
+        self.log = logger.bind(name="WritingAssistant.PromptBar")
         self._page: ft.Page | None = None
 
         # State
@@ -57,6 +60,7 @@ class PromptBar(ft.Container):
         # UI Components
         self.text_field = self._create_text_field()
         self.submit_button = self._create_submit_button()
+        self.add_file_button = self._create_add_file_button()
         self.selection_btn = self._create_selection_button()
         self.clipboard_btn = self._create_clipboard_button()
         self.attachment_zone = AttachmentZone(
@@ -78,6 +82,11 @@ class PromptBar(ft.Container):
         self.did_mount = self._on_mount
         self.will_unmount = self._on_unmount
 
+        # Listen to global events
+        bus = get_event_bus()
+        bus.on(EventType.WINDOW_PRE_SHOW, self._on_window_pre_show)
+        bus.on(EventType.LANGUAGE_CHANGED, self._on_language_changed)
+
     def _on_unmount(self) -> None:
         """Handle unmount - reset mounting state."""
         self._is_mounted = False
@@ -89,8 +98,52 @@ class PromptBar(ft.Container):
             self.attachment_zone.set_page(self.page)
             self._is_mounted = True
 
-        # Listen to PRE_SHOW event (BEFORE window takes focus) for selection capture
-        get_event_bus().on(EventType.WINDOW_PRE_SHOW, self._on_window_pre_show)
+    def _on_language_changed(self, data: dict) -> None:
+        """Handle language change event - update UI translations."""
+
+        self.log.info("PromptBar: updating translations")
+
+        # Update text field hint
+        self.text_field.hint_text = _("How can I help you?")
+        if self.text_field.page:
+            self.text_field.update()
+
+        # Update submit button tooltip
+        self.submit_button.tooltip = _("Send")
+        if self.submit_button.page:
+            self.submit_button.update()
+
+        # Update add file button tooltip
+        if self.add_file_button:
+            self.add_file_button.tooltip = _("Add files")
+            if self.add_file_button.page:
+                self.add_file_button.update()
+
+        # Update source indicators
+        self.selection_btn.label_text = _("Selection")
+        self.selection_btn.preview_text = (
+            self.selection_btn.preview_text
+        )  # Force display text update
+        if self.selection_btn.page:
+            self.selection_btn.update()
+
+        self.clipboard_btn.label_text = _("Clipboard")
+        self.clipboard_btn.preview_text = (
+            self.clipboard_btn.preview_text
+        )  # Force display text update
+        if self.clipboard_btn.page:
+            self.clipboard_btn.update()
+
+        # Update existing source-based attachments names
+        for att in self.attachments:
+            if att.source == "selection":
+                att.name = _("Selection")
+            elif att.source == "clipboard":
+                att.name = _("Clipboard Image") if att.type == "image" else _("Clipboard")
+
+        self._update_attachment_zone()
+        if self.page:
+            self.update()
 
     def _on_window_pre_show(self, data: dict | None = None) -> None:
         """Handle window pre-show event - capture selection BEFORE window gets focus."""
@@ -119,7 +172,7 @@ class PromptBar(ft.Container):
         if self.input_state.clipboard_text:
             self.clipboard_btn.preview_text = self.input_state.clipboard_text
         elif self.input_state.clipboard_image:
-            self.clipboard_btn.preview_text = "Image"
+            self.clipboard_btn.preview_text = _("Image")
         else:
             self.clipboard_btn.preview_text = None
 
@@ -140,7 +193,8 @@ class PromptBar(ft.Container):
             self.clipboard_btn.deactivate()
 
         self._update_attachment_zone()
-        self.update()
+        if self.page:
+            self.update()
 
     # =========================================================================
     # Source Toggle Handlers
@@ -152,12 +206,14 @@ class PromptBar(ft.Container):
             # Activating a source - deactivate the other
             if source_id == "selection":
                 self.clipboard_btn.deactivate()
-                self.clipboard_btn.update()  # Force UI update
+                if self.clipboard_btn.page:
+                    self.clipboard_btn.update()  # Force UI update
                 self._remove_clipboard_attachments()
                 self._add_selection_attachment()
             elif source_id == "clipboard":
                 self.selection_btn.deactivate()
-                self.selection_btn.update()  # Force UI update
+                if self.selection_btn.page:
+                    self.selection_btn.update()  # Force UI update
                 self._remove_selection_attachment()
                 self._add_clipboard_attachment()
         else:
@@ -168,7 +224,8 @@ class PromptBar(ft.Container):
                 self._remove_clipboard_attachments()
 
         self._update_attachment_zone()
-        self.update()  # Force PromptBar UI update
+        if self.page:
+            self.update()  # Force PromptBar UI update
 
     # =========================================================================
     # Attachment Management
@@ -186,7 +243,7 @@ class PromptBar(ft.Container):
             id=self.ID_SELECTION_TEXT,
             type="text",
             content=self.input_state.selection_text,
-            name="Sélection",
+            name=_("Selection"),
             source="selection",
         )
         self.attachments.append(att)
@@ -209,7 +266,7 @@ class PromptBar(ft.Container):
                 id=self.ID_CLIPBOARD_TEXT,
                 type="text",
                 content=self.input_state.clipboard_text,
-                name="Clipboard",
+                name=_("Clipboard"),
                 source="clipboard",
             )
             self.attachments.append(att)
@@ -220,7 +277,7 @@ class PromptBar(ft.Container):
                 id=self.ID_CLIPBOARD_IMAGE,
                 type="image",
                 content=self.input_state.clipboard_image,
-                name="Clipboard Image",
+                name=_("Clipboard Image"),
                 source="clipboard",
             )
             self.attachments.append(att)
@@ -260,7 +317,8 @@ class PromptBar(ft.Container):
         if removed_att and removed_att.source:
             if removed_att.source == "selection":
                 self.selection_btn.deactivate()
-                self.selection_btn.update()
+                if self.selection_btn.page:
+                    self.selection_btn.update()
             elif removed_att.source == "clipboard":
                 # Check if any clipboard attachments remain
                 remaining_clipboard = [
@@ -270,7 +328,8 @@ class PromptBar(ft.Container):
                 ]
                 if not remaining_clipboard:
                     self.clipboard_btn.deactivate()
-                    self.clipboard_btn.update()
+                    if self.clipboard_btn.page:
+                        self.clipboard_btn.update()
 
     def _handle_add_file_click(self) -> None:
         """Trigger file picker via callback."""
@@ -319,7 +378,7 @@ class PromptBar(ft.Container):
         """Update the attachment zone display."""
         self._reorder_attachments()
         self.attachment_zone.attachments = self.attachments
-        self.attachment_zone.refresh()
+        self.attachment_zone.refresh()  # refresh() already has page check inside attachment_zone
 
     # =========================================================================
     # UI Creation
@@ -330,7 +389,7 @@ class PromptBar(ft.Container):
             multiline=True,
             min_lines=1,
             max_lines=5,
-            hint_text="Comment puis-je vous aider ?",
+            hint_text=_("How can I help you?"),
             border=ft.InputBorder.NONE,
             text_size=16,
             content_padding=15,
@@ -345,13 +404,13 @@ class PromptBar(ft.Container):
             icon_color=ft.Colors.WHITE,
             bgcolor=AppColors.PRIMARY,
             on_click=self._handle_submit_action,
-            tooltip="Envoyer",
+            tooltip=_("Send"),
         )
 
     def _create_selection_button(self) -> SourceIndicator:
         return SourceIndicator(
             icon=ft.Icons.TEXT_FIELDS,
-            label="Sélection",
+            label=_("Selection"),
             source_id="selection",
             visible=False,
             on_toggle=self._handle_source_toggle,
@@ -360,10 +419,18 @@ class PromptBar(ft.Container):
     def _create_clipboard_button(self) -> SourceIndicator:
         return SourceIndicator(
             icon=ft.Icons.PASTE,
-            label="Clipboard",
+            label=_("Clipboard"),
             source_id="clipboard",
             visible=False,
             on_toggle=self._handle_source_toggle,
+        )
+
+    def _create_add_file_button(self) -> ft.IconButton:
+        return ft.IconButton(
+            icon=ft.Icons.ADD_CIRCLE_OUTLINE,
+            icon_color=ft.Colors.GREY_500,
+            tooltip=_("Add files"),
+            on_click=lambda _: self._handle_add_file_click(),
         )
 
     def _handle_submit_action(self, e: ft.ControlEvent) -> None:
@@ -386,7 +453,8 @@ class PromptBar(ft.Container):
 
         # Clear after submit
         self.text_field.value = ""
-        self.text_field.update()
+        if self.text_field.page:
+            self.text_field.update()
         self.attachments = []
         self._update_attachment_zone()
 
@@ -397,12 +465,7 @@ class PromptBar(ft.Container):
             content=ft.Row(
                 controls=[
                     # Add file button
-                    ft.IconButton(
-                        icon=ft.Icons.ADD_CIRCLE_OUTLINE,
-                        icon_color=ft.Colors.GREY_500,
-                        tooltip="Ajouter des fichiers",
-                        on_click=lambda _: self._handle_add_file_click(),
-                    ),
+                    self.add_file_button,
                     self.text_field,
                     ft.Container(self.submit_button, padding=5),
                 ],
@@ -436,3 +499,24 @@ class PromptBar(ft.Container):
     def refresh(self) -> None:
         """Refresh input sources detection."""
         self._refresh_sources()
+
+    def update_theme(self, dark_mode: bool) -> None:
+        """Update PromptBar and its children for the current theme."""
+        # Update input container colors
+        if self.content and isinstance(self.content, ft.Column) and len(self.content.controls) > 1:
+            input_container = self.content.controls[1]
+            if isinstance(input_container, ft.Container):
+                base_color = ft.Colors.WHITE if dark_mode else ft.Colors.BLACK
+                input_container.bgcolor = ft.Colors.with_opacity(0.05, base_color)
+                input_container.border = ft.border.all(1, ft.Colors.with_opacity(0.1, base_color))
+                if input_container.page:
+                    input_container.update()
+
+        # Update text field color
+        self.text_field.color = AppColors.get_text_primary(dark_mode)
+        if self.text_field.page:
+            self.text_field.update()
+
+        # Update source indicators
+        self.selection_btn.update_theme(dark_mode)
+        self.clipboard_btn.update_theme(dark_mode)

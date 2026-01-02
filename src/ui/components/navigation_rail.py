@@ -10,6 +10,7 @@ from collections.abc import Callable
 
 import flet as ft
 
+from src.core import _
 from src.ui.design_system import AppColors
 
 # Standard width for the navigation rail
@@ -41,7 +42,7 @@ def create_navigation_rail(
                 ft.IconButton(
                     icon=ft.Icons.MENU,
                     icon_color=AppColors.get_icon_color(dark_mode),
-                    tooltip="Toggle Menu",
+                    tooltip=_("Toggle Menu"),
                     on_click=on_menu_click,
                 ),
                 # Spacer
@@ -50,7 +51,7 @@ def create_navigation_rail(
                 ft.IconButton(
                     icon=ft.Icons.SETTINGS,
                     icon_color=AppColors.get_icon_color(dark_mode),
-                    tooltip="Settings",
+                    tooltip=_("Settings"),
                     on_click=on_settings_click,
                     icon_size=20,
                 ),

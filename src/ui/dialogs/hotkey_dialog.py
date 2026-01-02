@@ -80,7 +80,7 @@ def show_hotkey_capture_dialog(
 
     # Display text for current hotkey
     display_text = ft.Text(
-        format_hotkey_for_display(current_hotkey) if current_hotkey else "None",
+        format_hotkey_for_display(current_hotkey) if current_hotkey else _("None"),
         size=24,
         weight=ft.FontWeight.BOLD,
         color=AppColors.ACCENT,
@@ -141,7 +141,7 @@ def show_hotkey_capture_dialog(
         """Delete hotkey / set to None (update display, don't close)."""
         nonlocal captured_hotkey
         captured_hotkey = None
-        display_text.value = "None"
+        display_text.value = _("None")
         log.debug("Hotkey display set to None")
         page.update()
 
