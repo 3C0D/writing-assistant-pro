@@ -19,7 +19,7 @@ from pystray import Icon, Menu, MenuItem
 
 from ..enums import EventType
 from ..error_handler import UIError, handle_error
-from ..event_bus import get_event_bus
+from ..event_bus import emit_event, get_event_bus
 from ..services.translation import _
 from ..utils.paths import get_icon_path
 from .autostart import AutostartManager
@@ -176,9 +176,14 @@ class SystrayManager:
         self.log.debug("Settings menu item clicked")
         try:
             # Show the window
-            if self.page and self.page.window:
+            if self.page and not self.page.window.visible:
                 self.page.window.visible = True
-                self.page.update()
+                emit_event(EventType.WINDOW_SHOWN)
+            # Not working
+            # elif self.page and self.page.window.minimized:
+            #     self.page.window.minimized = False
+            #     self.page.window.to_front()
+            #     self.page.update()
 
             # Open settings view if app is available
             if self.app and hasattr(self.app, "toggle_settings_view"):

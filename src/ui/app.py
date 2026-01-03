@@ -17,6 +17,7 @@ from src.core import (
     WindowManager,
     _,
     change_language,
+    emit_event,
     get_current_language,
     get_event_bus,
     get_icon_path,
@@ -49,12 +50,7 @@ class WritingAssistantFletApp:
             debug: Whether to run in debug mode (passed from main.py)
             version: Application version string
         """
-        self.state = AppState(
-            config=ConfigManager(),
-            input_state=InputState(),
-            ui_state=UIState(),
-            attachments=[],
-        )
+        self.state = AppState(config=ConfigManager(), input_state=InputState(), ui_state=UIState())
         self.event_bus = get_event_bus()
 
         # Override DEBUG from config if explicitly passed
@@ -150,6 +146,9 @@ class WritingAssistantFletApp:
 
         # Create UI
         self._create_ui()
+
+        # Setup file picker
+        self._setup_file_picker()
 
         # Setup hotkey for toggle with logging
         self.log.info(f"Registering hotkey: {self.state.config.HOTKEY_COMBINATION}")
@@ -746,6 +745,12 @@ class WritingAssistantFletApp:
         self.state.ui_state.about_visible = True
         self.state.ui_state.settings_visible = False
         self.page.window.visible = True
+
+        # Sync window manager state
+        if self.window_manager:
+            self.window_manager.window_visible = True
+
+        emit_event(EventType.WINDOW_SHOWN)
         self._create_ui()
 
     def on_check_updates(self, e):

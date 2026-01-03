@@ -444,41 +444,6 @@ Hidden=false
         else:
             return False
 
-    # Not used
-    @staticmethod
-    def sync_with_settings(config_manager: "ConfigManager") -> bool:
-        """
-        Synchronize autostart state between system and settings.
-        Updates settings to match system state if they differ.
-        Also handles mode changes (dev <-> compiled) by migrating autostart entries.
-        """
-        try:
-            system_state = AutostartManager.check_autostart()
-            # Use .get() to avoid AttributeError if key doesn't exist
-            settings_state = config_manager.get("start_on_boot", False)
-
-            # Check if we need to migrate due to mode change
-            if settings_state and AutostartManager._needs_autostart_migration():
-                logger.info("Autostart mode migration needed, updating system entries")
-                # Remove any conflicting entries and set the correct one for current mode
-                success = AutostartManager.set_autostart(True)
-                if success:
-                    system_state = True  # Now it should be enabled
-                else:
-                    logger.warning("Failed to migrate autostart entry")
-
-            if system_state != settings_state:
-                # Update settings to match system state
-                config_manager.set("start_on_boot", system_state)
-                logger.debug(f"Synchronized start_on_boot setting: {system_state}")
-
-            return True
-        except Exception as e:
-            handle_error(
-                e, error_type=ConfigError, context="sync_with_settings", logger_instance=logger
-            )
-            return False
-
     @staticmethod
     def set_autostart_with_sync(enable: bool, config_manager: "ConfigManager") -> bool:
         """

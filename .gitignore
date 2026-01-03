@@ -43,7 +43,7 @@ legacy_project
 
 # Output and Logs
 # logs/
-# *.log
+*.log
 debug_output.txt
 error.txt
 pyright_output.txt

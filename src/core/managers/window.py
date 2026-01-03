@@ -23,7 +23,7 @@ class WindowManager:
     def __init__(
         self,
         config,
-        page=None,
+        page,
     ):
         self.config = config
         self.page = page  # Flet page reference
@@ -31,10 +31,6 @@ class WindowManager:
         self.last_trigger_time = 0.0
         self.trigger_lock = threading.Lock()  # Prevent overlapping triggers
         self.window_visible = False
-
-    def set_page(self, page):
-        """Set the Flet page reference"""
-        self.page = page
 
     def toggle_window(self) -> None:
         """Toggle window visibility on hotkey press"""
@@ -60,8 +56,13 @@ class WindowManager:
             # Toggle window visibility based on current state
             self.log.info(f"Toggle window - current state: visible={self.window_visible}")
 
-            if self.window_visible:
-                self.hide_window()
+            if self.window_visible and self.page:
+                if not self.page.window.minimized:
+                    self.hide_window()
+                else:
+                    self.page.window.minimized = False
+                    self.page.window.to_front()
+                    self.page.update()
             else:
                 self.show_window()
 
