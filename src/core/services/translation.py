@@ -148,17 +148,6 @@ class LanguageManager:
         }
         return language_names.get(language, language)
 
-    # Not used
-    def register_ui_update_callback(self, callback: Callable) -> None:
-        """
-        Register a callback function to be called when language changes.
-        This is used to update UI elements dynamically.
-
-        Args:
-            callback: Function to call on language change
-        """
-        self._update_callbacks.append(callback)
-
     def _trigger_ui_updates(self) -> None:
         """Trigger all registered UI update callbacks."""
         for callback in self._update_callbacks:
@@ -243,14 +232,3 @@ def change_language(language: str) -> None:
 def get_current_language() -> str:
     """Get the current language code."""
     return get_language_manager().get_current_language()
-
-
-# Not used
-def register_ui_update(callback: Callable) -> None:
-    """
-    Register a UI update callback for language changes.
-
-    Args:
-        callback: Function to call when language changes
-    """
-    get_language_manager().register_ui_update_callback(callback)

@@ -337,22 +337,3 @@ def format_hotkey_for_display(hotkey: str | None) -> str:
             display_parts.append(part.capitalize())
 
     return " + ".join(display_parts)
-
-
-# not used
-def format_hotkey_for_storage(display_hotkey: str) -> str:
-    """
-    Convert display format hotkey to storage format.
-
-    Args:
-        display_hotkey: Display format string (e.g., "Ctrl + Shift + A")
-
-    Returns:
-        Storage format string (e.g., "ctrl+shift+a")
-    """
-    if not display_hotkey or display_hotkey == "None":
-        return ""
-
-    # Split by " + " and lowercase everything
-    parts = [p.strip().lower() for p in display_hotkey.split(" + ")]
-    return "+ ".join(parts)

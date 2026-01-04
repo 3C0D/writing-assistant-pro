@@ -26,6 +26,11 @@ Bienvenue dans la documentation officielle du projet. Cette documentation est st
 
 - [**10_PRECOMMIT.md**](./10_PRECOMMIT.md) : Hooks de qualité de code (Ruff, Pyright).
 - [**11_TESTING.md**](./11_TESTING.md) : Tests unitaires et d'intégration.
+- [**CODING_GUIDELINES.md**](./CODING_GUIDELINES.md) : Conventions de code complètes.
+
+### 🤖 Pour les LLM
+
+- [**LLM_RULES.md**](./LLM_RULES.md) : Référence concise des outils et patterns à utiliser.
 
 ### 📦 Release & Versioning
 

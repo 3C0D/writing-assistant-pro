@@ -58,7 +58,6 @@ from .services.translation import (
     get_current_language,
     get_language_manager,
     init_translation,
-    register_ui_update,
 )
 from .state import AppState, UIState
 from .utils.paths import get_app_root, get_icon_path
@@ -71,7 +70,6 @@ __all__ = [
     "_",
     "change_language",
     "get_current_language",
-    "register_ui_update",
     # Logger system
     "setup_root_logger",
     "setup_exception_handler",
